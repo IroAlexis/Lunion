@@ -46,10 +46,8 @@ static void lunion_application_startup (GApplication* app)
 
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 
-	if (!this)
-	{
-		this->window = lunion_window_new (GTK_APPLICATION (this));
-	}
+	this->window = lunion_window_new (GTK_APPLICATION (this));
+
 }
 
 static void lunion_application_class_init (LunionApplicationClass* class)
