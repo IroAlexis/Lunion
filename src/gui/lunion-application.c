@@ -44,7 +44,7 @@ static void lunion_application_startup (GApplication* app)
 	// Traduction: self -> soi
 	LunionApplication* this = LUNION_APPLICATION (app);;
 
-	/* G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app); */
+	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 
 	if (!this)
 	{
