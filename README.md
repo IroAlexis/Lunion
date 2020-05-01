@@ -1,5 +1,7 @@
 Lunion
 ================
+Gather all your games on Linux
+
 Introduction
 ------------
 Inspired by Lutris, Steam and GOG Galaxy (2.0), Lunion is an open source GTK application that allows you to bring together all your Linux and/or Windows games (DRM-free ideally) in a single place.
@@ -43,13 +45,13 @@ System requirements (Recommended)
 Windows games supported and configured
 --------------------------------------
 **Stable:**
-* A Plague Tale: Innocence
+* A Plague Tale: Innocence (random issue on Nvidia cards)
 * Children of Morta (requires [mf-install](https://github.com/z0z0z/mf-install))
 * Dead Cells
 * Frostpunk
 * Katana ZERO
 * League of Legends (Patch 10.8)
-* Legends of Runeterra (~~requires `wininet`~~)
+* Legends of Runeterra
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Ori and the Blind Forest: Definitive Edition
