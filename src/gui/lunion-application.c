@@ -25,7 +25,7 @@ struct _LunionApplication
 {
 	GtkApplication    parent;
 
-	GtkWidget*     window;
+	LunionWindow*     window;
 };
 
 G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)

@@ -22,7 +22,7 @@
 struct _LunionWindow
 {
 	GtkApplicationWindow parent;
-	//GtkHeaderBar* headerbar;
+	/* GtkHeaderBar* headerbar; */
 };
 
 
