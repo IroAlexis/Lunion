@@ -34,19 +34,18 @@ G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
 
 static void lunion_application_activate (GApplication* app)
 {
-	LunionApplication* this = LUNION_APPLICATION (app);
+	LunionApplication* self = LUNION_APPLICATION (app);
 
-	gtk_window_present (GTK_WINDOW (this->window));
+	gtk_window_present (GTK_WINDOW (self->window));
 }
 
 static void lunion_application_startup (GApplication* app)
 {
-	// Traduction: self -> soi
-	LunionApplication* this = LUNION_APPLICATION (app);;
+	LunionApplication* self = LUNION_APPLICATION (app);;
 
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 
-	this->window = lunion_window_new (GTK_APPLICATION (this));
+	self->window = lunion_window_new (GTK_APPLICATION (self));
 
 }
 
@@ -67,11 +66,9 @@ static void lunion_application_init (LunionApplication* app)
 
 LunionApplication* lunion_application_new (void)
 {
-	                                       /* ,--> return LUNION_TYPE_APPLICATION */
+	//                                        ,--> return LUNION_TYPE_APPLICATION
 	return g_object_new (lunion_application_get_type (),
 	                     "application-id", "org.gtk.lunion"
 	                     "flags", G_APPLICATION_FLAGS_NONE,
 	                     NULL);
 }
-
-

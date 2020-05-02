@@ -38,6 +38,5 @@ LunionWindow* lunion_window_new (GtkApplication* app);
 
 G_END_DECLS
 
-#endif /* _LUNNION_WINDOW_H_ */
-
-
+// LUNION_WINDOW_H_
+#endif

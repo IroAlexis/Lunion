@@ -46,8 +46,8 @@ l_data* lunion_alloc_list_gamedir (const char* path)
 	// Browse all folders
 	while ((sdir = readdir (stream)) != NULL)
 	{
-		/* Don't display the folders "." and ".." */
-		/* !! The instruction "continue" continue the while loop !! */
+		// Don't display the folders "." and ".."
+		// !! The instruction "continue" continue the while loop !!
 		if (sdir->d_name[0] == '.')
 			continue;
 
@@ -58,7 +58,7 @@ l_data* lunion_alloc_list_gamedir (const char* path)
 			return NULL;
 		}
 
-		/* Allocation for the adding of the string in the list */
+		// Allocation for the adding of the string in the list
 		new_data->str = strdup (sdir->d_name);
 		if (NULL == new_data->str)
 		{
@@ -66,7 +66,7 @@ l_data* lunion_alloc_list_gamedir (const char* path)
 			return NULL;
 		}
 
-		/* Link the "new_data" list with the "gamedir" list */
+		// Link the "new_data" list with the "gamedir" list
 		if (lst != NULL)
 		{
 			t_ptr->next = new_data;
@@ -74,7 +74,7 @@ l_data* lunion_alloc_list_gamedir (const char* path)
 		}
 		else
 		{
-			/* Empty list */
+			// Empty list
 			t_ptr = new_data;
 			lst = new_data;
 		}
@@ -88,4 +88,3 @@ l_data* lunion_alloc_list_gamedir (const char* path)
 
 	return lst;
 }
-

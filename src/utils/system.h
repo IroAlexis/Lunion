@@ -38,5 +38,5 @@ l_data* lunion_alloc_list_gamedir (const char* path);
 
 
 
+// LUNION_SYSTEM_H
 #endif
-

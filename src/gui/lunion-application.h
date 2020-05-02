@@ -37,6 +37,5 @@ LunionApplication* lunion_application_new (void);
 G_END_DECLS
 
 
-#endif /* _LUNION_APPLICATION_H_ */
-
-
+// _LUNION_APPLICATION_H_
+#endif
