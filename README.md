@@ -17,7 +17,7 @@ Problematic
 How it works
 ------------
 For the native games, Lunion detects if you have installed with your package manager and integrates them in the library. It integrates also emulator applications and compatibility layers:
-* melonDS, open source emulator to run the DS/DSi games
+* ~~melonDS, open source emulator to run the DS/DSi games~~
 * Wine (and/or Lunion Play alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
 * DXVK, a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
 
@@ -39,6 +39,38 @@ System requirements (Recommended)
 ### Troubleshooting
 * **[EXPERIMENTAL]** For the configuration of 8 Go RAM, with DXVK, he is possible that you have an error `DxvkMemoryAllocator: Memory allocation failed`. You can use this procedure ([here](https://www.reddit.com/r/linux_gaming/comments/em97io/regarding_the_dxvkmemoryallocator_memory)) but read the comments please.
 
+
+
+
+Planned features
+----------------
+* Display the installed runners (*and others...*) and can them uninstall easly
+* Using XML for the configuration file: `.conf`
+* [GOG.com] Support of DLCs installation option
+
+
+
+Features no tested
+------------------
+* Multi-monitor
+
+
+
+File organisation
+-----------------
+Data `$HOME/.local/share/lunion/`
+* `games` : Installed games location (default folder but you have choice)
+* `log` : Storing Lunion and/or Lunion Play log files location (disable by default)
+* `runtime` : Location of DXVK and others...
+
+
+Cache `$HOME/.cache/lunion/`
+* `download` : Files download location
+* `tmp` : Temporary files location
+
+
+Configuration `$HOME/.config/lunion/`
+* `games` : Games configuration (banner pictures, logo, ...)
 
 
 
@@ -73,30 +105,9 @@ Windows games supported and configured
 
 
 
-File organisation
------------------
-Data `$HOME/.local/share/lunion/`
-* `games` : Installed games location (default folder but you have choice)
-* `log` : Storing Lunion and/or Lunion Play log files location (disable by default)
-* `runtime` : Location of DXVK and others...
-
-
-Cache `$HOME/.cache/lunion/`
-* `download` : Files download location
-* `tmp` : Temporary files location
-
-
-Configuration `$HOME/.config/lunion/`
-* `games` : Games configuration (banner pictures, logo, ...)
-
-
-
-
-System setup and optimization
------------------------------
-### Lunion Play
-In Lunion, the using of Wine goes by activation of Lunion Play (Settings > Lunion Play > Enable Lunion Play for all games). You have the choice to use Wine package in your distribution or download Lunion Play, a build of Wine optimized to give you the best performance in the games. This wouldn't be possible without the work of [Tk-Glitch](https://github.com/Tk-Glitch/PKGBUILDS), don't hesitate to thank him !
-
+Useful environment Variables 
+----------------------------
+### Wine
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
 | `STAGING_SHARED_MEMORY` | `1` or `0` |  |
@@ -133,20 +144,6 @@ Tips and tricks
 * [GOG.com] Silent installater, add `/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-` (don't work with: The Witcher 3 GOTY)
 * Disabling NVAPI (NVIDIA's core software development kit that allows direct access to NVIDIA GPUs and drivers on Windows) required on some games (Uplay, Battle.Net, etc): `WINEDLLOVERRIDES="nvapi,nvapi64=d"`
 
-
-
-
-Planned features
-----------------
-* Display the installed runners (*and others...*) and can them uninstall easly
-* Using XML for the configuration file: `.conf`
-* [GOG.com] Support of DLCs installation option
-
-
-
-Features no tested
-------------------
-* Multi-monitor
 
 
 
