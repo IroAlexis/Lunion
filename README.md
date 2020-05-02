@@ -83,14 +83,13 @@ Windows games supported and configured
 * Frostpunk
 * Katana ZERO
 * League of Legends (Patch 10.8)
-* Legends of Runeterra
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Ori and the Blind Forest: Definitive Edition
 * The Witcher 3: Wild Hunt GOTY
 
 **Instable:**
-* NB
+* Legends of Runeterra (disconnection possible)
 
 **Failure:**
 * NB
