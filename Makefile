@@ -9,6 +9,8 @@ UTILS = src/utils
 
 SRC = $(GUI)/lunion-application.c $(GUI)/lunion-window.c $(UTILS)/system.c $(MAIN)/main.c
 
+OBJS = $(SRC:.c=.o)
+
 
 
 all: lunion

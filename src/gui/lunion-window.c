@@ -47,7 +47,7 @@ static void lunion_window_init (LunionWindow* self)
 	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->headerbar), TRUE);
 
 	// Link headerbar in window properties LunionApplication
-	gtk_window_set_titlebar (GTK_WINDOW (app), self->headerbar);
+	gtk_window_set_titlebar (GTK_WINDOW (self), self->headerbar);
 
 	gtk_widget_show_all (GTK_WIDGET (self));
 
