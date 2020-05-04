@@ -8,7 +8,6 @@ GUI = src/gui
 UTILS = src/utils
 
 SRC = $(GUI)/lunion-application.c $(GUI)/lunion-window.c $(UTILS)/system.c $(MAIN)/main.c
-#BUILT_SRC = resources.c
 
 
 
