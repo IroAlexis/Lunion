@@ -22,7 +22,7 @@
 struct _LunionWindow
 {
 	GtkApplicationWindow parent;
-	//GtkHeaderBar* headerbar;
+	GtkWidget* headerbar;
 };
 
 
@@ -36,13 +36,21 @@ static void lunion_window_class_init (LunionWindowClass* class)
 	//GApplicationClass* application_class = G_APPLICATION_CLASS (class);
 
 	//application_class->activate = lunion_window_activate;
-
-	//gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class), "lunion-window.ui");
 }
 
 static void lunion_window_init (LunionWindow* app)
 {
-	//gtk_init_template (GTK_WINDOW (app));
+	//gtk_widget_init_template (GTK_WIDGET (app));
+
+	app->headerbar = gtk_header_bar_new();
+	gtk_header_bar_set_title (GTK_HEADER_BAR (app->headerbar), "Lunion");
+	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (app->headerbar), TRUE);
+
+	// Link headerbar in window properties LunionApplication
+	gtk_window_set_titlebar (GTK_WINDOW (app), app->headerbar);
+
+	gtk_widget_show_all (GTK_WIDGET (app));
+
 }
 
 LunionWindow* lunion_window_new (GtkApplication* app)
