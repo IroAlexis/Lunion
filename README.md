@@ -115,6 +115,7 @@ Useful environment Variables
 ### Proprietary driver NVIDIA
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
+| `__GL_NextGenCompiler` | `1` or `0` | Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption |
 | `__GL_SHADER_DISK_CACHE` | `1` or `0` |  |
 | `__GL_SHADER_DISK_CACHE` | `$PATH/TO/` |  |
 | `__GL_SHOW_GRAPHICS_OSD` | `1` or `0` | Showing the Graphics API Visual Indicator and FPS |
