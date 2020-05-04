@@ -38,18 +38,18 @@ static void lunion_window_class_init (LunionWindowClass* class)
 	//application_class->activate = lunion_window_activate;
 }
 
-static void lunion_window_init (LunionWindow* app)
+static void lunion_window_init (LunionWindow* self)
 {
-	//gtk_widget_init_template (GTK_WIDGET (app));
+	//gtk_widget_init_template (GTK_WIDGET (self));
 
-	app->headerbar = gtk_header_bar_new();
-	gtk_header_bar_set_title (GTK_HEADER_BAR (app->headerbar), "Lunion");
-	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (app->headerbar), TRUE);
+	self->headerbar = gtk_header_bar_new();
+	gtk_header_bar_set_title (GTK_HEADER_BAR (self->headerbar), "Lunion");
+	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->headerbar), TRUE);
 
 	// Link headerbar in window properties LunionApplication
-	gtk_window_set_titlebar (GTK_WINDOW (app), app->headerbar);
+	gtk_window_set_titlebar (GTK_WINDOW (app), self->headerbar);
 
-	gtk_widget_show_all (GTK_WIDGET (app));
+	gtk_widget_show_all (GTK_WIDGET (self));
 
 }
 

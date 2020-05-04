@@ -58,7 +58,7 @@ static void lunion_application_class_init (LunionApplicationClass* class)
 	gapp_class->startup = lunion_application_startup;
 }
 
-static void lunion_application_init (LunionApplication* app)
+static void lunion_application_init (LunionApplication* self)
 {
 
 }
