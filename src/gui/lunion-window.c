@@ -22,7 +22,11 @@
 struct _LunionWindow
 {
 	GtkApplicationWindow parent;
-	GtkWidget* headerbar;
+
+	GtkWidget* header_box;
+	GtkWidget* header_title;
+	GtkWidget* header_sep;
+	GtkWidget* header_nav;
 };
 
 
@@ -42,13 +46,28 @@ static void lunion_window_init (LunionWindow* self)
 {
 	//gtk_widget_init_template (GTK_WIDGET (self));
 
-	self->headerbar = gtk_header_bar_new();
-	gtk_header_bar_set_title (GTK_HEADER_BAR (self->headerbar), "Lunion");
-	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->headerbar), TRUE);
+	self->header_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-	// Link headerbar in window properties LunionApplication
-	gtk_window_set_titlebar (GTK_WINDOW (self), self->headerbar);
+	self->header_title = gtk_header_bar_new();
+	gtk_header_bar_set_title (GTK_HEADER_BAR (self->header_title), "Lunion");
+	// TODO Display if the user set the close button to left side
+	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->header_title), TRUE);
 
+	self->header_sep = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+
+	self->header_nav = gtk_header_bar_new ();
+	//
+	gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->header_nav), TRUE);
+
+	// Assemble
+	gtk_box_pack_start (GTK_BOX (self->header_box), GTK_WIDGET (self->header_title), FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (self->header_box), GTK_WIDGET (self->header_sep), FALSE, TRUE, 0);
+	gtk_box_pack_end (GTK_BOX (self->header_box), GTK_WIDGET (self->header_nav), TRUE, TRUE, 0);
+
+	// Link headerbar with window properties LunionApplication
+	gtk_window_set_titlebar (GTK_WINDOW (self), self->header_box);
+
+	gtk_window_set_decorated (GTK_WIDGET (self), TRUE);
 	gtk_widget_show_all (GTK_WIDGET (self));
 
 }
