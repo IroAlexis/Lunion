@@ -44,7 +44,7 @@ int main (int argc, char** argv)
 
 	app = lunion_application_new ();
 	g_application_set_default (G_APPLICATION (app));
-	ret = g_application_run (G_APPLICATION (app), argc, argv);
+	ret = g_application_run (G_APPLICATION (app), 0, NULL);
 
 	// Memory deallocation
 	while (gamedir != NULL)
