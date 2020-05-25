@@ -76,6 +76,8 @@ Configuration `$HOME/.config/lunion/`
 
 Windows games supported and configured
 --------------------------------------
+***Not regulary update for the moment***
+
 **Stable:**
 * A Plague Tale: Innocence (random issue on Nvidia cards)
 * Children of Morta (requires [mf-install](https://github.com/z0z0z/mf-install))
