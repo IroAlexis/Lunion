@@ -87,6 +87,7 @@ Windows games supported and configured
 * League of Legends (Patch 10.8)
 * Metro 2033 Redux
 * Metro: Last Night Redux
+* Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
 * Ori and the Blind Forest: Definitive Edition
 * The Witcher 3: Wild Hunt GOTY
 
