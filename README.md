@@ -95,7 +95,7 @@ Windows games supported and configured
 * Legends of Runeterra (disconnection possible)
 
 **Failure:**
-* NB
+* Valorant (incompatibility with Vanguard [for the moment](https://www.winehq.org/announce/5.8))
 
 **Future:**
 * Cyberpunk 2077
@@ -103,7 +103,6 @@ Windows games supported and configured
 * No Man's Sky
 * Project F
 * The Last Nigth
-* Valorant
 
 
 
