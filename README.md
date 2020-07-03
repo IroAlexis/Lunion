@@ -84,7 +84,6 @@ Windows games supported and configured
 * Dead Cells
 * Frostpunk
 * Katana ZERO
-* League of Legends (Patch 10.8)
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
@@ -92,6 +91,7 @@ Windows games supported and configured
 * The Witcher 3: Wild Hunt GOTY
 
 **Instable:**
+* League of Legends (Patch 10.13, 9S Error)
 * Legends of Runeterra (disconnection possible)
 
 **Failure:**
