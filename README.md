@@ -62,16 +62,14 @@ System requirements (Recommended)
 
 
 
-Planned features
-----------------
+Features
+--------
+### Planned
 * Display the installed runners (*and others...*) and can them uninstall easly
 * Using XML for the configuration file: `.conf`
 * [GOG.com] Support of DLCs installation option
 
-
-
-Features no tested
-------------------
+### No tested
 * Multi-monitor
 
 
@@ -94,8 +92,8 @@ Configuration `$HOME/.config/lunion/`
 
 
 
-Windows games supported and configured
---------------------------------------
+Windows games tested
+--------------------
 ***Not regulary update for the moment***
 
 **Stable:**
