@@ -2,10 +2,29 @@ Lunion
 ================
 Gather all your games on Linux
 
+
+
+Table of Contents
+-----------------
+1. [Introduction](#introduction)
+2. [Problematic](#problematic)
+3. [How it works](#how-it-works)
+4. [Features](#features)
+5. [File organisation](#file-organisation)
+6. [Windows games tested](#windows-games-tested)
+7. [Useful environment variables](#useful-environment-variables)
+8. [Tips and tricks](#tips-and-tricks)
+9. [Guides](#guides)
+10. [Acknowledgements](#acknowledgements)
+11. [Licence](#licence)
+
+
+
 Introduction
 ------------
 Inspired by Lutris, Steam and GOG Galaxy (2.0), Lunion is an open source GTK application that allows you to bring together all your Linux and/or Windows games (DRM-free ideally) in a single place.
 You can import your games list, install and launch your favorite PC games. You don't have to worry about how to organize your game files. However, it is fully configurable if you can get your hands dirty
+
 
 
 Problematic
@@ -20,6 +39,7 @@ For the native games, Lunion detects if you have installed with your package man
 * ~~melonDS, open source emulator to run the DS/DSi games~~
 * Wine (and/or Lunion Play alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
 * DXVK, a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
+
 
 
 System requirements (Recommended)
