@@ -1,6 +1,6 @@
 Lunion
 ================
-Gather all your games on Linux
+A GTK GUI for Wine ergonomic for beginners but also customizable for experts 
 
 
 
