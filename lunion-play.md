@@ -18,7 +18,7 @@ $ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="winemenubuilder.exe=" WINEDEBUG=-
 
 * Set up DXVK
 ```
-$ `WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/dxvk/setup_install.sh install`
+$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/dxvk/setup_install.sh install
 ```
 
 * Finished, now you have to go to the application root  and launch it
