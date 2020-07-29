@@ -138,6 +138,7 @@ Useful environment Variables
 | `__GL_NextGenCompiler` | `1` or `0` | Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption |
 | `__GL_SHADER_DISK_CACHE` | `1` or `0` |  |
 | `__GL_SHADER_DISK_CACHE` | `$PATH/TO/` |  |
+| `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) |
 | `__GL_SHOW_GRAPHICS_OSD` | `1` or `0` | Showing the Graphics API Visual Indicator and FPS |
 | `__GL_THREADED_OPTIMIZATION` | `1` or `0` | For the OpenGL games, allow the driver NVIDIA to work multi threaded. This speeds up when the drivers has a lot to do, but when your CPU is filled to the max, it can lower fps (Enable by default when the driver thinks it can improve performance) |
 
