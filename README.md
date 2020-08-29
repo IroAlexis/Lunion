@@ -102,7 +102,7 @@ Windows games tested
 * Dead Cells
 * Frostpunk
 * Katana ZERO
-* League of Legends (Patch 10.15)
+* League of Legends/Teamfight Tactics (Patch 10.16)
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
@@ -116,6 +116,7 @@ Windows games tested
 * Valorant (incompatibility with Vanguard [for the moment](https://www.winehq.org/announce/5.8))
 
 **Future:**
+* Control
 * Cyberpunk 2077
 * Hytale
 * No Man's Sky
@@ -138,7 +139,7 @@ Useful environment Variables
 | `__GL_NextGenCompiler` | `1` or `0` | Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption |
 | `__GL_SHADER_DISK_CACHE` | `1` or `0` |  |
 | `__GL_SHADER_DISK_CACHE_PATH` | `$PATH/TO/` |  |
-| `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) |
+| `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) (source from [Nvidia Forum](https://forums.developer.nvidia.com/t/opengl-shader-disk-cache-max-size-garbage-collection/60056))|
 | `__GL_SHOW_GRAPHICS_OSD` | `1` or `0` | Showing the Graphics API Visual Indicator and FPS |
 | `__GL_THREADED_OPTIMIZATION` | `1` or `0` | For the OpenGL games, allow the driver NVIDIA to work multi threaded. This speeds up when the drivers has a lot to do, but when your CPU is filled to the max, it can lower fps (Enable by default when the driver thinks it can improve performance) |
 
