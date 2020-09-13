@@ -103,7 +103,7 @@ Windows games tested
 * Dead Cells
 * Frostpunk
 * Katana ZERO
-* League of Legends/Teamfight Tactics (Patch 10.16)
+* League of Legends/Teamfight Tactics (Patch 10.18)
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Metro Exodus (not tested on DX12)
