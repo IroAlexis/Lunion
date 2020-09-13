@@ -98,6 +98,7 @@ Windows games tested
 
 **Stable:**
 * A Plague Tale: Innocence (random issue on Nvidia cards)
+* Control Ultimate Edition
 * Children of Morta (requires [mf-install](https://github.com/z0z0z/mf-install))
 * Dead Cells
 * Frostpunk
@@ -105,6 +106,7 @@ Windows games tested
 * League of Legends/Teamfight Tactics (Patch 10.16)
 * Metro 2033 Redux
 * Metro: Last Night Redux
+* Metro Exodus (not tested on DX12)
 * Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
 * Ori and the Blind Forest: Definitive Edition
 * The Witcher 3: Wild Hunt GOTY
@@ -116,7 +118,6 @@ Windows games tested
 * Valorant (incompatibility with Vanguard [for the moment](https://www.winehq.org/announce/5.8))
 
 **Future:**
-* Control
 * Cyberpunk 2077
 * Hytale
 * No Man's Sky
