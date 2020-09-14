@@ -99,14 +99,14 @@ Windows games tested
 **Stable:**
 * A Plague Tale: Innocence (random issue on Nvidia cards)
 * Control Ultimate Edition
-* Children of Morta (requires [mf-install](https://github.com/z0z0z/mf-install))
+* Children of Morta
 * Dead Cells
 * Frostpunk
 * Katana ZERO
 * League of Legends/Teamfight Tactics (Patch 10.18)
 * Metro 2033 Redux
 * Metro: Last Night Redux
-* Metro Exodus (not tested on DX12)
+* Metro Exodus
 * Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
 * Ori and the Blind Forest: Definitive Edition
 * The Witcher 3: Wild Hunt GOTY
