@@ -103,7 +103,6 @@ Windows games tested
 * Dead Cells
 * Frostpunk
 * Katana ZERO
-* League of Legends/Teamfight Tactics (Patch 10.18)
 * Metro 2033 Redux
 * Metro: Last Night Redux
 * Metro Exodus
@@ -115,6 +114,7 @@ Windows games tested
 * Legends of Runeterra (disconnection possible)
 
 **Failure:**
+* League of Legends/Teamfight Tactics (Patch 10.19 since 24/09/2020)
 * Valorant (incompatibility with Vanguard [for the moment](https://www.winehq.org/announce/5.8))
 
 **Future:**
