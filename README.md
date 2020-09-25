@@ -57,10 +57,6 @@ System requirements (Recommended)
 * winetricks
 * vkd3d-proton
 
-### Troubleshooting
-* **[EXPERIMENTAL]** For the configuration of 8 Go RAM, with DXVK, he is possible that you have an error `DxvkMemoryAllocator: Memory allocation failed`. You can use this procedure ([here](https://www.reddit.com/r/linux_gaming/comments/em97io/regarding_the_dxvkmemoryallocator_memory)) but read the comments please.
-
-
 
 
 Features
@@ -175,6 +171,13 @@ Guides
 ------
 * [Improving gaming performance](https://www.reddit.com/r/linux_gaming/comments/e32v49/improving_gaming_performance_guide/)
 * [NVIDIA: Reduce stuttering](https://www.reddit.com/r/wine_gaming/comments/8ih53x/tutorial_how_to_reduce_stuttering_nvidia/)
+
+
+
+Troubleshooting
+---------------
+* **[EXPERIMENTAL]** For the configuration of 8 Go RAM, with DXVK, he is possible that you have an error `DxvkMemoryAllocator: Memory allocation failed`. You can use this procedure ([here](https://www.reddit.com/r/linux_gaming/comments/em97io/regarding_the_dxvkmemoryallocator_memory)) but read the comments please.
+
 
 
 
