@@ -15,8 +15,9 @@ Table of Contents
 7. [Useful environment variables](#useful-environment-variables)
 8. [Tips and tricks](#tips-and-tricks)
 9. [Guides](#guides)
-10. [Acknowledgements](#acknowledgements)
-11. [Licence](#licence)
+10. [Troubleshooting](#troubleshooting)
+11. [Acknowledgements](#acknowledgements)
+12. [Licence](#licence)
 
 
 
