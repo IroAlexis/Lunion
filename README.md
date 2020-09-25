@@ -51,10 +51,11 @@ System requirements (Recommended)
 * *Storage*: SSD
 
 ### Dependencies
-* Curl
-* GTK+ 3
-* Unzip
-* Winetricks
+* curl
+* gtk
+* unzip
+* winetricks
+* vkd3d-proton
 
 ### Troubleshooting
 * **[EXPERIMENTAL]** For the configuration of 8 Go RAM, with DXVK, he is possible that you have an error `DxvkMemoryAllocator: Memory allocation failed`. You can use this procedure ([here](https://www.reddit.com/r/linux_gaming/comments/em97io/regarding_the_dxvkmemoryallocator_memory)) but read the comments please.
