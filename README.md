@@ -90,40 +90,6 @@ Configuration `$HOME/.config/lunion/`
 
 
 
-Windows games tested
---------------------
-***Not regulary update for the moment***
-
-**Stable:**
-* A Plague Tale: Innocence (random issue on Nvidia cards)
-* Control Ultimate Edition
-* Children of Morta
-* Dead Cells
-* Frostpunk
-* Katana ZERO
-* Metro 2033 Redux
-* Metro: Last Night Redux
-* Metro Exodus
-* Minecraft Dungeons (requires [mf-install](https://github.com/z0z0z/mf-install))
-* Ori and the Blind Forest: Definitive Edition
-* The Witcher 3: Wild Hunt GOTY
-
-**Instable:**
-* Legends of Runeterra (disconnection possible)
-
-**Failure:**
-* League of Legends/Teamfight Tactics (Patch 10.19 since 24/09/2020)
-* Valorant (incompatibility with Vanguard [for the moment](https://www.winehq.org/announce/5.8))
-
-**Future:**
-* Cyberpunk 2077
-* Hytale
-* No Man's Sky
-* Project F
-* The Last Nigth
-
-
-
 Useful environment Variables 
 ----------------------------
 ### Wine
