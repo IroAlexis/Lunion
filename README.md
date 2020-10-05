@@ -11,13 +11,12 @@ Table of Contents
 3. [How it works](#how-it-works)
 4. [Features](#features)
 5. [File organisation](#file-organisation)
-6. [Windows games tested](#windows-games-tested)
-7. [Useful environment variables](#useful-environment-variables)
-8. [Tips and tricks](#tips-and-tricks)
-9. [Guides](#guides)
-10. [Troubleshooting](#troubleshooting)
-11. [Acknowledgements](#acknowledgements)
-12. [Licence](#licence)
+6. [Useful environment variables](#useful-environment-variables)
+7. [Tips and tricks](#tips-and-tricks)
+8. [Guides](#guides)
+9. [Troubleshooting](#troubleshooting)
+10. [Acknowledgements](#acknowledgements)
+11. [Licence](#licence)
 
 
 
