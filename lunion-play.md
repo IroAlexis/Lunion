@@ -6,7 +6,7 @@ Install process
 ---------------
 * Set up the Wine prefix
 ```
-$ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml=" WINEDEBUG=-all /path/to/wine/bin/wineboot -u
+$ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i
 
 # Need to wait for files to be written to disk (ext4)
 ```
