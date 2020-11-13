@@ -7,9 +7,9 @@ Install process
 * Set up the Wine prefix
 ```
 $ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i
-
-# Need to wait for files to be written to disk (ext4)
 ```
+You need to wait wineserver is finish and files to be written to disk (ext4 limition please verif your config, by default it is 5s).
+
 
 * Install the application
 ```
