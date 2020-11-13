@@ -16,9 +16,12 @@ $ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml=" W
 $ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wine /path/to/file.exe
 ```
 
-* Set up DXVK
+* Set up DXVK and/or VKD3D-Proton
+  * [DXVK](https://github.com/doitsujin/dxvk): https://github.com/doitsujin/dxvk/releases
+  * [VKD3D-Proton](https://github.com/HansKristian-Work/vkd3d-proton): https://github.com/HansKristian-Work/vkd3d-proton/releases
 ```
 $ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/dxvk/setup_install.sh install
+$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/vkd3d-proton/setup_install.sh install
 ```
 
 * Finished, now you have to go to the application root  and launch it
