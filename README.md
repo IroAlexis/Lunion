@@ -36,9 +36,9 @@ Problematic
 How it works
 ------------
 For the native games, Lunion detects if you have installed with your package manager and integrates them in the library. It integrates also emulator applications and compatibility layers:
-* ~~melonDS, open source emulator to run the DS/DSi games~~
 * Wine (and/or Lunion Play alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
 * DXVK, a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
+* VKD3D Proton, a fork of VKD3D, which aims to implement the full Direct3D 12 API on top of Vulkan
 
 
 
@@ -53,9 +53,8 @@ System requirements (Recommended)
 ### Dependencies
 * curl
 * gtk
-* unzip
-* winetricks
-* vkd3d-proton
+* libzip
+* winetricks (*optionnal*)
 
 
 
@@ -65,6 +64,7 @@ Features
 * Display the installed runners (*and others...*) and can them uninstall easly
 * Using XML for the configuration file: `.conf`
 * [GOG.com] Support of DLCs installation option
+* Implement a message (or something) for Ubisoft Connect games for invit the user change the default .exe
 
 ### No tested
 * Multi-monitor
@@ -151,6 +151,7 @@ Acknowledgements
 ----------------
 * [Wine](https://winehq.org) 
 * [Tk-Glitch](https://github.com/Tk-Glitch)
+* [Hans-Kristian Arntzen](https://github.com/HansKristian-Work)
 * [Philip Rebohle](https://github.com/doitsujin)
 * [Joshua Ashton](https://github.com/Joshua-Ashton)
 * [Lutris](https://github.com/lutris)
