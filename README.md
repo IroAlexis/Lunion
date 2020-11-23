@@ -2,6 +2,8 @@ Lunion
 ======
 A game library for all your PC games under Linux. Fully ergonomic for beginners but also customizable for experts (we're going to try to work with you to offer you that opportunity)
 
+The Windows games tested list is available [here](https://github.com/IroAlexis/lunion/wiki/Tested-Windows-games-list) :frog:
+
 
 
 Table of Contents
