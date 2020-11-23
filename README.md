@@ -22,9 +22,9 @@ Table of Contents
 How it works
 ------------
 For the native games, Lunion detects if you have installed with your package manager and integrates them in the library. It integrates also emulator applications and compatibility layers:
-* Wine (and/or [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
-* DXVK, a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
-* VKD3D Proton, a fork of VKD3D, which aims to implement the full Direct3D 12 API on top of Vulkan
+* [Wine](https://www.winehq.org/) (and/or [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) entirely based on [Wine TkG](https://github.com/Frogging-Family/wine-tkg-git)), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
+* [DXVK](https://github.com/doitsujin/dxvk), a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
+* [VKD3D-Proton](https://github.com/HansKristian-Work/vkd3d-proton), a fork of [VKD3D](https://source.winehq.org/git/vkd3d.git/), which aims to implement the full Direct3D 12 API on top of Vulkan
 
 
 
@@ -68,7 +68,7 @@ Useful environment Variables
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
 | `STAGING_SHARED_MEMORY` | `1` or `0` |  |
-| `WINE_LARGE_ADDRESS_AWARE` | `1` or `0` | Useful for 32-bit games hitting address space limitations, only with Lunion Play (or a build of [Wine TkG](https://github.com/Tk-Glitch/PKGBUILDS/tree/master/wine-tkg-git)) but enable by default |
+| `WINE_LARGE_ADDRESS_AWARE` | `1` or `0` | Useful for 32-bit games hitting address space limitations, only with [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) (or a build of [Wine TkG](https://github.com/Frogging-Family/wine-tkg-git)) but enable by default |
 
 ### Proprietary driver NVIDIA
 | Environment Variables | Value(s) | Description |
@@ -76,7 +76,7 @@ Useful environment Variables
 | `__GL_NextGenCompiler` | `1` or `0` | Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption |
 | `__GL_SHADER_DISK_CACHE` | `1` or `0` |  |
 | `__GL_SHADER_DISK_CACHE_PATH` | `$PATH/TO/` |  |
-| `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) (source from [Nvidia Forum](https://forums.developer.nvidia.com/t/opengl-shader-disk-cache-max-size-garbage-collection/60056))|
+| `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) (_[Nvidia Forum](https://forums.developer.nvidia.com/t/opengl-shader-disk-cache-max-size-garbage-collection/60056)_)|
 | `__GL_SHOW_GRAPHICS_OSD` | `1` or `0` | Showing the Graphics API Visual Indicator and FPS |
 | `__GL_THREADED_OPTIMIZATION` | `1` or `0` | For the OpenGL games, allow the driver NVIDIA to work multi threaded. This speeds up when the drivers has a lot to do, but when your CPU is filled to the max, it can lower fps (Enable by default when the driver thinks it can improve performance) |
 
@@ -86,7 +86,7 @@ There is a full list of environment variables available [here](https://www.mesa3
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
 | `GALLIUM_HUD` | `fps` | Showing Overlay FPS |
-| `RADV_PERFTEST` | `aco` | For the AMD GPU users, ACO is an open-source shader compiler developed by Valve. It offers lesser compilation time and also provides more FPS (source from [Phoronix](https://www.phoronix.com/scan.php?page=article&item=radv-aco-llvm&num=1)) |
+| `RADV_PERFTEST` | `aco` | Enable by default on [Mesa 20.2](https://docs.mesa3d.org/relnotes/20.2.0.html). For the AMD GPU users, ACO is an open-source shader compiler developed by Valve. It offers lesser compilation time and also provides more FPS (_[Phoronix](https://www.phoronix.com/scan.php?page=article&item=radv-aco-llvm&num=1)_) |
 | `mesa_glthread` | `true` or `false` | [Performance](https://www.gamingonlinux.com/wiki/Performance_impact_of_Mesa_glthread) and [amelioration with Mesa 20.0](https://www.phoronix.com/scan.php?page=news_item&px=Faster-Emulators-Mesa-GL-Thread) |
 
 
