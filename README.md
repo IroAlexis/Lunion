@@ -1,6 +1,6 @@
 Lunion
 ======
-A game library for all your PC games under Linux. Fully ergonomic for beginners but also customizable for experts (we're going to try to work with you to offer you that opportunity)
+A game library for all your PC games under Linux (GTK) inspired by GameHub, Steam and GOG Galaxy. Try to be ergonomic for "beginners" but also customizable for experts (we're going to try to work with you to offer you that opportunity)
 
 The Windows games tested list is available [here](https://github.com/IroAlexis/lunion/wiki/Tested-Windows-games-list) :frog:
 
@@ -8,37 +8,22 @@ The Windows games tested list is available [here](https://github.com/IroAlexis/l
 
 Table of Contents
 -----------------
-1. [Introduction](#introduction)
-2. [Problematic](#problematic)
-3. [How it works](#how-it-works)
-4. [Features](#features)
-5. [File organisation](#file-organisation)
-6. [Useful environment variables](#useful-environment-variables)
-7. [Tips and tricks](#tips-and-tricks)
-8. [Guides](#guides)
-9. [Troubleshooting](#troubleshooting)
-10. [Acknowledgements](#acknowledgements)
-11. [Licence](#licence)
-
-
-
-Introduction
-------------
-Inspired by Lutris, Steam and GOG Galaxy (2.0), Lunion is an open source GTK application that allows you to bring together all your Linux and/or Windows games (DRM-free ideally) in a single place.
-You can import your games list, install and launch your favorite PC games. You don't have to worry about how to organize your game files. However, it is fully configurable if you can get your hands dirty
-
-
-
-Problematic
--------------
-**(*W.I.P.*)**
+1. [How it works](#how-it-works)
+2. [Features](#features)
+3. [File organisation](#file-organisation)
+4. [Useful environment variables](#useful-environment-variables)
+5. [Tips and tricks](#tips-and-tricks)
+6. [Guides](#guides)
+7. [Troubleshooting](#troubleshooting)
+8. [Acknowledgements](#acknowledgements)
+9. [Licence](#licence)
 
 
 
 How it works
 ------------
 For the native games, Lunion detects if you have installed with your package manager and integrates them in the library. It integrates also emulator applications and compatibility layers:
-* Wine (and/or Lunion Play alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
+* Wine (and/or [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) alias Wine TkG), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
 * DXVK, a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
 * VKD3D Proton, a fork of VKD3D, which aims to implement the full Direct3D 12 API on top of Vulkan
 
@@ -156,8 +141,8 @@ Acknowledgements
 * [Hans-Kristian Arntzen](https://github.com/HansKristian-Work)
 * [Philip Rebohle](https://github.com/doitsujin)
 * [Joshua Ashton](https://github.com/Joshua-Ashton)
-* [Lutris](https://github.com/lutris)
 * [GameHub](https://github.com/tkashkin/GameHub)
+* [Lutris](https://github.com/lutris)
 * [CD Projekt RED](https://en.cdprojektred.com)
 * Valve [Proton](https://github.com/ValveSoftware/Proton)
 
