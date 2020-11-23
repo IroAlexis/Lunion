@@ -9,14 +9,13 @@ The Windows games tested list is available [here](https://github.com/IroAlexis/l
 Table of Contents
 -----------------
 1. [How it works](#how-it-works)
-2. [Features](#features)
-3. [File organisation](#file-organisation)
-4. [Useful environment variables](#useful-environment-variables)
-5. [Tips and tricks](#tips-and-tricks)
-6. [Guides](#guides)
-7. [Troubleshooting](#troubleshooting)
-8. [Acknowledgements](#acknowledgements)
-9. [Licence](#licence)
+2. [File organisation](#file-organisation)
+3. [Useful environment variables](#useful-environment-variables)
+4. [Tips and tricks](#tips-and-tricks)
+5. [Guides](#guides)
+6. [Troubleshooting](#troubleshooting)
+7. [Acknowledgements](#acknowledgements)
+8. [Licence](#licence)
 
 
 
@@ -42,19 +41,6 @@ System requirements (Recommended)
 * gtk
 * libzip
 * winetricks (*optionnal*)
-
-
-
-Features
---------
-### Planned
-* Display the installed runners (*and others...*) and can them uninstall easly
-* Using XML for the configuration file: `.conf`
-* [GOG.com] Support of DLCs installation option
-* Implement a message (or something) for Ubisoft Connect games for invit the user change the default .exe
-
-### No tested
-* Multi-monitor
 
 
 
