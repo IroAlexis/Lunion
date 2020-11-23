@@ -11,7 +11,7 @@ $ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml=" W
 You need to wait wineserver is finish and files to be written to disk (ext4 limition please verif your config, by default it is 5s).
 
 
-* Install the application
+* Install the application:
 ``` bash
 $ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wine /path/to/file.exe
 ```
