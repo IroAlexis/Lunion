@@ -8,7 +8,7 @@ Install process
 ``` bash
 $ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i
 ```
-You need to wait wineserver is finish and files to be written to disk (ext4 limition please verif your config, by default it is 5s).
+You need to wait wineserver is finish (5s).
 
 
 * Install the application:
