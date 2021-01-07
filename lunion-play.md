@@ -1,6 +1,6 @@
 Lunion Play
 ===========
-
+You can have a game list that launch with this method [here](https://github.com/IroAlexis/lunion/wiki/Tested-Windows-games-list) :frog:
 
 Install process
 ---------------
@@ -8,7 +8,7 @@ Install process
 ``` bash
 $ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i
 ```
-You need to wait wineserver is finish (5s).
+You need to wait wineserver is finish (approx. 5s).
 
 
 * Install the application:
