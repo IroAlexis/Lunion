@@ -17,14 +17,14 @@
  */
 
 #include "lunion-window.h"
-#include "lunion-headerbar.h"
+//#include "lunion-headerbar.h"
 
 
 struct _LunionWindow
 {
 	GtkApplicationWindow parent;
-
-	GtkWidget*           titlebar;
+	
+	GtkWidget*           m_headerbar;
 };
 
 
@@ -44,11 +44,13 @@ static void lunion_window_class_init (LunionWindowClass* klass)
 static void lunion_window_init (LunionWindow* self)
 {
 	// Init GtkHeaderBar
-	self->titlebar = lunion_header_bar_new();
-	// Set GtkHeaderBar
-	gtk_window_set_titlebar(GTK_WINDOW (self), self->titlebar);
+	self->m_headerbar = gtk_header_bar_new ();
 	
-	gtk_widget_show(self->titlebar);
+	// Set GtkHeaderBar
+	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
+	gtk_window_set_title (GTK_WINDOW (self), "Lunion");
+	
+	gtk_widget_show (self->m_headerbar);
 }
 
 

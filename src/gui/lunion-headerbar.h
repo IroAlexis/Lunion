@@ -11,11 +11,6 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (LunionHeaderBar, lunion_header_bar, LUNION, HEADER_BAR, GtkHeaderBar)
 
 
-struct _LunionHeaderBarClass
-{
-	GtkHeaderBarClass* parent_class;
-};
-
 
 GtkWidget* lunion_header_bar_new (void);
 

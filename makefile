@@ -7,7 +7,7 @@ MAIN = src
 GUI = src/gui
 UTILS = src/utils
 
-SRC = $(GUI)/lunion-headerbar.c $(GUI)/lunion-window.c $(GUI)/lunion-application.c $(UTILS)/system.c $(MAIN)/main.c
+SRC = $(GUI)/lunion-window.c $(GUI)/lunion-application.c $(UTILS)/system.c $(MAIN)/main.c
 
 OBJS = $(SRC:.c=.o)
 
