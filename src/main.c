@@ -28,24 +28,28 @@
 
 int main (int argc, char** argv)
 {
-	int                        ret;
-	l_data*                    gamedir = NULL;
-	l_data*                    tmp = NULL;
+	int     status;
+	l_data* gamedir = NULL;
+	l_data* tmp = NULL;
+	
 	g_autoptr (LunionApplication) app = NULL;
-
+	
+	
 	// Detection installed games
 	gamedir = lunion_alloc_list_gamedir ("/home/iroalexis/Games");
 	fprintf (stdout, "::lunion:: liste des jeux detectees\n");
 	for (tmp = gamedir; tmp != NULL; tmp = tmp->next)
 		fprintf (stdout, " * %s\n", tmp->str);
-
-	// Launch main window
+	
+	// App name
 	g_set_application_name ("Lunion");
-
+	
+	// Application
 	app = lunion_application_new ();
 	g_application_set_default (G_APPLICATION (app));
-	ret = g_application_run (G_APPLICATION (app), 0, NULL);
-
+	
+	
+	status = g_application_run (G_APPLICATION (app), argc, argv);
 	// Memory deallocation
 	while (gamedir != NULL)
 	{
@@ -54,6 +58,6 @@ int main (int argc, char** argv)
 		free (tmp->str);
 		free (tmp);
 	}
-
-	return ret;
+	
+	return status;
 }

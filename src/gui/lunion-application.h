@@ -26,8 +26,10 @@
 
 G_BEGIN_DECLS
 
+#define APPLICATION_ID "org.gtk.lunion"
 
 #define LUNION_TYPE_APPLICATION (lunion_application_get_type ())
+
 G_DECLARE_FINAL_TYPE (LunionApplication, lunion_application, LUNION, APPLICATION, GtkApplication)
 
 

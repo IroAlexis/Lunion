@@ -20,19 +20,20 @@
 #define LUNION_WINDOW_H
 
 #include <gtk/gtk.h>
-#include <glib-object.h>
-#include <gio/gio.h>
+
+#include "lunion-application.h"
 
 G_BEGIN_DECLS
 
 
 
 #define LUNION_TYPE_WINDOW (lunion_window_get_type ())
+
 G_DECLARE_FINAL_TYPE (LunionWindow, lunion_window, LUNION, WINDOW, GtkApplicationWindow)
 
 
 
-LunionWindow* lunion_window_new (GtkApplication* app);
+LunionWindow* lunion_window_new (LunionApplication* app);
 
 
 
