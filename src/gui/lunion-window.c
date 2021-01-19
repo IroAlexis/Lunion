@@ -25,6 +25,9 @@ struct _LunionWindow
 	GtkApplicationWindow parent;
 	
 	GtkWidget*           m_headerbar;
+	GtkWidget*           m_menubutton;
+	GtkWidget*           m_popover;
+	GtkWidget*           m_menutitle;
 };
 
 
@@ -38,11 +41,22 @@ static void lunion_window_class_init (LunionWindowClass* klass)
 
 static void lunion_window_init (LunionWindow* self)
 {
-	// Init GtkHeaderBar
 	self->m_headerbar = gtk_header_bar_new ();
+	self->m_menubutton = gtk_menu_button_new();
+	self->m_popover = gtk_popover_new();
+	self->m_menutitle = gtk_toggle_button_new_with_label("Lunion");
+	gtk_popover_set_child (GTK_POPOVER (self->m_popover), self->m_menutitle);
 	
-	// Set GtkHeaderBar
+	gtk_menu_button_set_direction (GTK_MENU_BUTTON (self->m_menubutton),
+								   GTK_ARROW_NONE);
+	gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->m_menubutton),
+								 self->m_popover);
+	gtk_popover_set_position (GTK_POPOVER (self->m_popover),
+							  GTK_POS_BOTTOM);
+	
 	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
+							 self->m_menubutton);
 	//gtk_window_set_title (GTK_WINDOW (self), "Lunion");
 	
 	gtk_widget_show (self->m_headerbar);
