@@ -25,7 +25,7 @@ struct _LunionApplication
 {
 	GtkApplication application;
 	
-	GtkWindow*     window;
+	GtkWidget*     window;
 };
 
 G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
@@ -35,6 +35,8 @@ G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
 static void lunion_application_activate (GApplication* app)
 {
 	LunionApplication* self = LUNION_APPLICATION (app);
+	
+	G_APPLICATION_CLASS(lunion_application_parent_class)->activate(app);
 	
 	gtk_window_present (GTK_WINDOW (self->window));
 }
@@ -46,7 +48,7 @@ static void lunion_application_startup (GApplication* app)
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 	
 	// Window
-	self->window = GTK_WINDOW (lunion_window_new (self));
+	self->window = lunion_window_new (self);
 }
 
 static void lunion_application_class_init (LunionApplicationClass* klass)
@@ -54,13 +56,14 @@ static void lunion_application_class_init (LunionApplicationClass* klass)
 	GObjectClass* object_class = G_OBJECT_CLASS (klass);
 	GApplicationClass* application_class = G_APPLICATION_CLASS (klass);
 	
-	application_class->activate = lunion_application_activate;
 	application_class->startup = lunion_application_startup;
+	application_class->activate = lunion_application_activate;
 }
 
 static void lunion_application_init (LunionApplication* self)
 {
-
+	// App name
+	//g_set_application_name ("Lunion");
 }
 
 LunionApplication* lunion_application_new (void)

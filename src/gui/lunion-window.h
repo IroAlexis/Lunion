@@ -33,7 +33,7 @@ G_DECLARE_FINAL_TYPE (LunionWindow, lunion_window, LUNION, WINDOW, GtkApplicatio
 
 
 
-LunionWindow* lunion_window_new (LunionApplication* app);
+GtkWidget* lunion_window_new (LunionApplication* app);
 
 
 

@@ -41,9 +41,6 @@ int main (int argc, char** argv)
 	for (tmp = gamedir; tmp != NULL; tmp = tmp->next)
 		fprintf (stdout, " * %s\n", tmp->str);
 	
-	// App name
-	g_set_application_name ("Lunion");
-	
 	// Application
 	app = lunion_application_new ();
 	g_application_set_default (G_APPLICATION (app));

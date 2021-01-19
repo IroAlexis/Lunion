@@ -33,11 +33,6 @@ G_DEFINE_TYPE (LunionWindow, lunion_window, GTK_TYPE_APPLICATION_WINDOW)
 
 static void lunion_window_class_init (LunionWindowClass* klass)
 {
-	//GObjectClass* object_class = G_OBJECT_CLASS (klass)
-	//GWidgetClass* widget_class = GTK_WIDGET_CLASS (klass);
-
-	//widget_class->activate = lunion_window_activate;
-	//widget_class->startup = lunion_window_startup;
 }
 
 
@@ -48,15 +43,16 @@ static void lunion_window_init (LunionWindow* self)
 	
 	// Set GtkHeaderBar
 	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
-	gtk_window_set_title (GTK_WINDOW (self), "Lunion");
+	//gtk_window_set_title (GTK_WINDOW (self), "Lunion");
 	
 	gtk_widget_show (self->m_headerbar);
 }
 
 
-LunionWindow* lunion_window_new (LunionApplication* app)
+GtkWidget* lunion_window_new (LunionApplication* app)
 {
 	return g_object_new (LUNION_TYPE_WINDOW,
 						 "application", app,
+						 "title", "Lunion",
 						 NULL);
 }
