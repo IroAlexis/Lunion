@@ -32,7 +32,7 @@ int main (int argc, char** argv)
 	l_data* gamedir = NULL;
 	l_data* tmp = NULL;
 	
-	g_autoptr (LunionApplication) app = NULL;
+	LunionApplication* app = NULL;
 	
 	
 	// Detection installed games
@@ -45,9 +45,10 @@ int main (int argc, char** argv)
 	app = lunion_application_new ();
 	g_application_set_default (G_APPLICATION (app));
 	
-	
 	status = g_application_run (G_APPLICATION (app), argc, argv);
+	
 	// Memory deallocation
+	g_object_unref (app);
 	while (gamedir != NULL)
 	{
 		tmp = gamedir;

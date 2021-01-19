@@ -23,23 +23,14 @@
 
 struct _LunionApplication
 {
-	GtkApplication application;
+	GtkApplication m_parent;
 	
-	GtkWidget*     window;
+	GtkWidget*     m_window;
 };
 
 G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
 
 
-
-static void lunion_application_activate (GApplication* app)
-{
-	LunionApplication* self = LUNION_APPLICATION (app);
-	
-	G_APPLICATION_CLASS(lunion_application_parent_class)->activate(app);
-	
-	gtk_window_present (GTK_WINDOW (self->window));
-}
 
 static void lunion_application_startup (GApplication* app)
 {
@@ -48,28 +39,47 @@ static void lunion_application_startup (GApplication* app)
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 	
 	// Window
-	self->window = lunion_window_new (self);
+	self->m_window = lunion_window_new (self);
+}
+
+static void lunion_application_activate (GApplication* app)
+{
+	LunionApplication* self = LUNION_APPLICATION (app);
+	
+	G_APPLICATION_CLASS(lunion_application_parent_class)->activate(app);
+	
+	gtk_window_present (GTK_WINDOW (self->m_window));
+}
+
+static void lunion_application_finalize(GObject* object)
+{
+	G_OBJECT_CLASS (lunion_application_parent_class)->finalize (object);
 }
 
 static void lunion_application_class_init (LunionApplicationClass* klass)
 {
-	GObjectClass* object_class = G_OBJECT_CLASS (klass);
 	GApplicationClass* application_class = G_APPLICATION_CLASS (klass);
+	GObjectClass* object_class = G_OBJECT_CLASS (klass);
 	
 	application_class->startup = lunion_application_startup;
 	application_class->activate = lunion_application_activate;
+	
+	object_class->finalize = lunion_application_finalize;
 }
 
 static void lunion_application_init (LunionApplication* self)
 {
-	// App name
-	//g_set_application_name ("Lunion");
 }
 
 LunionApplication* lunion_application_new (void)
 {
-	return g_object_new (LUNION_TYPE_APPLICATION,
-	                     "application-id", APPLICATION_ID,
-	                     "flags", G_APPLICATION_FLAGS_NONE,
-	                     NULL);
+	LunionApplication* app = NULL;
+	
+	g_set_application_name ("Lunion");
+	
+	app = g_object_new (LUNION_TYPE_APPLICATION,
+						   "application-id", APPLICATION_ID,
+						   "flags", G_APPLICATION_FLAGS_NONE,
+						   NULL);
+	return app;
 }
