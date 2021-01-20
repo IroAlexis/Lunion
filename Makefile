@@ -1,7 +1,7 @@
 CC ?= gcc
 PKGCONFIG = $(shell which pkg-config)
 CFLAGS = $(shell $(PKGCONFIG) --cflags gtk4) -Wall -pedantic -Wextra
-LIBS = $(shell $(PKGCONFIG) --libs gtk4)
+LDFLAGS = $(shell $(PKGCONFIG) --libs gtk4)
 
 MAIN = src
 GUI = src/gui
@@ -20,7 +20,7 @@ all: lunion
 	$(CC) -o $(@) $(CFLAGS) -c $<
 
 lunion: $(OBJS)
-	$(CC) -o $(@F) $(^) $(LIBS)
+	$(CC) -o $(@F) $(^) $(LDFLAGS)
 
 clean:
 	@echo "-> Suppresion"
