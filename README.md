@@ -32,7 +32,7 @@ How Lunion install and launch your games, you can know him [here](https://github
 
 System requirements (Recommended)
 ---------------------------------
-* *OS*: Linux kernel with [Fsync patch](https://wiki.archlinux.org/index.php/Steam#Fsync_patch)
+* *OS*: Linux kernel
 * *Processor*: Multi core 64 bits
 * *Memory*: +8 Go RAM
 * *Graphic*: Vulkan 1.1

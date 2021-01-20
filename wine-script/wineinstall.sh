@@ -34,12 +34,10 @@ if [[ "$_CONDITION" =~ [nN] ]]; then
 fi
 
 wineboot --init
-# because wineserver still alive approx 5s after
-echo "Waiting wineserver..."
-sleep 6
 
-# Confirm that wineserver is killed
-wineserver -k
+# wineserver still alive approx 5s after
+echo "Waiting wineserver..."
+wineserver --wait
 
 
 
@@ -47,11 +45,13 @@ wineserver -k
 read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
 	$HOME/Downloads/runtime/dxvk-1.7.3/setup_dxvk.sh install
+	wineserver --wait
 fi
 
 read -rp "Do you want install VKD3D Proton for Direct3D 12 (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
 	$HOME/Downloads/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install
+	wineserver --wait
 fi
 
 
@@ -60,6 +60,7 @@ fi
 #wine $2
 
 # Confirm that wineserver is killed
-#wineserver -k
+#wineserver --wait
+
 
 exit 0
