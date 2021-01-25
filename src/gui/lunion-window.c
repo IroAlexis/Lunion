@@ -118,6 +118,7 @@ static void lunion_window_init (LunionWindow* self)
 {
 	self->m_headerbar = gtk_header_bar_new ();
 	self->m_addbutton = gtk_button_new_from_icon_name ("list-add-symbolic");
+	
 	self->m_searchbutton = gtk_button_new_from_icon_name ("edit-find-symbolic");
 	self->m_optionbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	self->m_viewbutton = gtk_button_new_from_icon_name ("view-list-symbolic");
@@ -130,6 +131,7 @@ static void lunion_window_init (LunionWindow* self)
 	// Assemble option box
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_viewbutton);
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_menuviewbutton);
+	gtk_widget_add_css_class (self->m_menuviewbutton, "disclosure-button");
 	gtk_widget_add_css_class (self->m_optionbox, "linked");
 	
 	// Build menu menuview

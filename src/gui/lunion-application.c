@@ -59,6 +59,29 @@ static GActionEntry lunion_application_actions[] = {
 	{"selection-remove", NULL, NULL, NULL, NULL, {0, 0, 0}}
 };
 
+GtkWidget* lunion_application_create_window (LunionApplication* self,
+											 GdkDisplay*        display)
+{
+	GtkWidget* window;
+	GtkCssProvider* provider;
+	GFile* css;
+	
+	// Check error
+	css = g_file_new_for_path ("src/gui/test.css");
+	
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_file (provider, css);
+	gtk_style_context_add_provider_for_display (display,
+												GTK_STYLE_PROVIDER (provider),
+												GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	
+	window = lunion_window_new (self);
+	
+	g_object_unref (css);
+	
+	return window;
+}
+
 
 static void lunion_application_quit (GSimpleAction *action,
 									 GVariant *parameter,
@@ -73,8 +96,8 @@ static void lunion_application_startup (GApplication* app)
 	
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 	
-	// Window
-	self->m_window = lunion_window_new (self);
+	self->m_window = lunion_application_create_window (self,
+													   gdk_display_get_default ());
 }
 
 static void lunion_application_activate (GApplication* app)
