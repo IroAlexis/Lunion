@@ -131,8 +131,9 @@ static void lunion_window_init (LunionWindow* self)
 	// Assemble option box
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_viewbutton);
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_menuviewbutton);
-	gtk_widget_add_css_class (self->m_menuviewbutton, "disclosure-button");
 	gtk_widget_add_css_class (self->m_optionbox, "linked");
+	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_menuviewbutton),
+							  "disclosure-button");
 	
 	// Build menu menuview
 	self->m_menuview = lunion_window_build_menu_view ();
