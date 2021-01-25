@@ -28,12 +28,16 @@ struct _LunionApplication
 	GtkWidget*     m_window;
 };
 
-
 G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
 
 
 
+
 static void lunion_application_quit (GSimpleAction *action,
+									 GVariant *parameter,
+									 gpointer user_data);
+
+static void lunion_application_about (GSimpleAction *action,
 									 GVariant *parameter,
 									 gpointer user_data);
 
@@ -48,15 +52,10 @@ static void lunion_application_class_init (LunionApplicationClass* klass);
 static void lunion_application_init (LunionApplication* self);
 
 
-static GActionEntry lunion_application_actions[] = {
-	//{"mpc-playback-shuffle", lunion_application_playback_shuffle, NULL, "false", lunion_application_playback_change, {0, 0, 0}},
-	{"quit", lunion_application_quit, NULL, NULL, NULL, {0, 0, 0}},
-	{"selection-change", NULL, "i", NULL, NULL, {0, 0, 0}},
-	{"selection-mode-all", NULL, NULL, NULL, NULL, {0, 0, 0}},
-	{"selection-mode-none", NULL, NULL, NULL, NULL, {0, 0, 0}},
-	{"selection-mode-off", NULL, NULL, NULL, NULL, {0, 0, 0}},
-	{"selection-mode-on", NULL, NULL, NULL, NULL, {0, 0, 0}},
-	{"selection-remove", NULL, NULL, NULL, NULL, {0, 0, 0}}
+static GActionEntry lunion_application_actions[] =
+{
+	{ "quit", lunion_application_quit, NULL, NULL, NULL, { 0, 0, 0 } },
+	{ "about", lunion_application_about, NULL, NULL, NULL, { 0, 0, 0 } },
 };
 
 GtkWidget* lunion_application_create_window (LunionApplication* self,
@@ -82,6 +81,15 @@ GtkWidget* lunion_application_create_window (LunionApplication* self,
 	return window;
 }
 
+
+static void lunion_application_about (GSimpleAction *action,
+									 GVariant *parameter,
+									 gpointer user_data)
+{
+	LunionApplication* app = user_data;
+
+	lunion_window_show_about (LUNION_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
+}
 
 static void lunion_application_quit (GSimpleAction *action,
 									 GVariant *parameter,

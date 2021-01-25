@@ -35,6 +35,8 @@ G_DECLARE_FINAL_TYPE (LunionWindow, lunion_window, LUNION, WINDOW, GtkApplicatio
 
 GtkWidget* lunion_window_new (LunionApplication* app);
 
+void lunion_window_show_about (LunionWindow* window);
+
 
 
 G_END_DECLS

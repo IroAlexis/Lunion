@@ -76,7 +76,7 @@ GMenuModel* lunion_window_build_menu (void)
 	g_menu_insert_item (menu, LUNION_KEYBOARD_SHORTCUT, item);
 	g_object_unref (item);
 	
-	item = g_menu_item_new ("About Lunion", "app.quit");
+	item = g_menu_item_new ("About Lunion", "app.about");
 	g_menu_insert_item (menu, LUNION_ABOUT, item);
 	g_object_unref (item);
 	
@@ -169,4 +169,15 @@ GtkWidget* lunion_window_new (LunionApplication* app)
 						 "application", app,
 						 "title", "Lunion",
 						 NULL);
+}
+
+void lunion_window_show_about (LunionWindow* window)
+{
+	gtk_show_about_dialog (GTK_WINDOW (window),
+						   "program-name", g_get_application_name(),
+						   "version", "0.1.alpha",
+						   "copyright", "© 2020 Alexis Peypelut",
+						   "comments", "Game manager for GNOME",
+						   "license-type", GTK_LICENSE_GPL_3_0,
+						   NULL);
 }
