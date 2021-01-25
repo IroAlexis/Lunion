@@ -29,6 +29,7 @@ struct _LunionWindow
 	GtkWidget*           m_headerbar;
 	
 	GtkWidget*           m_addbutton;
+	GMenuModel*          m_menuadd;
 	
 	GtkWidget*           m_searchbutton;
 	
@@ -39,6 +40,14 @@ struct _LunionWindow
 	
 	GtkWidget*           m_menubutton;
 	GMenuModel*          m_menu;
+};
+
+
+enum lunion_menu_add_position
+{
+	LUNION_ADD_GAME,
+	LUNION_ADD_TOOL,
+	LUNION_ADD_PLATEFORM
 };
 
 
@@ -62,6 +71,26 @@ enum lunion_menu_view_position
 G_DEFINE_TYPE (LunionWindow, lunion_window, GTK_TYPE_APPLICATION_WINDOW)
 
 
+
+GMenuModel* lunion_window_build_menu_add (void)
+{
+	GMenu* menu = g_menu_new ();
+	GMenuItem* item = NULL;
+
+	item = g_menu_item_new("Add a new game", "app.none");
+	g_menu_insert_item (menu, LUNION_ADD_GAME, item);
+	g_object_unref (item);
+
+	item = g_menu_item_new("Add a new tool", "app.none");
+	g_menu_insert_item (menu, LUNION_ADD_TOOL, item);
+	g_object_unref (item);
+
+	item = g_menu_item_new("Connect a plateform", "app.none");
+	g_menu_insert_item (menu, LUNION_ADD_PLATEFORM, item);
+	g_object_unref (item);
+
+	return G_MENU_MODEL (menu);
+}
 
 GMenuModel* lunion_window_build_menu (void)
 {
@@ -117,7 +146,7 @@ static void lunion_window_class_init (LunionWindowClass* klass)
 static void lunion_window_init (LunionWindow* self)
 {
 	self->m_headerbar = gtk_header_bar_new ();
-	self->m_addbutton = gtk_button_new_from_icon_name ("list-add-symbolic");
+	self->m_addbutton = gtk_menu_button_new ();
 	
 	self->m_searchbutton = gtk_button_new_from_icon_name ("edit-find-symbolic");
 	self->m_optionbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -128,6 +157,9 @@ static void lunion_window_init (LunionWindow* self)
 	// Title
 	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
 	
+	// Add button
+	gtk_menu_button_set_icon_name (GTK_MENU_BUTTON (self->m_addbutton), "list-add-symbolic");
+
 	// Assemble option box
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_viewbutton);
 	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_menuviewbutton);
@@ -135,6 +167,11 @@ static void lunion_window_init (LunionWindow* self)
 	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_menuviewbutton),
 							  "disclosure-button");
 	
+	// Build menu addbutton
+	self->m_menuadd = lunion_window_build_menu_add ();
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_addbutton),
+									G_MENU_MODEL (self->m_menuadd));
+
 	// Build menu menuview
 	self->m_menuview = lunion_window_build_menu_view ();
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_menuviewbutton),
