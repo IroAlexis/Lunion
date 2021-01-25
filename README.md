@@ -40,7 +40,7 @@ System requirements (Recommended)
 
 ### Dependencies
 * curl
-* gtk
+* gtk4
 * libzip
 * winetricks (*optionnal*)
 
