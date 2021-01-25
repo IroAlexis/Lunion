@@ -149,8 +149,8 @@ LunionApplication* lunion_application_new (void)
 	g_set_application_name ("Lunion");
 	
 	app = g_object_new (LUNION_TYPE_APPLICATION,
-						   "application-id", APPLICATION_ID,
-						   "flags", G_APPLICATION_FLAGS_NONE,
-						   NULL);
+						"application-id", APPLICATION_ID,
+						"flags", G_APPLICATION_FLAGS_NONE,
+						NULL);
 	return app;
 }
