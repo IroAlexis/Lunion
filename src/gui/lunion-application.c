@@ -24,6 +24,7 @@
 struct _LunionApplication
 {
 	GtkApplication m_parent;
+	GdkDisplay*    m_display;
 	
 	GtkWidget*     m_window;
 };
@@ -65,7 +66,7 @@ GtkWidget* lunion_application_create_window (LunionApplication* self,
 	GtkCssProvider* provider;
 	GFile* css;
 	
-	// FIXME Check error
+	// TODO Check error
 	css = g_file_new_for_path ("src/gui/Adwaita.css");
 	
 	provider = gtk_css_provider_new ();
@@ -95,7 +96,10 @@ static void lunion_application_quit (GSimpleAction *action,
 									 GVariant *parameter,
 									 gpointer user_data)
 {
-	g_application_quit (G_APPLICATION (user_data));
+	LunionApplication* self = LUNION_APPLICATION (user_data);
+
+	gdk_display_close (self->m_display);
+	g_application_quit (self);
 }
 
 static void lunion_application_startup (GApplication* app)
@@ -104,8 +108,8 @@ static void lunion_application_startup (GApplication* app)
 	
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
 	
-	self->m_window = lunion_application_create_window (self,
-													   gdk_display_get_default ());
+	self->m_display = gdk_display_get_default ();
+	self->m_window = lunion_application_create_window (self, self->m_display);
 }
 
 static void lunion_application_activate (GApplication* app)
