@@ -17,7 +17,7 @@
  */
 
 #include <gtk/gtk.h>
-#include <glib-object.h>
+#include <glib.h>
 #include <gio/gio.h>
 
 
@@ -33,10 +33,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (LunionApplication, lunion_application, LUNION, APPLICATION, GtkApplication)
 
 
-LunionApplication* lunion_application_new (void);
+GtkWidget*         lunion_application_create_window (LunionApplication* self);
 
-GtkWidget* lunion_application_create_window (LunionApplication* self,
-											 GdkDisplay*        display);
+LunionApplication* lunion_application_new           (void);
 
 G_END_DECLS
 
