@@ -187,12 +187,12 @@ static void lunion_window_init (LunionWindow* self)
 	// Assemble
 	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
 							   self->m_addbutton);
+	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
+							 self->m_searchbutton);
 	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
 							 self->m_menubutton);
 	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
 							 self->m_optionbox);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_searchbutton);
 	//gtk_window_set_title (GTK_WINDOW (self), "Lunion");
 	
 	// Draw
