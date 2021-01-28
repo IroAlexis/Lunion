@@ -28,18 +28,17 @@ struct _LunionWindow
 	GtkApplicationWindow parent;
 	GtkWidget*           m_headerbar;
 	
-	GtkWidget*           m_addbutton;
-	GMenuModel*          m_menuadd;
+	GtkWidget*           m_add;
+	GMenuModel*          m_addmenu;
 	
-	GtkWidget*           m_searchbutton;
-	
-	GtkWidget*           m_optionbox;
-	GtkWidget*           m_viewbutton;
-	GtkWidget*           m_menuviewbutton;
-	GMenuModel*          m_menuview;
-	
-	GtkWidget*           m_menubutton;
-	GMenuModel*          m_menu;
+	GtkWidget*           m_search;
+	GtkWidget*           m_box;
+	GtkWidget*           m_viewtoggle;
+	GtkWidget*           m_viewoption;
+	GMenuModel*          m_viewmenu;
+
+	GtkWidget*           m_appoption;
+	GMenuModel*          m_appmenu;
 };
 
 
@@ -72,7 +71,7 @@ G_DEFINE_TYPE (LunionWindow, lunion_window, GTK_TYPE_APPLICATION_WINDOW)
 
 
 
-GMenuModel* lunion_window_build_menu_add (void)
+static GMenuModel* lunion_window_build_addmenu (void)
 {
 	GMenu* menu = g_menu_new ();
 	GMenuItem* item = NULL;
@@ -92,7 +91,7 @@ GMenuModel* lunion_window_build_menu_add (void)
 	return G_MENU_MODEL (menu);
 }
 
-GMenuModel* lunion_window_build_menu (void)
+static GMenuModel* lunion_window_build_appmenu (void)
 {
 	GMenu* menu = g_menu_new ();
 	GMenuItem* item = NULL;
@@ -117,7 +116,7 @@ GMenuModel* lunion_window_build_menu (void)
 }
 
 
-GMenuModel* lunion_window_build_menu_view (void)
+static GMenuModel* lunion_window_build_viewmenu (void)
 {
 	GMenu* menu = g_menu_new ();
 	GMenuItem* item = NULL;
@@ -143,59 +142,72 @@ static void lunion_window_class_init (LunionWindowClass* klass)
 }
 
 
+static void lunion_window_headerbar_left (LunionWindow* self)
+{
+	self->m_add = gtk_menu_button_new ();
+	self->m_addmenu = lunion_window_build_addmenu ();
+	gtk_menu_button_set_icon_name (GTK_MENU_BUTTON (self->m_add),
+								   "list-add-symbolic");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_add),
+									G_MENU_MODEL (self->m_addmenu));
+}
+
+
+static void lunion_window_headerbar_middle (LunionWindow* self)
+{
+	// TODO Waiting libadwaita (libhandy)
+}
+
+
+static void lunion_window_headerbar_right (LunionWindow* self)
+{
+	self->m_search = gtk_button_new_from_icon_name ("edit-find-symbolic");
+	self->m_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	self->m_viewtoggle = gtk_button_new ();
+	gtk_button_set_icon_name (GTK_BUTTON (self->m_viewtoggle),
+							  "view-list-symbolic");
+	self->m_viewoption = gtk_menu_button_new ();
+	self->m_appoption = gtk_menu_button_new ();
+
+	gtk_box_append (GTK_BOX (self->m_box), self->m_viewtoggle);
+	gtk_box_append (GTK_BOX (self->m_box), self->m_viewoption);
+	gtk_widget_add_css_class (self->m_box, "linked");
+	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_viewoption),
+							  "disclosure-button");
+
+	self->m_viewmenu = lunion_window_build_viewmenu ();
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_viewoption),
+									G_MENU_MODEL (self->m_viewmenu));
+
+	self->m_appmenu = lunion_window_build_appmenu ();
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_appoption),
+									G_MENU_MODEL (self->m_appmenu));
+	gtk_menu_button_set_direction (GTK_MENU_BUTTON (self->m_appoption),
+								   GTK_ARROW_NONE);
+}
+
+
 static void lunion_window_init (LunionWindow* self)
 {
 	self->m_headerbar = gtk_header_bar_new ();
-	self->m_addbutton = gtk_menu_button_new ();
-	
-	self->m_searchbutton = gtk_button_new_from_icon_name ("edit-find-symbolic");
-	self->m_optionbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	self->m_viewbutton = gtk_button_new_from_icon_name ("view-list-symbolic");
-	self->m_menuviewbutton = gtk_menu_button_new ();
-	self->m_menubutton = gtk_menu_button_new ();
-	
+
 	// Title
 	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
-	
-	// Add button
-	gtk_menu_button_set_icon_name (GTK_MENU_BUTTON (self->m_addbutton), "list-add-symbolic");
 
-	// Assemble option box
-	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_viewbutton);
-	gtk_box_append (GTK_BOX (self->m_optionbox), self->m_menuviewbutton);
-	gtk_widget_add_css_class (self->m_optionbox, "linked");
-	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_menuviewbutton),
-							  "disclosure-button");
-	
-	// Build menu addbutton
-	self->m_menuadd = lunion_window_build_menu_add ();
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_addbutton),
-									G_MENU_MODEL (self->m_menuadd));
+	lunion_window_headerbar_left (self);
+	lunion_window_headerbar_right (self);
 
-	// Build menu menuview
-	self->m_menuview = lunion_window_build_menu_view ();
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_menuviewbutton),
-									G_MENU_MODEL (self->m_menuview));
-	
-	// Build menu menubutton
-	self->m_menu = lunion_window_build_menu ();
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_menubutton),
-									G_MENU_MODEL (self->m_menu));
-	gtk_menu_button_set_direction (GTK_MENU_BUTTON (self->m_menubutton),
-								   GTK_ARROW_NONE);
-	
 	// Assemble
 	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
-							   self->m_addbutton);
-	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_searchbutton);
+							   self->m_add);
 	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_menubutton);
+							 self->m_appoption);
 	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_optionbox);
+							 self->m_box);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
+							 self->m_search);
 	//gtk_window_set_title (GTK_WINDOW (self), "Lunion");
-	
-	// Draw
+
 	gtk_widget_show (self->m_headerbar);
 }
 
@@ -204,7 +216,7 @@ GtkWidget* lunion_window_new (LunionApplication* app)
 {
 	return g_object_new (LUNION_TYPE_WINDOW,
 						 "application", app,
-						 "title", "Lunion",
+						 "title", g_get_application_name(),
 						 NULL);
 }
 
@@ -212,7 +224,7 @@ void lunion_window_show_about (LunionWindow* window)
 {
 	gtk_show_about_dialog (GTK_WINDOW (window),
 						   "program-name", g_get_application_name(),
-						   "version", "0.1.alpha",
+						   "version", "0.1_alpha",
 						   "copyright", "© 2020 Alexis Peypelut",
 						   "comments", "Game manager for GNOME",
 						   "license-type", GTK_LICENSE_GPL_3_0,
