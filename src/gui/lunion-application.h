@@ -1,6 +1,6 @@
 /* lunion-application.h
  *
- * Copyright (C) 2020 Alexis Peypelut <peypeluta@live.fr>
+ * Copyright (C) 2020-2021 Alexis Peypelut <peypeluta@live.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

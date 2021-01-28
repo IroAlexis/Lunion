@@ -141,4 +141,4 @@ Licence
 -------
 Available in [LICENSE](LICENSE) file<br>
 
-**Copyright (C)** 2019-2020 Alexis Peypelut alias IroAlexis
+**Copyright (C)** 2019-2021 Alexis Peypelut alias IroAlexis
