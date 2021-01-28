@@ -138,7 +138,7 @@ GtkWidget* lunion_application_create_window (LunionApplication* self)
 	GFile* css;
 
 	// TODO Check error
-	css = g_file_new_for_path ("src/gui/Adwaita.css");
+	css = g_file_new_for_path ("src/gui/lunion.css");
 
 	// Load our css theme
 	provider = gtk_css_provider_new ();
