@@ -1,0 +1,6 @@
+REGEDIT4
+
+; Only Wine 6.0+
+[HKEY_CURRENT_USER\Software\Wine\Direct3D]
+"renderer"="vulkan"
+
