@@ -27,10 +27,10 @@ struct _LunionWindow
 {
 	GtkApplicationWindow parent;
 	GtkWidget*           m_headerbar;
-	
+
 	GtkWidget*           m_add;
 	GMenuModel*          m_addmenu;
-	
+
 	GtkWidget*           m_search;
 	GtkWidget*           m_box;
 	GtkWidget*           m_viewtoggle;
@@ -142,7 +142,7 @@ static void lunion_window_class_init (LunionWindowClass* klass)
 }
 
 
-static void lunion_window_headerbar_left (LunionWindow* self)
+static void lunion_window_headerbar_start (LunionWindow* self)
 {
 	self->m_add = gtk_menu_button_new ();
 	self->m_addmenu = lunion_window_build_addmenu ();
@@ -153,13 +153,13 @@ static void lunion_window_headerbar_left (LunionWindow* self)
 }
 
 
-static void lunion_window_headerbar_middle (LunionWindow* self)
+static void lunion_window_headerbar_center (LunionWindow* self)
 {
 	// TODO Waiting libadwaita (libhandy)
 }
 
 
-static void lunion_window_headerbar_right (LunionWindow* self)
+static void lunion_window_headerbar_end (LunionWindow* self)
 {
 	self->m_search = gtk_button_new_from_icon_name ("edit-find-symbolic");
 	self->m_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -194,8 +194,8 @@ static void lunion_window_init (LunionWindow* self)
 	// Title
 	gtk_window_set_titlebar (GTK_WINDOW (self), self->m_headerbar);
 
-	lunion_window_headerbar_left (self);
-	lunion_window_headerbar_right (self);
+	lunion_window_headerbar_start (self);
+	lunion_window_headerbar_end (self);
 
 	// Assemble
 	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
