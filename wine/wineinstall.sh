@@ -8,8 +8,7 @@ if [ $# -ne 1 ]; then
 fi
 
 if [ ! -d $GAMEDIR/$1 ]; then
-	echo "$GAMEDIR/$1 doesn't exist"
-	exit 1
+	mkdir $GAMEDIR/$1
 fi
 
 
