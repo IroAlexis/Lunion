@@ -34,7 +34,7 @@ typedef struct _l_data
  * @param path Path where is the games
  * @return List build, NULL otherwise
  */
-l_data* lunion_alloc_list_gamedir (const char* path);
+l_data* lunion_list_games (const char* path);
 
 
 

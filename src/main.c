@@ -36,9 +36,9 @@ int main (int argc, char** argv)
 
 
 	// Detection installed games
-	gamedir = lunion_alloc_list_gamedir ("/home/iroalexis/Games");
+	gamedir = lunion_list_games ("/home/iroalexis/Games");
 
-	fprintf (stdout, "[-] Liste des jeux detectees\n");
+	fprintf (stdout, "[-] info:: List of installed games\n");
 	for (tmp = gamedir; tmp != NULL; tmp = tmp->next)
 		fprintf (stdout, "   > %s\n", tmp->str);
 
