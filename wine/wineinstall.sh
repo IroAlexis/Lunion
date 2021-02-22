@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 
-export GAMEDIR=$HOME/Games
-
 if [ $# -ne 1 ]; then
 	echo "Usage: $0 game_name"
 	exit 1
 fi
 
-if [ ! -d $GAMEDIR/$1 ]; then
-	mkdir $GAMEDIR/$1
+if [ ! -d $HOME/Games/$1 ]; then
+	mkdir -p $HOME/Games/$1
 fi
+
+GAMEDIR=$HOME/Games/$1
 
 
 
@@ -21,7 +21,7 @@ if [[ "$_CONDITION" =~ [nN] ]]; then
 	exit 1
 fi
 
-export WINEPREFIX=$GAMEDIR/$1/windata
+export WINEPREFIX=$GAMEDIR/windata
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
 read -rp "Install 32 bit (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
@@ -40,16 +40,19 @@ wineserver --wait
 
 
 
-
 read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
-	$HOME/Downloads/runtime/dxvk-1.7.3/setup_dxvk.sh install
+	mkdir -p $GAMEDIR/shaders
+
+	$HOME/runtime/dxvk-1.8/setup_dxvk.sh install
 	wineserver --wait
 fi
 
 read -rp "Do you want install VKD3D Proton for Direct3D 12 (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
-	$HOME/Downloads/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install
+	mkdir -p $GAMEDIR/shaders
+
+	$HOME/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install
 	wineserver --wait
 fi
 
