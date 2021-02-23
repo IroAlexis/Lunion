@@ -91,12 +91,12 @@ int lunion_detect_file (const char* path, const char* gamedir, const char* file)
 
 	if (stat (tmp, &st) != 0)
 	{
-		fprintf (stderr, "NO\n");
+		fprintf (stderr, ANSI_COLOR_RED "NO\n" ANSI_COLOR_RESET);
 		free (tmp);
 		return 1;
 	}
 
-	fprintf (stderr, "OK\n");
+	fprintf (stderr, ANSI_COLOR_GREEN "OK\n" ANSI_COLOR_RESET);
 	free (tmp);
 	return 0;
 }
