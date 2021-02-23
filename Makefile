@@ -16,13 +16,13 @@ OBJS = $(SRC:.c=.o)
 all: lunion
 
 %.o: %.c
-	@echo "INFO Generation du '.o' $(<)"
+	@echo "[-] info:: Generation du '.o' $(<)"
 	$(CC) -o $(@) $(CFLAGS) -c $<
 
 lunion: $(OBJS)
 	$(CC) -o $(@F) $(^) $(LDFLAGS)
 
 clean:
-	@echo "-> Suppresion"
+	@echo "[-] info:: Suppresion"
 	rm -f $(OBJS)
 	rm -f lunion
