@@ -19,15 +19,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 
 #include "system.h"
 
 
 
-int lunion_detect_gameinfo (const char* path, const char* gamedir)
+int lunion_alloc_ldata (const char* dir, l_data** lst)
+{
+	l_data* t_ptr = NULL;
+	l_data* new_data = NULL;
+
+	new_data = (l_data*) calloc (1, sizeof (l_data));
+	if (NULL == new_data)
+	{
+		fprintf (stderr, "[-] err:: Allocation problem\n");
+		return EXIT_FAILURE;
+	}
+
+	// Allocation for the adding of the string in the list
+	new_data->str = strndup (dir, strlen (dir));
+	if (NULL == new_data->str)
+	{
+		fprintf (stderr, "[-] err:: Allocation problem\n");
+		return EXIT_FAILURE;
+	}
+
+	// Link the "new_data" list with the game list
+	if (*lst == NULL)
+		*lst = new_data;
+	else
+	{
+		t_ptr = *lst;
+		while (t_ptr->next != NULL)
+			t_ptr = t_ptr->next;
+
+		t_ptr->next = new_data;
+	}
+
+	t_ptr = NULL;
+	new_data = NULL;
+
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_detect_file (const char* path, const char* gamedir, const char* file)
 {
 	struct stat st;
 	char*       tmp = NULL;
@@ -43,91 +80,102 @@ int lunion_detect_gameinfo (const char* path, const char* gamedir)
 	tmp = (char*) realloc (tmp, size * sizeof (char));
 	strncat (tmp, gamedir, strlen (gamedir));
 
-	size += strlen ("/gameinfo") + 1;
+	size += 2;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
-	strncat (tmp, "/gameinfo", strlen ("/gameinfo"));
+	strcat (tmp, "/");
+	fprintf (stderr, "[-] info:: Search '%s' in '%s' : ", file, tmp);
 
-	//fprintf (stderr, "[-] debug:: %s\n", tmp);
+	size += strlen (file) + 1;
+	tmp = (char*) realloc (tmp, size * sizeof (char));
+	strncat (tmp, file, strlen (file));
 
 	if (stat (tmp, &st) != 0)
 	{
+		fprintf (stderr, "NO\n");
 		free (tmp);
 		return 1;
 	}
 
+	fprintf (stderr, "OK\n");
 	free (tmp);
 	return 0;
 }
 
 
-l_data* lunion_list_games (const char* path)
+l_data* lunion_search_install_games (const char* path)
 {
-	struct dirent* sdir = NULL;
 	DIR*           stream = NULL;
-
+	struct dirent* sdir = NULL;
 	l_data* lst = NULL;
-	l_data* t_ptr = NULL;
-	l_data* new_data = NULL;
 
 	stream = opendir (path);
 	if (NULL == stream)
 		return NULL;
 
-	// Browse all folders
-	while ((sdir = readdir (stream)) != NULL)
+	sdir = readdir (stream);
+	if (sdir->d_type == DT_UNKNOWN)
 	{
-		if (sdir->d_type == DT_UNKNOWN)
-			fprintf (stderr, "[-] warn:: Your filesystems don't have full support for returning the file type in d_type\n");
-		else
-			if (sdir->d_type != DT_DIR)
-				continue;
-
-		// Don't save the folders "." and ".."
-		// !! The instruction "continue" continue the while loop !!
-		if (strcmp (sdir->d_name, ".") == 0)
-			continue;
-
-		if (strcmp (sdir->d_name, "..") == 0)
-			continue;
-
-		// Find the gameinfo file in the game directory
-		if (lunion_detect_gameinfo (path, sdir->d_name) == 1)
-			continue;
-
-		new_data = (l_data*) calloc (1, sizeof (l_data));
-		if (NULL == new_data)
-		{
-			fprintf (stderr, "[-] err:: Allocation problem\n");
-			return NULL;
-		}
-
-		// Allocation for the adding of the string in the list
-		new_data->str = strndup (sdir->d_name, strlen (sdir->d_name) + 1);
-		if (NULL == new_data->str)
-		{
-			fprintf (stderr, "[-] err:: Allocation problem\n");
-			return NULL;
-		}
-
-		// Link the "new_data" list with the game list
-		if (lst != NULL)
-		{
-			t_ptr->next = new_data;
-			t_ptr = t_ptr->next;
-		}
-		else
-		{
-			// Empty list
-			t_ptr = new_data;
-			lst = new_data;
-		}
-		new_data = NULL;
+		fprintf (stderr, "[-] info:: Filesystem don't have full support for returning the file type\n");
+		//lst = lunion_list_games_alt ();
 	}
+	else
+		lst = lunion_list_games (path, &stream, &sdir);
 
 	closedir (stream);
-	t_ptr = NULL;
 	stream = NULL;
 	sdir = NULL;
 
 	return lst;
+}
+
+
+l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
+{
+	DIR*           p_stream;
+	struct dirent* p_sdir;
+
+	l_data* lst = NULL;
+
+	p_stream = *stream;
+	p_sdir = *sdir;
+
+	// Browse all folders
+	while (p_sdir != NULL)
+	{
+		//fprintf (stderr, "[-] debug:: %s\n", p_sdir->d_name);
+
+		if (p_sdir->d_type != DT_DIR ||
+			 strcmp (p_sdir->d_name, ".") == 0 ||
+			 strcmp (p_sdir->d_name, "..") == 0 ||
+			 lunion_detect_file (path, p_sdir->d_name, "gameinfo") == 1)
+		{
+			p_sdir = readdir (p_stream);
+			continue;
+		}
+
+		lunion_alloc_ldata (p_sdir->d_name, &lst);
+		p_sdir = readdir (p_stream);
+	}
+
+	p_stream = NULL;
+	p_sdir = NULL;
+
+	return lst;
+}
+
+
+void lunion_free_list (l_data** gamelst)
+{
+	l_data* tmp;
+
+	while (*gamelst != NULL)
+	{
+		tmp = *gamelst;
+		*gamelst = tmp->next;
+		free (tmp->str);
+		free (tmp);
+	}
+
+	tmp = NULL;
+	*gamelst = NULL;
 }

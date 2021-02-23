@@ -19,6 +19,8 @@
 #ifndef LUNION_SYSTEM_H
 #define LUNION_SYSTEM_H
 
+#include <dirent.h>
+#include <sys/types.h>
 
 
 typedef struct _l_data
@@ -29,12 +31,20 @@ typedef struct _l_data
 
 
 
-/*!
- * @brief Build the game's list in a folder
- * @param path Path where is the games
- * @return List build, NULL otherwise
- */
-l_data* lunion_list_games (const char* path);
+int lunion_detect_file (const char* path,
+												const char* gamedir,
+												const char* file);
+
+
+void lunion_free_list (l_data** gamelst);
+
+
+l_data* lunion_list_games (const char* path,
+													 DIR** stream,
+													 struct dirent** sdir);
+
+
+l_data* lunion_search_install_games (const char* path);
 
 
 
