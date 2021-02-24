@@ -29,8 +29,8 @@
 int main (int argc, char** argv)
 {
 	int     status;
-	l_data* gamelst = NULL;
-	l_data* tmp = NULL;
+	LunionList* gamelst = NULL;
+	LunionList* tmp = NULL;
 	LunionApplication* app = NULL;
 
 	// Detection installed games

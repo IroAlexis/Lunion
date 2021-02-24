@@ -25,12 +25,12 @@
 
 
 
-int lunion_alloc_ldata (const char* dir, const char* path, l_data** lst)
+int lunion_alloc_member (const char* dir, const char* path, LunionList** lst)
 {
-	l_data* t_ptr = NULL;
-	l_data* new_data = NULL;
+	LunionList* t_ptr = NULL;
+	LunionList* new_data = NULL;
 
-	new_data = (l_data*) calloc (1, sizeof (l_data));
+	new_data = (LunionList*) calloc (1, sizeof (LunionList));
 	if (NULL == new_data)
 	{
 		fprintf (stderr, "[-] err:: Allocation problem\n");
@@ -109,9 +109,9 @@ int lunion_detect_file (const char* file, const char* path, const char* dir)
 }
 
 
-void lunion_free_list (l_data** gamelst)
+void lunion_free_list (LunionList** gamelst)
 {
-	l_data* tmp;
+	LunionList* tmp;
 
 	while (*gamelst != NULL)
 	{
@@ -127,12 +127,12 @@ void lunion_free_list (l_data** gamelst)
 }
 
 
-l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
+LunionList* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
 {
 	DIR*           p_stream;
 	struct dirent* p_sdir;
 
-	l_data* lst = NULL;
+	LunionList* lst = NULL;
 
 	p_stream = *stream;
 	p_sdir = *sdir;
@@ -151,7 +151,7 @@ l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
 			continue;
 		}
 
-		lunion_alloc_ldata (p_sdir->d_name, path, &lst);
+		lunion_alloc_member (p_sdir->d_name, path, &lst);
 		p_sdir = readdir (p_stream);
 	}
 
@@ -162,11 +162,11 @@ l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
 }
 
 
-l_data* lunion_search_install_games (const char* path)
+LunionList* lunion_search_install_games (const char* path)
 {
 	DIR*           stream = NULL;
 	struct dirent* sdir = NULL;
-	l_data* lst = NULL;
+	LunionList* lst = NULL;
 
 	stream = opendir (path);
 	if (NULL == stream)
