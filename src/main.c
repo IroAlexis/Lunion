@@ -31,16 +31,14 @@ int main (int argc, char** argv)
 	int     status;
 	l_data* gamelst = NULL;
 	l_data* tmp = NULL;
-
 	LunionApplication* app = NULL;
-
 
 	// Detection installed games
 	gamelst = lunion_search_install_games ("/home/iroalexis/Games");
 
 	fprintf (stdout, "[-] info:: List of installed games\n");
 	for (tmp = gamelst; tmp != NULL; tmp = tmp->next)
-		fprintf (stdout, "   > %s\n", tmp->str);
+		fprintf (stdout, "   > %s '%s'\n", tmp->slug, tmp->path);
 
 	g_set_application_name ("Lunion");
 

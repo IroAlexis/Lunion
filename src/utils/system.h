@@ -29,7 +29,8 @@
 
 typedef struct _l_data
 {
-	char*          str;
+	char*           slug;
+	char*           path;
 	struct _l_data* next;
 } l_data;
 
