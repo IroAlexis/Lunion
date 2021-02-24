@@ -102,30 +102,20 @@ int lunion_detect_file (const char* file, const char* path, const char* dir)
 }
 
 
-l_data* lunion_search_install_games (const char* path)
+void lunion_free_list (l_data** gamelst)
 {
-	DIR*           stream = NULL;
-	struct dirent* sdir = NULL;
-	l_data* lst = NULL;
+	l_data* tmp;
 
-	stream = opendir (path);
-	if (NULL == stream)
-		return NULL;
-
-	sdir = readdir (stream);
-	if (sdir->d_type == DT_UNKNOWN)
+	while (*gamelst != NULL)
 	{
-		fprintf (stderr, "[-] info:: Filesystem don't have full support for returning the file type\n");
-		//lst = lunion_list_games_alt ();
+		tmp = *gamelst;
+		*gamelst = tmp->next;
+		free (tmp->str);
+		free (tmp);
 	}
-	else
-		lst = lunion_list_games (path, &stream, &sdir);
 
-	closedir (stream);
-	stream = NULL;
-	sdir = NULL;
-
-	return lst;
+	tmp = NULL;
+	*gamelst = NULL;
 }
 
 
@@ -164,18 +154,29 @@ l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
 }
 
 
-void lunion_free_list (l_data** gamelst)
+l_data* lunion_search_install_games (const char* path)
 {
-	l_data* tmp;
+	DIR*           stream = NULL;
+	struct dirent* sdir = NULL;
+	l_data* lst = NULL;
 
-	while (*gamelst != NULL)
+	stream = opendir (path);
+	if (NULL == stream)
+		return NULL;
+
+	sdir = readdir (stream);
+	if (sdir->d_type == DT_UNKNOWN)
 	{
-		tmp = *gamelst;
-		*gamelst = tmp->next;
-		free (tmp->str);
-		free (tmp);
+		fprintf (stderr, "[-] info:: Filesystem don't have full support for returning the file type\n");
+		//lst = lunion_list_games_alt ();
 	}
+	else
+		lst = lunion_list_games (path, &stream, &sdir);
 
-	tmp = NULL;
-	*gamelst = NULL;
+	closedir (stream);
+	stream = NULL;
+	sdir = NULL;
+
+	return lst;
 }
+
