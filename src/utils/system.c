@@ -64,7 +64,7 @@ int lunion_alloc_ldata (const char* dir, l_data** lst)
 }
 
 
-int lunion_detect_file (const char* path, const char* gamedir, const char* file)
+int lunion_detect_file (const char* file, const char* path, const char* dir)
 {
 	struct stat st;
 	char*       tmp = NULL;
@@ -76,9 +76,9 @@ int lunion_detect_file (const char* path, const char* gamedir, const char* file)
 	tmp = (char*) realloc (tmp, size * sizeof (char));
 	strcat (tmp, "/");
 
-	size += strlen (gamedir) + 1;
+	size += strlen (dir) + 1;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
-	strncat (tmp, gamedir, strlen (gamedir));
+	strncat (tmp, dir, strlen (dir));
 
 	size += 2;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
@@ -147,7 +147,7 @@ l_data* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
 		if (p_sdir->d_type != DT_DIR ||
 			 strcmp (p_sdir->d_name, ".") == 0 ||
 			 strcmp (p_sdir->d_name, "..") == 0 ||
-			 lunion_detect_file (path, p_sdir->d_name, "gameinfo") == 1)
+			 lunion_detect_file ("gameinfo", path, p_sdir->d_name) == 1)
 		{
 			p_sdir = readdir (p_stream);
 			continue;

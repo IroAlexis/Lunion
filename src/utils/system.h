@@ -35,9 +35,9 @@ typedef struct _l_data
 
 
 
-int lunion_detect_file (const char* path,
-												const char* gamedir,
-												const char* file);
+int lunion_detect_file (const char* file,
+												const char* path,
+												const char* dir);
 
 
 void lunion_free_list (l_data** gamelst);
