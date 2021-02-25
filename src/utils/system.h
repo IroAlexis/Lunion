@@ -38,6 +38,10 @@ typedef struct _LunionList
 
 
 
+int lunion_create_dir (const char* path,
+											 const char* dir);
+
+
 int lunion_detect_file (const char* file,
 												const char* path,
 												const char* dir);
@@ -53,8 +57,8 @@ int lunion_init_dir ();
 
 
 LunionList* lunion_list_games (const char* path,
-													 DIR** stream,
-													 struct dirent** sdir);
+															 DIR** stream,
+															 struct dirent** sdir);
 
 
 LunionList* lunion_search_install_games (const char* path);
