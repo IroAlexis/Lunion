@@ -28,14 +28,19 @@
 
 int main (int argc, char** argv)
 {
-	int     status;
-	LunionList* gamelst = NULL;
-	LunionList* tmp = NULL;
+	int                  status;
+	char*                usr_path = NULL;
+	LunionList*          gamelst = NULL;
+	LunionList*          tmp = NULL;
 	LunionApplication* app = NULL;
+
+	lunion_init_dir ();
+	// TODO Search the conf file
 
 	// Detection installed games
 	gamelst = lunion_search_install_games ("/home/iroalexis/Games");
 
+	// TODO Create a list display function
 	fprintf (stdout, "[-] info:: List of installed games\n");
 	for (tmp = gamelst; tmp != NULL; tmp = tmp->next)
 		fprintf (stdout, "   > %s '%s'\n", tmp->slug, tmp->path);
@@ -51,6 +56,7 @@ int main (int argc, char** argv)
 	// Memory deallocation
 	g_object_unref (app);
 	lunion_free_list (&gamelst);
+	free (usr_path);
 
 	return status;
 }

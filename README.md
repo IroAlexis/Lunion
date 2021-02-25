@@ -50,8 +50,9 @@ File organisation
 -----------------
 Data `$HOME/.local/share/lunion/`
 * `games` : Installed games location (default folder but you have choice)
-* `log` : Storing Lunion and/or Lunion Play log files location (disable by default)
-* `runtime` : Location of DXVK and others...
+* `logs` : Storing Lunion and/or Lunion Play log files location (disable by default)
+* `runtime` : Location of DXVK and VKD3D Proton
+* `tools` : Location of Lunion Play and Wine TkG
 
 
 Cache `$HOME/.cache/lunion/`

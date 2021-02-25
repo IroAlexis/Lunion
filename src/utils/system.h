@@ -22,6 +22,8 @@
 #include <dirent.h>
 #include <sys/types.h>
 
+#define CONFIG_DIR "/.local/share/lunion"
+
 #define ANSI_COLOR_RED   "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -42,6 +44,12 @@ int lunion_detect_file (const char* file,
 
 
 void lunion_free_list (LunionList** gamelst);
+
+
+char* lunion_get_game_location ();
+
+
+int lunion_init_dir ();
 
 
 LunionList* lunion_list_games (const char* path,

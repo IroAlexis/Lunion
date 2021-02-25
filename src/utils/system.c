@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "system.h"
 
@@ -67,6 +68,25 @@ int lunion_alloc_member (const char* dir, const char* path, LunionList** lst)
 	t_ptr = NULL;
 	new_data = NULL;
 
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_create_dir (const char* path)
+{
+	int ret;
+
+	fprintf (stderr, "[-] debug:: %s\n", path);
+
+
+	ret = mkdir (path, 0755);
+	if (ret == -1)
+	{
+		fprintf (stderr, "[-] err:: Directory '%s' will not be created\n", path);
+		return EXIT_FAILURE;
+	}
+
+	sync ();
 	return EXIT_SUCCESS;
 }
 
@@ -124,6 +144,92 @@ void lunion_free_list (LunionList** gamelst)
 
 	tmp = NULL;
 	*gamelst = NULL;
+}
+
+
+/* TODO Work In Progress
+char* lunion_get_game_location ()
+{
+	return NULL;
+}
+*/
+
+int lunion_init_dir ()
+{
+	char* home = NULL;
+	char* config_path = NULL;
+	char* comp = NULL;
+	struct stat dir = {0};
+
+	home = getenv ("HOME");
+	if (NULL == home)
+	{
+		fprintf (stderr, "[-] err:: User path not found\n");
+		return EXIT_FAILURE;
+	}
+
+	// Copy $HOME for manipulate
+	config_path = (char*) calloc (strlen (home) + 1, sizeof (char));
+	if (NULL == config_path)
+	{
+		fprintf (stderr, "[-] err:: Allocation problem\n");
+		return EXIT_FAILURE;
+	}
+	strncpy (config_path, home, strlen (home));
+
+	config_path = (char*) realloc (config_path, (strlen (config_path) + strlen (CONFIG_DIR) + 1) * sizeof (char));
+	strncat (config_path, CONFIG_DIR, strlen (CONFIG_DIR));
+	//fprintf (stderr, "[-] debug:: %s\n", config_path);
+
+	// Create configuration directory .local/share/lunion
+	if (stat (config_path, &dir) == -1)
+	{
+		fprintf (stderr, "[-] info:: Create configuration directories '%s'\n", config_path);
+		if (lunion_create_dir (config_path) == EXIT_FAILURE)
+			return EXIT_FAILURE;
+
+		// Create tools directory .local/share/lunion/tools
+		comp = strndup (config_path, strlen (config_path));
+		if (NULL == comp)
+		{
+			fprintf (stderr, "[-] err:: Allocation problem\n");
+			return EXIT_FAILURE;
+		}
+		comp = (char*) realloc (comp, (strlen (comp) + strlen ("/tools") + 1) * sizeof (char));
+		strncat (comp, "/tools", strlen ("/tools"));
+		if (lunion_create_dir (comp) == EXIT_FAILURE)
+			return EXIT_FAILURE;
+		free (comp);
+
+		// Create tools directory .local/share/lunion/runtime
+		comp = strndup (config_path, strlen (config_path));
+		if (NULL == comp)
+		{
+			fprintf (stderr, "[-] err:: Allocation problem\n");
+			return EXIT_FAILURE;
+		}
+		comp = (char*) realloc (comp, (strlen (comp) + strlen ("/runtime") + 1) * sizeof (char));
+		strncat (comp, "/runtime", strlen ("/runtime"));
+		if (lunion_create_dir (comp) == EXIT_FAILURE)
+			return EXIT_FAILURE;
+		free (comp);
+
+		// Create log directory .local/share/lunion/logs
+		comp = strndup (config_path, strlen (config_path));
+		if (NULL == comp)
+		{
+			fprintf (stderr, "[-] err:: Allocation problem\n");
+			return EXIT_FAILURE;
+		}
+		comp = (char*) realloc (comp, (strlen (comp) + strlen ("/logs") + 1) * sizeof (char));
+		strncat (comp, "/logs", strlen ("/logs"));
+		if (lunion_create_dir (comp) == EXIT_FAILURE)
+			return EXIT_FAILURE;
+		free (comp);
+	}
+
+	free (config_path);
+	return EXIT_SUCCESS;
 }
 
 
