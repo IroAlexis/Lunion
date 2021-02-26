@@ -169,21 +169,21 @@ void lunion_display_list (LunionList* lst)
 }
 
 
-void lunion_free_list (LunionList** gamelst)
+void lunion_free_list (LunionList** lst)
 {
 	LunionList* tmp;
 
-	while (*gamelst != NULL)
+	while (*lst != NULL)
 	{
-		tmp = *gamelst;
-		*gamelst = tmp->next;
+		tmp = *lst;
+		*lst = tmp->next;
 		free (tmp->slug);
 		free (tmp->path);
 		free (tmp);
 	}
 
 	tmp = NULL;
-	*gamelst = NULL;
+	*lst = NULL;
 }
 
 
