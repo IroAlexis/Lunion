@@ -22,7 +22,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 
-#define CONFIG_DIR "/.local/share/lunion"
+#define USR_DATA_DIR "/.local/share/lunion"
 
 #define ANSI_COLOR_RED   "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"

@@ -187,7 +187,7 @@ char* lunion_get_game_location ()
 int lunion_init_dir ()
 {
 	char* home = NULL;
-	char* config_path = NULL;
+	char* usrdata_path = NULL;
 
 	home = getenv ("HOME");
 	if (NULL == home)
@@ -197,25 +197,25 @@ int lunion_init_dir ()
 	}
 
 	// Copy $HOME for manipulate
-	config_path = (char*) calloc (strlen (home) + 1, sizeof (char));
-	if (NULL == config_path)
+	usrdata_path = (char*) calloc (strlen (home) + 1, sizeof (char));
+	if (NULL == usrdata_path)
 	{
 		fprintf (stderr, "[-] err:: Allocation problem\n");
 		return EXIT_FAILURE;
 	}
-	strncpy (config_path, home, strlen (home));
+	strncpy (usrdata_path, home, strlen (home));
 
-	// Create configuration directory .local/share/lunion
-	lunion_create_dir (config_path, CONFIG_DIR);
+	// Create user data directory .local/share/lunion
+	lunion_create_dir (usrdata_path, USR_DATA_DIR);
 
-	config_path = (char*) realloc (config_path, (strlen (config_path) + strlen (CONFIG_DIR) + 1) * sizeof (char));
-	strncat (config_path, CONFIG_DIR, strlen (CONFIG_DIR));
+	usrdata_path = (char*) realloc (usrdata_path, (strlen (usrdata_path) + strlen (USR_DATA_DIR) + 1) * sizeof (char));
+	strncat (usrdata_path, USR_DATA_DIR, strlen (USR_DATA_DIR));
 
-	lunion_create_dir (config_path, "/tools");
-	lunion_create_dir (config_path, "/runtime");
-	lunion_create_dir (config_path, "/logs");
+	lunion_create_dir (usrdata_path, "/tools");
+	lunion_create_dir (usrdata_path, "/runtime");
+	lunion_create_dir (usrdata_path, "/logs");
 
-	free (config_path);
+	free (usrdata_path);
 	return EXIT_SUCCESS;
 }
 
