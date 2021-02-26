@@ -184,10 +184,52 @@ char* lunion_get_game_location ()
 */
 
 
-int lunion_init_dir ()
+int lunion_init_usr_specific_data (const char* home, const char* dirname)
+{
+	char* path = NULL;
+
+	// Copy $HOME for manipulate
+	path = (char*) calloc (strlen (home) + 1, sizeof (char));
+	if (NULL == path)
+	{
+		fprintf (stderr, "[-] err:: Allocation problem\n");
+		return EXIT_FAILURE;
+	}
+
+	strncpy (path, home, strlen (home));
+
+	lunion_create_dir (path, dirname);
+
+	path = (char*) realloc (path, (strlen (path) + strlen (dirname) + 1) * sizeof (char));
+	strncat (path, dirname, strlen (dirname));
+
+	if (strncmp (dirname, USR_DATA_DIR, strlen (dirname)) == 0)
+	{
+		lunion_create_dir (path, "/tools");
+		lunion_create_dir (path, "/runtime");
+		lunion_create_dir (path, "/logs");
+	}
+
+	if (strncmp (dirname, CONFIG_DIR, strlen (dirname)) == 0)
+	{
+		lunion_create_dir (path, "/downloads");
+		lunion_create_dir (path, "/tmp");
+	}
+
+	if (strncmp (dirname, CACHE_DIR, strlen (dirname)) == 0)
+	{
+		lunion_create_dir (path, "/downloads");
+		lunion_create_dir (path, "/tmp");
+	}
+
+	free (path);
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_init_dirs ()
 {
 	char* home = NULL;
-	char* usrdata_path = NULL;
 
 	home = getenv ("HOME");
 	if (NULL == home)
@@ -196,26 +238,10 @@ int lunion_init_dir ()
 		return EXIT_FAILURE;
 	}
 
-	// Copy $HOME for manipulate
-	usrdata_path = (char*) calloc (strlen (home) + 1, sizeof (char));
-	if (NULL == usrdata_path)
-	{
-		fprintf (stderr, "[-] err:: Allocation problem\n");
-		return EXIT_FAILURE;
-	}
-	strncpy (usrdata_path, home, strlen (home));
+	lunion_init_usr_specific_data (home, USR_DATA_DIR);
+	lunion_init_usr_specific_data (home, CONFIG_DIR);
+	lunion_init_usr_specific_data (home, CACHE_DIR);
 
-	// Create user data directory .local/share/lunion
-	lunion_create_dir (usrdata_path, USR_DATA_DIR);
-
-	usrdata_path = (char*) realloc (usrdata_path, (strlen (usrdata_path) + strlen (USR_DATA_DIR) + 1) * sizeof (char));
-	strncat (usrdata_path, USR_DATA_DIR, strlen (USR_DATA_DIR));
-
-	lunion_create_dir (usrdata_path, "/tools");
-	lunion_create_dir (usrdata_path, "/runtime");
-	lunion_create_dir (usrdata_path, "/logs");
-
-	free (usrdata_path);
 	return EXIT_SUCCESS;
 }
 

@@ -34,7 +34,7 @@ int main (int argc, char** argv)
 	LunionList*        tmp = NULL;
 	LunionApplication* app = NULL;
 
-	lunion_init_dir ();
+	lunion_init_dirs ();
 	// TODO Search the conf file
 
 	// Detection installed games

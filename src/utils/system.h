@@ -23,6 +23,8 @@
 #include <sys/types.h>
 
 #define USR_DATA_DIR "/.local/share/lunion"
+#define CONFIG_DIR   "/.config/lunion"
+#define CACHE_DIR    "/.cache/lunion"
 
 #define ANSI_COLOR_RED   "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
@@ -53,7 +55,7 @@ void lunion_free_list (LunionList** gamelst);
 char* lunion_get_game_location ();
 
 
-int lunion_init_dir ();
+int lunion_init_dirs ();
 
 
 LunionList* lunion_list_games (const char* path,
