@@ -39,11 +39,7 @@ int main (int argc, char** argv)
 
 	// Detection installed games
 	gamelst = lunion_search_install_games ("/home/iroalexis/Games");
-
-	// TODO Create a list display function
-	fprintf (stdout, "[-] info:: List of installed games\n");
-	for (tmp = gamelst; tmp != NULL; tmp = tmp->next)
-		fprintf (stdout, "   > %s '%s'\n", tmp->slug, tmp->path);
+	lunion_display_list (gamelst);
 
 	g_set_application_name ("Lunion");
 

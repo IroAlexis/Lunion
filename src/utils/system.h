@@ -49,6 +49,9 @@ int lunion_detect_file (const char* path,
 												const char* filename);
 
 
+void lunion_display_list (LunionList* lst);
+
+
 void lunion_free_list (LunionList** gamelst);
 
 

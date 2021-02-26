@@ -158,6 +158,17 @@ int lunion_detect_file (const char* path, const char* dirname, const char* filen
 }
 
 
+void lunion_display_list (LunionList* lst)
+{
+	LunionList* tmp = NULL;
+
+	fprintf (stdout, "[-] info:: List of installed games\n");
+
+	for (tmp = lst; tmp != NULL; tmp = tmp->next)
+		fprintf (stdout, "   > %s '%s'\n", tmp->slug, tmp->path);
+}
+
+
 void lunion_free_list (LunionList** gamelst)
 {
 	LunionList* tmp;
