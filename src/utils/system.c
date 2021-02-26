@@ -89,7 +89,7 @@ int lunion_create_dir_alt (const char* path)
 }
 
 
-int lunion_create_dir (const char* path, const char* dir)
+int lunion_create_dir (const char* path, const char* dirname)
 {
 	char* tmp = NULL;
 	struct stat st = {0};
@@ -107,8 +107,8 @@ int lunion_create_dir (const char* path, const char* dir)
 		return EXIT_FAILURE;
 	}
 
-	tmp = (char*) realloc (tmp, (strlen (tmp) + strlen (dir) + 1) * sizeof (char));
-	strncat (tmp, dir, strlen (dir));
+	tmp = (char*) realloc (tmp, (strlen (tmp) + strlen (dirname) + 1) * sizeof (char));
+	strncat (tmp, dirname, strlen (dirname));
 	if (lunion_create_dir_alt (tmp) == EXIT_FAILURE)
 	{
 		free (tmp);
@@ -120,7 +120,7 @@ int lunion_create_dir (const char* path, const char* dir)
 }
 
 
-int lunion_detect_file (const char* file, const char* path, const char* dir)
+int lunion_detect_file (const char* path, const char* dirname, const char* filename)
 {
 	struct stat st;
 	char*       tmp = NULL;
@@ -132,18 +132,18 @@ int lunion_detect_file (const char* file, const char* path, const char* dir)
 	tmp = (char*) realloc (tmp, size * sizeof (char));
 	strcat (tmp, "/");
 
-	size += strlen (dir) + 1;
+	size += strlen (dirname) + 1;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
-	strncat (tmp, dir, strlen (dir));
+	strncat (tmp, dirname, strlen (dirname));
 
 	size += 2;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
 	strcat (tmp, "/");
-	fprintf (stderr, "[-] info:: Search '%s' in '%s' : ", file, tmp);
+	fprintf (stderr, "[-] info:: Search '%s' in '%s' : ", filename, tmp);
 
-	size += strlen (file) + 1;
+	size += strlen (filename) + 1;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
-	strncat (tmp, file, strlen (file));
+	strncat (tmp, filename, strlen (filename));
 
 	if (stat (tmp, &st) != 0)
 	{
@@ -238,7 +238,7 @@ LunionList* lunion_list_games (const char* path, DIR** stream, struct dirent** s
 		if (p_sdir->d_type != DT_DIR ||
 			 strcmp (p_sdir->d_name, ".") == 0 ||
 			 strcmp (p_sdir->d_name, "..") == 0 ||
-			 lunion_detect_file ("gameinfo", path, p_sdir->d_name) == 1)
+			 lunion_detect_file (path, p_sdir->d_name, "gameinfo") == 1)
 		{
 			p_sdir = readdir (p_stream);
 			continue;

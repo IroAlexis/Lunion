@@ -39,12 +39,12 @@ typedef struct _LunionList
 
 
 int lunion_create_dir (const char* path,
-											 const char* dir);
+											 const char* dirname);
 
 
-int lunion_detect_file (const char* file,
-												const char* path,
-												const char* dir);
+int lunion_detect_file (const char* path,
+												const char* dirname,
+												const char* filename);
 
 
 void lunion_free_list (LunionList** gamelst);

@@ -28,10 +28,10 @@
 
 int main (int argc, char** argv)
 {
-	int                  status;
-	char*                usr_path = NULL;
-	LunionList*          gamelst = NULL;
-	LunionList*          tmp = NULL;
+	int                status;
+	char*              usr_path = NULL;
+	LunionList*        gamelst = NULL;
+	LunionList*        tmp = NULL;
 	LunionApplication* app = NULL;
 
 	lunion_init_dir ();
