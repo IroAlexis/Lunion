@@ -223,8 +223,7 @@ int lunion_init_usr_specific_data (const char* home, const char* dirname)
 
 	if (strncmp (dirname, CONFIG_DIR, strlen (dirname)) == 0)
 	{
-		lunion_create_dir (path, "/downloads");
-		lunion_create_dir (path, "/tmp");
+		lunion_create_dir (path, "/games");
 	}
 
 	if (strncmp (dirname, CACHE_DIR, strlen (dirname)) == 0)
