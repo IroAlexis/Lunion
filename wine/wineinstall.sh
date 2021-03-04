@@ -44,7 +44,7 @@ read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
 	mkdir -p $GAMEDIR/shaders
 
-	$HOME/runtime/dxvk-1.8/setup_dxvk.sh install
+	$HOME/runtime/dxvk-1.8.1/setup_dxvk.sh install
 	wineserver --wait
 fi
 
