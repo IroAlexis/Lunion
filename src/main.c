@@ -33,11 +33,12 @@ int main (int argc, char** argv)
 	LunionList*        gamelst = NULL;
 	LunionApplication* app = NULL;
 
-	lunion_init_dirs ();
+	if (lunion_init_dirs () != EXIT_SUCCESS)
+		return EXIT_FAILURE;
 	// TODO Search the conf file
 
 	// Detection installed games
-	gamelst = lunion_search_install_games ("/home/iroalexis/Games");
+	gamelst = lunion_search_games ("/home/iroalexis/Games");
 	lunion_display_list (gamelst);
 
 	g_set_application_name ("Lunion");

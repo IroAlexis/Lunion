@@ -31,22 +31,14 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 
 
-typedef struct _LunionList
-{
-	char*              slug;
-	char*              path;
-	struct _LunionList* next;
-} LunionList;
+typedef struct _LunionList LunionList;
 
 
 
-int lunion_create_dir (const char* path,
-											 const char* dirname);
+int lunion_create_dir (const char* path, const char* dirname);
 
 
-int lunion_detect_file (const char* path,
-												const char* dirname,
-												const char* filename);
+int lunion_detect_file (const char* path, const char* dirname, const char* filename);
 
 
 void lunion_display_list (LunionList* lst);
@@ -61,12 +53,10 @@ char* lunion_get_game_location ();
 int lunion_init_dirs ();
 
 
-LunionList* lunion_list_games (const char* path,
-															 DIR** stream,
-															 struct dirent** sdir);
+LunionList* lunion_install_games_list (const char* path, DIR** stream, struct dirent** sdir);
 
 
-LunionList* lunion_search_install_games (const char* path);
+LunionList* lunion_search_games (const char* path);
 
 
 

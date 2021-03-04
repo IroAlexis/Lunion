@@ -27,7 +27,15 @@
 
 
 
-int lunion_alloc_member (const char* dir, const char* path, LunionList** lst)
+struct _LunionList
+{
+	char*               dirname;
+	struct _LunionList* next;
+};
+
+
+
+int lunion_list_alloc_member (const char* dirname, LunionList** lst)
 {
 	LunionList* t_ptr = NULL;
 	LunionList* new_data = NULL;
@@ -40,15 +48,8 @@ int lunion_alloc_member (const char* dir, const char* path, LunionList** lst)
 	}
 
 	// Allocation for the adding of the string in the list
-	new_data->slug = strndup (dir, strlen (dir));
-	if (NULL == new_data->slug)
-	{
-		fprintf (stderr, "[-] err:: Allocation problem\n");
-		return EXIT_FAILURE;
-	}
-
-	new_data->path = strndup (path, strlen (path));
-	if (NULL == new_data->path)
+	new_data->dirname = strndup (dirname, strlen (dirname));
+	if (NULL == new_data->dirname)
 	{
 		fprintf (stderr, "[-] err:: Allocation problem\n");
 		return EXIT_FAILURE;
@@ -97,7 +98,6 @@ int lunion_create_dir (const char* path, const char* dirname)
 	if (stat (path, &st) == -1)
 		return EXIT_FAILURE;
 
-	// Create tools directory .local/share/lunion/tools
 	tmp = strndup (path, strlen (path));
 	if (NULL == tmp)
 	{
@@ -165,7 +165,7 @@ void lunion_display_list (LunionList* lst)
 	fprintf (stdout, "[-] info:: List of installed games\n");
 
 	for (tmp = lst; tmp != NULL; tmp = tmp->next)
-		fprintf (stdout, "   > %s '%s'\n", tmp->slug, tmp->path);
+		fprintf (stdout, "   > %s\n", tmp->dirname);
 }
 
 
@@ -177,8 +177,7 @@ void lunion_free_list (LunionList** lst)
 	{
 		tmp = *lst;
 		*lst = tmp->next;
-		free (tmp->slug);
-		free (tmp->path);
+		free (tmp->dirname);
 		free (tmp);
 	}
 
@@ -190,6 +189,8 @@ void lunion_free_list (LunionList** lst)
 /* TODO Work In Progress
 char* lunion_get_game_location ()
 {
+	// Find the configuration file config.json
+	// Parse the file for return the string that we want (?)
 	return NULL;
 }
 */
@@ -256,7 +257,7 @@ int lunion_init_dirs ()
 }
 
 
-LunionList* lunion_list_games (const char* path, DIR** stream, struct dirent** sdir)
+LunionList* lunion_install_games_list (const char* path, DIR** stream, struct dirent** sdir)
 {
 	DIR*           p_stream;
 	struct dirent* p_sdir;
@@ -280,7 +281,7 @@ LunionList* lunion_list_games (const char* path, DIR** stream, struct dirent** s
 			continue;
 		}
 
-		lunion_alloc_member (p_sdir->d_name, path, &lst);
+		lunion_list_alloc_member (p_sdir->d_name, &lst);
 		p_sdir = readdir (p_stream);
 	}
 
@@ -291,7 +292,7 @@ LunionList* lunion_list_games (const char* path, DIR** stream, struct dirent** s
 }
 
 
-LunionList* lunion_search_install_games (const char* path)
+LunionList* lunion_search_games (const char* path)
 {
 	DIR*           stream = NULL;
 	struct dirent* sdir = NULL;
@@ -304,7 +305,7 @@ LunionList* lunion_search_install_games (const char* path)
 	sdir = readdir (stream);
 	if (sdir->d_type == DT_UNKNOWN)
 		fprintf (stderr, "[-] info:: Filesystem don't have full support for returning the file type\n");
-	lst = lunion_list_games (path, &stream, &sdir);
+	lst = lunion_install_games_list (path, &stream, &sdir);
 
 	closedir (stream);
 	stream = NULL;
