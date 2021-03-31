@@ -78,7 +78,7 @@ int lunion_create_dir_alt (const char* path)
 {
 	errno = 0;
 
-	if (mkdir (path, 0755) != 0 && errno != EEXIST)
+	if (mkdir (path, 0777) != 0 && errno != EEXIST)
 	{
 		fprintf (stderr, "[-] err:: %s", path);
 		perror (": ");
@@ -139,7 +139,7 @@ int lunion_detect_file (const char* path, const char* dirname, const char* filen
 	size += 2;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
 	strcat (tmp, "/");
-	fprintf (stderr, "[-] info:: Search '%s' in '%s' : ", filename, tmp);
+	fprintf (stderr, "[+] %s%s : ", tmp, filename);
 
 	size += strlen (filename) + 1;
 	tmp = (char*) realloc (tmp, size * sizeof (char));
