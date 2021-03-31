@@ -22,7 +22,7 @@
 #include <glib/gi18n.h>
 
 #include "utils/system.h"
-#include "gui/lunion-application.h"
+#include "lunion-application.h"
 
 
 
