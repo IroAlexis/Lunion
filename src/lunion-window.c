@@ -146,10 +146,8 @@ static void lunion_window_headerbar_start (LunionWindow* self)
 {
 	self->m_add = gtk_menu_button_new ();
 	self->m_addmenu = lunion_window_build_addmenu ();
-	gtk_menu_button_set_icon_name (GTK_MENU_BUTTON (self->m_add),
-								   "list-add-symbolic");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_add),
-									G_MENU_MODEL (self->m_addmenu));
+	gtk_menu_button_set_icon_name (GTK_MENU_BUTTON (self->m_add), "list-add-symbolic");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_add), G_MENU_MODEL (self->m_addmenu));
 }
 
 
@@ -164,26 +162,21 @@ static void lunion_window_headerbar_end (LunionWindow* self)
 	self->m_search = gtk_button_new_from_icon_name ("edit-find-symbolic");
 	self->m_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	self->m_viewtoggle = gtk_button_new ();
-	gtk_button_set_icon_name (GTK_BUTTON (self->m_viewtoggle),
-							  "view-list-symbolic");
+	gtk_button_set_icon_name (GTK_BUTTON (self->m_viewtoggle), "view-list-symbolic");
 	self->m_viewoption = gtk_menu_button_new ();
 	self->m_appoption = gtk_menu_button_new ();
 
 	gtk_box_append (GTK_BOX (self->m_box), self->m_viewtoggle);
 	gtk_box_append (GTK_BOX (self->m_box), self->m_viewoption);
 	gtk_widget_add_css_class (self->m_box, "linked");
-	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_viewoption),
-							  "disclosure-button");
+	gtk_widget_add_css_class (gtk_widget_get_first_child (self->m_viewoption), "disclosure-button");
 
 	self->m_viewmenu = lunion_window_build_viewmenu ();
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_viewoption),
-									G_MENU_MODEL (self->m_viewmenu));
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_viewoption), G_MENU_MODEL (self->m_viewmenu));
 
 	self->m_appmenu = lunion_window_build_appmenu ();
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_appoption),
-									G_MENU_MODEL (self->m_appmenu));
-	gtk_menu_button_set_direction (GTK_MENU_BUTTON (self->m_appoption),
-								   GTK_ARROW_NONE);
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->m_appoption), G_MENU_MODEL (self->m_appmenu));
+	gtk_menu_button_set_direction (GTK_MENU_BUTTON (self->m_appoption), GTK_ARROW_NONE);
 }
 
 
@@ -198,14 +191,10 @@ static void lunion_window_init (LunionWindow* self)
 	lunion_window_headerbar_end (self);
 
 	// Assemble
-	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar),
-							   self->m_add);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_appoption);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_box);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar),
-							 self->m_search);
+	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->m_headerbar), self->m_add);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar), self->m_appoption);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar), self->m_box);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (self->m_headerbar), self->m_search);
 	//gtk_window_set_title (GTK_WINDOW (self), "Lunion");
 
 	gtk_widget_show (self->m_headerbar);
@@ -215,18 +204,18 @@ static void lunion_window_init (LunionWindow* self)
 GtkWidget* lunion_window_new (LunionApplication* app)
 {
 	return g_object_new (LUNION_TYPE_WINDOW,
-						 "application", app,
-						 "title", g_get_application_name(),
-						 NULL);
+	                     "application", app,
+	                     "title", g_get_application_name(),
+	                     NULL);
 }
 
 void lunion_window_show_about (LunionWindow* window)
 {
 	gtk_show_about_dialog (GTK_WINDOW (window),
-						   "program-name", g_get_application_name(),
-						   "version", "0.1_alpha",
-						   "copyright", "© 2020 Alexis Peypelut",
-						   "comments", "Game manager for GNOME",
-						   "license-type", GTK_LICENSE_GPL_3_0,
-						   NULL);
+	                       "program-name", g_get_application_name(),
+	                       "version", "0.1_alpha",
+	                       "copyright", "© 2020 Alexis Peypelut",
+	                       "comments", "Game manager for GNOME",
+	                       "license-type", GTK_LICENSE_GPL_3_0,
+	                       NULL);
 }

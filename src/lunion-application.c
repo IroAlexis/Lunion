@@ -34,23 +34,14 @@ G_DEFINE_TYPE (LunionApplication, lunion_application, GTK_TYPE_APPLICATION)
 
 
 
-static void lunion_application_action_quit (GSimpleAction *action,
-											GVariant *parameter,
-											gpointer user_data);
-
-static void lunion_application_action_about (GSimpleAction *action,
-											 GVariant *parameter,
-											 gpointer user_data);
+static void lunion_application_action_quit (GSimpleAction *action, GVariant *parameter, gpointer user_data);
+static void lunion_application_action_about (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 
 
 static void lunion_application_startup (GApplication* app);
-
 static void lunion_application_activate (GApplication* app);
-
 static void lunion_application_finalize(GObject* object);
-
 static void lunion_application_class_init (LunionApplicationClass* klass);
-
 static void lunion_application_init (LunionApplication* self);
 
 
@@ -61,9 +52,7 @@ static GActionEntry lunion_application_actions[] =
 };
 
 
-static void lunion_application_action_about (GSimpleAction *action,
-											 GVariant *parameter,
-											 gpointer user_data)
+static void lunion_application_action_about (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
 	LunionApplication* app = user_data;
 
@@ -71,9 +60,7 @@ static void lunion_application_action_about (GSimpleAction *action,
 }
 
 
-static void lunion_application_action_quit (GSimpleAction *action,
-											GVariant *parameter,
-											gpointer user_data)
+static void lunion_application_action_quit (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
 	LunionApplication* self = LUNION_APPLICATION (user_data);
 
@@ -99,10 +86,7 @@ static void lunion_application_activate (GApplication* app)
 
 	G_APPLICATION_CLASS(lunion_application_parent_class)->activate(app);
 
-	g_action_map_add_action_entries(G_ACTION_MAP(self),
-									lunion_application_actions,
-									G_N_ELEMENTS(lunion_application_actions),
-									self);
+	g_action_map_add_action_entries(G_ACTION_MAP(self), lunion_application_actions, G_N_ELEMENTS(lunion_application_actions), self);
 
 	gtk_window_present (GTK_WINDOW (self->m_mainwindow));
 }
@@ -138,14 +122,12 @@ GtkWidget* lunion_application_create_window (LunionApplication* self)
 	GFile* css;
 
 	// TODO Check error
-	css = g_file_new_for_path ("src/gui/lunion.css");
+	css = g_file_new_for_path ("src/lunion.css");
 
 	// Load our css theme
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_file (provider, css);
-	gtk_style_context_add_provider_for_display (self->m_display,
-												GTK_STYLE_PROVIDER (provider),
-												GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	gtk_style_context_add_provider_for_display (self->m_display, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 	// Window
 	mainwindow = lunion_window_new (self);
@@ -161,9 +143,9 @@ LunionApplication* lunion_application_new (void)
 	LunionApplication* app = NULL;
 
 	app = g_object_new (LUNION_TYPE_APPLICATION,
-						"application-id", APPLICATION_ID,
-						"flags", G_APPLICATION_FLAGS_NONE,
-						NULL);
+	                    "application-id", APPLICATION_ID,
+	                    "flags", G_APPLICATION_FLAGS_NONE,
+	                    NULL);
 
 	return app;
 }
