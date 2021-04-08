@@ -33,26 +33,21 @@ if [[ "$_CONDITION" =~ [nN] ]]; then
 	export WINEDEBUG=-all
 fi
 
-wineboot --init
-# wineserver still alive approx 5s after
-echo "Waiting wineserver..."
-wineserver --wait
+wineboot --init && wineserver --wait
 
 if [ $? ]; then
 	mkdir -p $GAMEDIR/shaders
 
 	read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
 	if [[ "$_CONDITION" =~ [yY] ]]; then
-		$HOME/runtime/dxvk-1.8.1/setup_dxvk.sh install
-		wineserver --wait
+		$HOME/runtime/dxvk-1.8.1/setup_dxvk.sh install && wineserver --wait
 	fi
 
 	read -rp "Do you want install VKD3D Proton for Direct3D 12 (N/y) ? " _CONDITION;
 	if [[ "$_CONDITION" =~ [yY] ]]; then
 		mkdir -p $GAMEDIR/shaders
 
-		$HOME/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install
-		wineserver --wait
+		$HOME/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install && wineserver --wait
 	fi
 
 	exit 0

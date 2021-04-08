@@ -6,10 +6,8 @@ Install process
 ---------------
 * Set up the Wine prefix:
 ``` bash
-$ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i
+$ WINEPREFIX=/path/to/prefix WINEARCH=win64 WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" WINEDEBUG=-all /path/to/wine/bin/wineboot -i && wineserver --wait
 ```
-You need to wait wineserver is finish (approx. 5s).
-
 
 * Install the application:
 ``` bash
@@ -20,8 +18,8 @@ $ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="winemenubuilder.exe=" WINEDEBUG=-
   * [DXVK](https://github.com/doitsujin/dxvk): https://github.com/doitsujin/dxvk/releases
   * [VKD3D-Proton](https://github.com/HansKristian-Work/vkd3d-proton): https://github.com/HansKristian-Work/vkd3d-proton/releases
 ``` bash
-$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/dxvk/setup_install.sh install
-$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml=" PATH=/path/to/wine/bin/:$PATH /path/to/vkd3d-proton/setup_install.sh install
+$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" PATH=/path/to/wine/bin/:$PATH /path/to/dxvk/setup_install.sh install && wineserver --wait
+$ WINEPREFIX=/path/to/prefix WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe=" PATH=/path/to/wine/bin/:$PATH /path/to/vkd3d-proton/setup_install.sh install && wineserver --wait
 ```
 
 Launch game
@@ -29,7 +27,7 @@ Launch game
 * Now you have to go to the game root and launch it:
 ``` bash
 $ cd /path/to/prefix/drive_c/path/to/game
-$ WINEPREFIX=/path/to/prefix {WINEFSYNC=1 | WINEESYNC=1} /path/to/wine/bin/{wine | wine64} file.exe
+$ WINEPREFIX=/path/to/prefix {WINEFSYNC=1 | WINEESYNC=1} /path/to/wine/bin/{wine | wine64} file.exe && wineserver --wait
 ```
 
 Note : With Lunion, `prefix` it is `windata`.
