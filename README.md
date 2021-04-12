@@ -41,6 +41,7 @@ System requirements (Recommended)
 ### Dependencies
 * curl
 * gtk4
+* libadwaita-git
 * libzip
 * winetricks (*optionnal*)
 
@@ -61,7 +62,7 @@ Cache `$HOME/.cache/lunion/`
 
 
 Configuration `$HOME/.config/lunion/`
-* `games` : Games configuration (banner pictures, logo, ...)
+* `plateform` : Relative to the plateform connexion
 
 
 
@@ -76,7 +77,7 @@ Useful environment Variables
 ### Proprietary driver NVIDIA
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
-| `__GL_NextGenCompiler` | `1` or `0` | Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption |
+| ~~`__GL_NextGenCompiler`~~ | ~~`1` or `0`~~ | ~~Using the Vulkan SPIR-V Compiler. The goal is to reduce shader compilation time and shader system memory consumption~~ |
 | `__GL_SHADER_DISK_CACHE` | `1` or `0` |  |
 | `__GL_SHADER_DISK_CACHE_PATH` | `$PATH/TO/` |  |
 | `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP` | `1` or `0` | Remove the shader cache size limit that is 125Mb (NB: disable this limit with the value `1`) (_[Nvidia Forum](https://forums.developer.nvidia.com/t/opengl-shader-disk-cache-max-size-garbage-collection/60056)_)|
