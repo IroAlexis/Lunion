@@ -7,7 +7,8 @@ export WINEPREFIX=$HOME/$GAMEDIR/windata/
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
 export WINEDEBUG=-all
 
-wineboot && wineserver --wait
+echo "[+] lunion-play: game: preparing to launch..."
+wineboot &> /dev/null && wineserver --wait
 
 unset WINEDLLOVERRIDES
 unset WINEDEBUG
@@ -39,5 +40,6 @@ export MANGOHUD_CONFIGFILE=$HOME/Games/mangohud.config
 # Prevention en reference au probleme que j'ai eu avec The Witcher 3
 cd $HOME/$GAMEDIR/windata/drive_c/
 
+echo "[+] lunion-play: game: launch the game..."
 wine gameexe.exe && wineserver --wait
 #wine64 gameexe.exe && wineserver --wait
