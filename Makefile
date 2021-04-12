@@ -1,9 +1,9 @@
 CC ?= gcc
 PKGCONFIG = $(shell which pkg-config)
-CFLAGS = $(shell $(PKGCONFIG) --cflags gtk4) -Wall -pedantic -Wextra
-LDFLAGS = $(shell $(PKGCONFIG) --libs gtk4)
+CFLAGS = $(shell $(PKGCONFIG) --cflags gtk4 libadwaita-1) -Wall -pedantic -Wextra
+LDFLAGS = $(shell $(PKGCONFIG) --libs gtk4 libadwaita-1)
 
-SRC = src/lunion-window.c src/lunion-application.c src/utils/system.c src/main.c
+SRC = src/lunion-headerbar.c src/lunion-window.c src/lunion-application.c src/utils/system.c src/main.c
 
 OBJS = $(SRC:.c=.o)
 

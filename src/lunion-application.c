@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <adwaita.h>
+
 #include "lunion-application.h"
 #include "lunion-window.h"
 
@@ -74,6 +76,8 @@ static void lunion_application_startup (GApplication* app)
 	LunionApplication* self = LUNION_APPLICATION (app);;
 
 	G_APPLICATION_CLASS (lunion_application_parent_class)->startup (app);
+
+	adw_init();
 
 	self->m_display = gdk_display_get_default ();
 	self->m_mainwindow = lunion_application_create_window (self);

@@ -29,19 +29,13 @@
 int main (int argc, char** argv)
 {
 	int                status;
-	char*              usr_path = NULL;
-	LunionList*        gamelst = NULL;
 	LunionApplication* app = NULL;
 
 	if (lunion_init_dirs () != EXIT_SUCCESS)
 		return EXIT_FAILURE;
-	// TODO Search the conf file
-
-	// Detection installed games
-	gamelst = lunion_search_games ("/home/iroalexis/Games");
-	lunion_display_list (gamelst);
 
 	g_set_application_name ("Lunion");
+	fprintf (stdout, "[+] %s\n", g_get_application_name());
 
 	// Application
 	app = lunion_application_new ();
@@ -51,8 +45,6 @@ int main (int argc, char** argv)
 
 	// Memory deallocation
 	g_object_unref (app);
-	lunion_free_list (&gamelst);
-	free (usr_path);
 
 	return status;
 }

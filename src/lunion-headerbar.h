@@ -8,7 +8,7 @@ G_BEGIN_DECLS
 
 #define LUNION_TYPE_HEADER_BAR (lunion_header_bar_get_type ())
 
-G_DECLARE_FINAL_TYPE (LunionHeaderBar, lunion_header_bar, LUNION, HEADER_BAR, GtkHeaderBar)
+G_DECLARE_FINAL_TYPE (LunionHeaderBar, lunion_header_bar, LUNION, HEADER_BAR, AdwBin)
 
 
 
