@@ -35,7 +35,6 @@ int main (int argc, char** argv)
 		return EXIT_FAILURE;
 
 	g_set_application_name ("Lunion");
-	fprintf (stdout, "[+] %s\n", g_get_application_name());
 
 	// Application
 	app = lunion_application_new ();
