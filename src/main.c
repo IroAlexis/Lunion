@@ -21,7 +21,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "utils/system.h"
+#include "system.h"
 #include "lunion-application.h"
 
 
