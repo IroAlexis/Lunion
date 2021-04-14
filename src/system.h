@@ -53,6 +53,9 @@ char* lunion_get_game_location ();
 int lunion_init_dirs ();
 
 
+int lunion_init_env_var (const char* name, const char* value);
+
+
 LunionList* lunion_install_games_list (const char* path, DIR** stream, struct dirent** sdir);
 
 

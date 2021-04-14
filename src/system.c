@@ -22,6 +22,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <assert.h>
 
 #include "system.h"
 
@@ -253,6 +254,28 @@ int lunion_init_dirs ()
 	lunion_init_usr_specific_data (home, CONFIG_DIR);
 	lunion_init_usr_specific_data (home, CACHE_DIR);
 
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_init_env_var (const char* name, const char* value)
+{
+	assert (name != NULL);
+	assert (value != NULL);
+
+	errno = 0;
+
+	if (setenv (name, value, 1) != 0)
+	{
+		if (errno == EINVAL)
+			fprintf (stderr, "[-] err:: lunion_init_env_var: %s is void or contains an '=' character\n", name);
+		if (errno == ENOMEM)
+			fprintf (stderr, "[-] err:: lunion_init_env_var: Insufficient memory to add a new variable to the environment\n");
+
+		return EXIT_FAILURE;
+	}
+
+	fprintf (stdout, "[+] info:: %s=%s\n", name, value);
 	return EXIT_SUCCESS;
 }
 
