@@ -43,6 +43,7 @@ System requirements (Recommended)
 * gtk4
 * libadwaita-git
 * libzip
+* wine or wine-staging (*optionnal*)
 * winetricks (*optionnal*)
 
 
