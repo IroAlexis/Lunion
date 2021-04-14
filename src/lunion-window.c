@@ -184,7 +184,7 @@ static void lunion_window_init (LunionWindow* self)
 	gtk_widget_show (self->m_mainview);
 	gtk_widget_show (self->m_headerbar);
 	gtk_widget_show (self->m_add);
-	gtk_widget_show (self->m_search);
+	gtk_widget_hide (self->m_search);
 	gtk_widget_show (self->m_box);
 	gtk_widget_hide (self->m_viewgrid);
 	gtk_widget_show (self->m_viewlist);

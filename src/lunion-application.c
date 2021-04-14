@@ -122,21 +122,21 @@ static void lunion_application_init (LunionApplication* self)
 GtkWidget* lunion_application_create_window (LunionApplication* self)
 {
 	GtkWidget* mainwindow;
-	GtkCssProvider* provider;
-	GFile* css;
+	GtkCssProvider* cssProvider;
+	GFile* cssProviderFile;
 
 	// TODO Check error
-	css = g_file_new_for_path ("src/lunion.css");
+	cssProviderFile = g_file_new_for_path ("src/lunion.css");
 
 	// Load our css theme
-	provider = gtk_css_provider_new ();
-	gtk_css_provider_load_from_file (provider, css);
-	gtk_style_context_add_provider_for_display (self->m_display, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	cssProvider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_file (cssProvider, cssProviderFile);
+	gtk_style_context_add_provider_for_display (self->m_display, GTK_STYLE_PROVIDER (cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 	// Window
 	mainwindow = lunion_window_new (self);
 
-	g_object_unref (css);
+	g_object_unref (cssProviderFile);
 
 	return mainwindow;
 }
