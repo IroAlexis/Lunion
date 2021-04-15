@@ -26,10 +26,6 @@
 #define CONFIG_DIR   "/.config/lunion"
 #define CACHE_DIR    "/.cache/lunion"
 
-#define ANSI_COLOR_RED   "\x1b[31m"
-#define ANSI_COLOR_GREEN "\x1b[32m"
-#define ANSI_COLOR_RESET "\x1b[0m"
-
 
 typedef struct _LunionList LunionList;
 
@@ -47,16 +43,7 @@ void lunion_display_list (LunionList* lst);
 void lunion_free_list (LunionList** lst);
 
 
-char* lunion_get_game_location ();
-
-
 int lunion_init_dirs ();
-
-
-LunionList* lunion_install_games_list (const char* path, DIR** stream, struct dirent** sdir);
-
-
-LunionList* lunion_search_games (const char* path);
 
 
 int lunion_set_env_var (const char* name, const char* value);

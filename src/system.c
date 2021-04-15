@@ -121,6 +121,7 @@ int lunion_create_dir (const char* path, const char* dirname)
 }
 
 
+/* DEPRECATED
 int lunion_detect_file (const char* path, const char* dirname, const char* filename)
 {
 	struct stat st;
@@ -148,15 +149,16 @@ int lunion_detect_file (const char* path, const char* dirname, const char* filen
 
 	if (stat (tmp, &st) != 0)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "NO\n" ANSI_COLOR_RESET);
+		fprintf (stderr, "NO\n");
 		free (tmp);
 		return 1;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "OK\n" ANSI_COLOR_RESET);
+	fprintf (stderr, "OK\n");
 	free (tmp);
 	return 0;
 }
+*/
 
 
 void lunion_display_list (LunionList* lst)
@@ -185,16 +187,6 @@ void lunion_free_list (LunionList** lst)
 	tmp = NULL;
 	*lst = NULL;
 }
-
-
-/* TODO Work In Progress
-char* lunion_get_game_location ()
-{
-	// Find the configuration file config.json
-	// Parse the file for return the string that we want (?)
-	return NULL;
-}
-*/
 
 
 int lunion_init_usr_specific_data (const char* home, const char* dirname)
@@ -258,6 +250,7 @@ int lunion_init_dirs ()
 }
 
 
+/* DEPRECATED
 LunionList* lunion_install_games_list (const char* path, DIR** stream, struct dirent** sdir)
 {
 	DIR*           p_stream;
@@ -291,8 +284,10 @@ LunionList* lunion_install_games_list (const char* path, DIR** stream, struct di
 
 	return lst;
 }
+*/
 
 
+/* DEPRECATED
 LunionList* lunion_search_games (const char* path)
 {
 	DIR*           stream = NULL;
@@ -314,6 +309,7 @@ LunionList* lunion_search_games (const char* path)
 
 	return lst;
 }
+*/
 
 
 int lunion_set_env_var (const char* name, const char* value)
