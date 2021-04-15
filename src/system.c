@@ -81,7 +81,7 @@ int lunion_create_dir_alt (const char* path)
 
 	if (mkdir (path, 0777) != 0 && errno != EEXIST)
 	{
-		fprintf (stderr, "[-] err:: %s", path);
+		fprintf (stderr, "[-] err:: lunion_create_dir_alt: %s", path);
 		perror (": ");
 		return EXIT_FAILURE;
 	}
@@ -102,7 +102,7 @@ int lunion_create_dir (const char* path, const char* dirname)
 	tmp = strndup (path, strlen (path));
 	if (NULL == tmp)
 	{
-		fprintf (stderr, "[-] err:: Allocation problem\n");
+		fprintf (stderr, "[-] err:: lunion_create_dir: Allocation problem\n");
 
 		free (tmp);
 		return EXIT_FAILURE;
@@ -205,7 +205,7 @@ int lunion_init_usr_specific_data (const char* home, const char* dirname)
 	path = (char*) calloc (strlen (home) + 1, sizeof (char));
 	if (NULL == path)
 	{
-		fprintf (stderr, "[-] err:: Allocation problem\n");
+		fprintf (stderr, "[-] err:: lunion_init_usr_specific_data: Allocation problem\n");
 		return EXIT_FAILURE;
 	}
 
@@ -246,7 +246,7 @@ int lunion_init_dirs ()
 	home = getenv ("HOME");
 	if (NULL == home)
 	{
-		fprintf (stderr, "[-] err:: User path not found\n");
+		fprintf (stderr, "[-] err:: lunion_init_dirs: User path not found\n");
 		return EXIT_FAILURE;
 	}
 
@@ -254,28 +254,6 @@ int lunion_init_dirs ()
 	lunion_init_usr_specific_data (home, CONFIG_DIR);
 	lunion_init_usr_specific_data (home, CACHE_DIR);
 
-	return EXIT_SUCCESS;
-}
-
-
-int lunion_init_env_var (const char* name, const char* value)
-{
-	assert (name != NULL);
-	assert (value != NULL);
-
-	errno = 0;
-
-	if (setenv (name, value, 1) != 0)
-	{
-		if (errno == EINVAL)
-			fprintf (stderr, "[-] err:: lunion_init_env_var: %s is void or contains an '=' character\n", name);
-		if (errno == ENOMEM)
-			fprintf (stderr, "[-] err:: lunion_init_env_var: Insufficient memory to add a new variable to the environment\n");
-
-		return EXIT_FAILURE;
-	}
-
-	fprintf (stdout, "[+] info:: %s=%s\n", name, value);
 	return EXIT_SUCCESS;
 }
 
@@ -337,3 +315,40 @@ LunionList* lunion_search_games (const char* path)
 	return lst;
 }
 
+
+int lunion_set_env_var (const char* name, const char* value)
+{
+	assert (name != NULL);
+	assert (value != NULL);
+
+	errno = 0;
+
+	if (setenv (name, value, 1) != 0)
+	{
+		if (errno == EINVAL)
+			fprintf (stderr, "[-] err:: lunion_set_env_var: %s: The variable name is void or contains an '=' character\n", name);
+		if (errno == ENOMEM)
+			fprintf (stderr, "[-] err:: lunion_set_env_var: Insufficient memory to add a new variable to the environment\n");
+
+		return EXIT_FAILURE;
+	}
+
+	fprintf (stdout, "[+] info:: %s=%s\n", name, value);
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_unset_env_var (const char* name)
+{
+	assert (name != NULL);
+
+	errno = 0;
+
+	if (unsetenv (name) != 0 && errno == EINVAL)
+	{
+		fprintf (stderr, "[-] err:: lunion_unset_env_var: %s: The name variable is void or contains an '=' character\n", name);
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
