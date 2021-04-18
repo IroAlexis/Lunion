@@ -138,8 +138,8 @@ int main ()
 
 	test_lunion_unset_env_var ("WINEDLLOVERRIDES");
 
-	test_lunion_convert_to_unix_style ("Assassin's Creed®: Director's Cut");
+	test_lunion_convert_to_unix_style ("no_mans_sky");
 	test_lunion_convert_to_unix_style ("Shadowrun: Dragonfall - Director's Cut");
 	test_lunion_convert_to_unix_style ("Beyond Good & Evil™");
-	test_lunion_convert_to_unix_style ("The Witcher   3");
+	test_lunion_convert_to_unix_style ("The Witcher  3     ");
 }

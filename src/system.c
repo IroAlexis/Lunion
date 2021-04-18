@@ -80,15 +80,15 @@ char* lunion_convert_to_unix_style (const char* text)
 {
 	assert (text != NULL);
 
-	char* name;
-	int len;
+	char* name = NULL;
+	size_t len;
 	int tx;
 	int nx;
 	int r_memb = 0;
 
 	len = strlen (text) + 1;
 
-	name = (char*) calloc (len, sizeof (char));
+	name = (char*) calloc (len, len * sizeof (char));
 	if (NULL == name)
 	{
 		fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Allocation problem\n");
@@ -116,7 +116,7 @@ char* lunion_convert_to_unix_style (const char* text)
 			nx++;
 		}
 
-		else if (text[tx] == ' ' && name[nx - 1] != '-')
+		else if (text[tx] == ' ' && text[tx + 1] != '\0' && text[tx + 1] != ' ' && name[nx - 1] != '-')
 		{
 			name[nx] = '-';
 			nx++;
