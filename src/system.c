@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <assert.h>
@@ -72,6 +73,75 @@ int lunion_list_alloc_member (const char* dirname, LunionList** lst)
 	new_data = NULL;
 
 	return EXIT_SUCCESS;
+}
+
+
+char* lunion_convert_to_unix_style (const char* text)
+{
+	assert (text != NULL);
+
+	char* name;
+	int len;
+	int tx;
+	int nx;
+	int r_memb = 0;
+
+	len = strlen (text) + 1;
+
+	name = (char*) calloc (len, sizeof (char));
+	if (NULL == name)
+	{
+		fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Allocation problem\n");
+		return NULL;
+	}
+
+	for (tx = 0, nx = 0; tx < strlen(text); tx++)
+	{
+		if ((text[tx] >= 'a' && text[tx] <= 'z') || (text[tx] >= '0' && text[tx] <= '9'))
+		{
+			name[nx] = text[tx];
+			nx++;
+		}
+
+		// Convert to lower case
+		else if (text[tx] >= 'A' && text[tx] <= 'Z')
+		{
+			name[nx] = tolower (text[tx]);
+			nx++;
+		}
+
+		else if (text[tx] == '_')
+		{
+			name[nx] = '-';
+			nx++;
+		}
+
+		else if (text[tx] == ' ' && name[nx - 1] != '-')
+		{
+			name[nx] = '-';
+			nx++;
+		}
+
+		// Other char
+		else if (!(text[tx] >= 'a' && text[tx] <= 'z') && (text[tx] != '_' || text[tx] != '-'))
+			r_memb += 1;
+	}
+	// Add the '\0' char
+	name[++nx] = text[tx];
+
+	if (r_memb != 0)
+	{
+		name = (char*) realloc (name, len - (r_memb * sizeof(char)));
+		if (NULL == name)
+		{
+			fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Reallocation problem\n");
+			free (name);
+
+			return NULL;
+		}
+	}
+
+	return name;
 }
 
 
@@ -319,7 +389,7 @@ int lunion_set_env_var (const char* name, const char* value)
 
 	errno = 0;
 
-	if (setenv (name, value, 1) != 0)
+	if (setenv (name, value, 1))
 	{
 		if (errno == EINVAL)
 			fprintf (stderr, "[-] err:: lunion_set_env_var: %s: The variable name is void or contains an '=' character\n", name);
@@ -340,7 +410,7 @@ int lunion_unset_env_var (const char* name)
 
 	errno = 0;
 
-	if (unsetenv (name) != 0 && errno == EINVAL)
+	if (unsetenv (name) && errno == EINVAL)
 	{
 		fprintf (stderr, "[-] err:: lunion_unset_env_var: %s: The name variable is void or contains an '=' character\n", name);
 		return EXIT_FAILURE;

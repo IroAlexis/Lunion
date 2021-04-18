@@ -34,6 +34,9 @@ typedef struct _LunionList LunionList;
 int lunion_create_dir (const char* path, const char* dirname);
 
 
+char* lunion_convert_to_unix_style (const char* text);
+
+
 int lunion_detect_file (const char* path, const char* dirname, const char* filename);
 
 

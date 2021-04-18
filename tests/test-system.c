@@ -109,6 +109,25 @@ int test_lunion_unset_env_var (const char* name)
 }
 
 
+int test_lunion_convert_to_unix_style (const char* text)
+{
+	char* t_new = NULL;
+
+	t_new = lunion_convert_to_unix_style (text);
+	if (NULL == t_new)
+	{
+		fprintf (stderr, "[+] test:: lunion_convert_to_unix_style: ");
+		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		return EXIT_FAILURE;
+	}
+
+	fprintf (stdout, "[+] test:: lunion_convert_to_unix_style: %s | %s\n", text, t_new);
+	free (t_new);
+
+	return EXIT_SUCCESS;
+}
+
+
 int main ()
 {
 	test_lunion_set_env_var ("WINEDLLOVERRIDES", "\"mscoree,mshtml,winemenubuilder.exe=\"");
@@ -118,4 +137,9 @@ int main ()
 	test_error_lunion_get_env_var ("WINEDEBUG=");
 
 	test_lunion_unset_env_var ("WINEDLLOVERRIDES");
+
+	test_lunion_convert_to_unix_style ("Assassin's Creed®: Director's Cut");
+	test_lunion_convert_to_unix_style ("Shadowrun: Dragonfall - Director's Cut");
+	test_lunion_convert_to_unix_style ("Beyond Good & Evil™");
+	test_lunion_convert_to_unix_style ("The Witcher   3");
 }
