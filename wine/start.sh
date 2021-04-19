@@ -28,7 +28,7 @@ export DXVK_LOG_LEVEL=none
 
 #VKD3D
 export VKD3D_DEBUG=none
-export VKD3D_CONFIG=dxr,force_static_cbv,multi_queue
+export VKD3D_CONFIG=dxr,force_static_cbv
 
 export __GL_SHADER_DISK_CACHE=1
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
