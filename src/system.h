@@ -46,6 +46,9 @@ void lunion_display_list (LunionList* lst);
 void lunion_free_list (LunionList** lst);
 
 
+char* lunion_get_absolute_path (const char* file);
+
+
 int lunion_init_dirs ();
 
 

@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <libgen.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <assert.h>
@@ -256,6 +257,18 @@ void lunion_free_list (LunionList** lst)
 
 	tmp = NULL;
 	*lst = NULL;
+}
+
+
+char* lunion_get_absolute_path (const char* file)
+{
+	char* path = NULL;
+
+	path = strdup (file);
+	if (NULL == path)
+		return NULL;
+
+	return dirname (path);
 }
 
 
