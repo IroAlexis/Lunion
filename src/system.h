@@ -42,10 +42,10 @@ char* lunion_convert_to_unix_style (const char* text);
 /*!
  * @brief Create a directory
  * @param path Path where we create the directory
- * @param dirname Name directory
+ * @param d_name Name directory
  * @return EXIT_SUCCESS if you create the directory, EXIT_FAILURE otherwise
  */
-int lunion_create_dir (const char* path, const char* dirname);
+int lunion_create_dir (const char* path, const char* d_name);
 
 
 /*!

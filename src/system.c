@@ -32,13 +32,13 @@
 
 struct _LunionList
 {
-	char*               dirname;
+	char*               d_name;
 	struct _LunionList* next;
 };
 
 
 
-int lunion_list_alloc_member (const char* dirname, LunionList** lst)
+int lunion_list_alloc_member (const char* d_name, LunionList** lst)
 {
 	LunionList* t_ptr = NULL;
 	LunionList* new_data = NULL;
@@ -51,8 +51,8 @@ int lunion_list_alloc_member (const char* dirname, LunionList** lst)
 	}
 
 	// Allocation for the adding of the string in the list
-	new_data->dirname = strndup (dirname, strlen (dirname));
-	if (NULL == new_data->dirname)
+	new_data->d_name = strndup (d_name, strlen (d_name));
+	if (NULL == new_data->d_name)
 	{
 		fprintf (stderr, "[-] err:: Allocation problem\n");
 		return EXIT_FAILURE;
@@ -162,7 +162,7 @@ int lunion_create_dir_alt (const char* path)
 }
 
 
-int lunion_create_dir (const char* path, const char* dirname)
+int lunion_create_dir (const char* path, const char* d_name)
 {
 	char* tmp = NULL;
 	struct stat st = {0};
@@ -179,8 +179,8 @@ int lunion_create_dir (const char* path, const char* dirname)
 		return EXIT_FAILURE;
 	}
 
-	tmp = (char*) realloc (tmp, (strlen (tmp) + strlen (dirname) + 1) * sizeof (char));
-	strncat (tmp, dirname, strlen (dirname));
+	tmp = (char*) realloc (tmp, (strlen (tmp) + strlen (d_name) + 1) * sizeof (char));
+	strncat (tmp, d_name, strlen (d_name));
 	if (lunion_create_dir_alt (tmp) == EXIT_FAILURE)
 	{
 		free (tmp);
@@ -239,7 +239,7 @@ void lunion_display_list (LunionList* lst)
 	fprintf (stdout, "[-] info:: List of installed games\n");
 
 	for (tmp = lst; tmp != NULL; tmp = tmp->next)
-		fprintf (stdout, "   > %s\n", tmp->dirname);
+		fprintf (stdout, "   > %s\n", tmp->d_name);
 }
 
 
@@ -251,7 +251,7 @@ void lunion_free_list (LunionList** lst)
 	{
 		tmp = *lst;
 		*lst = tmp->next;
-		free (tmp->dirname);
+		free (tmp->d_name);
 		free (tmp);
 	}
 
@@ -272,7 +272,7 @@ char* lunion_get_absolute_path (const char* file)
 }
 
 
-int lunion_init_usr_specific_data (const char* home, const char* dirname)
+int lunion_init_usr_specific_data (const char* home, const char* d_name)
 {
 	char* path = NULL;
 
@@ -286,24 +286,24 @@ int lunion_init_usr_specific_data (const char* home, const char* dirname)
 
 	strncpy (path, home, strlen (home));
 
-	lunion_create_dir (path, dirname);
+	lunion_create_dir (path, d_name);
 
-	path = (char*) realloc (path, (strlen (path) + strlen (dirname) + 1) * sizeof (char));
-	strncat (path, dirname, strlen (dirname));
+	path = (char*) realloc (path, (strlen (path) + strlen (d_name) + 1) * sizeof (char));
+	strncat (path, d_name, strlen (d_name));
 
-	if (strncmp (dirname, USR_DATA_DIR, strlen (dirname)) == 0)
+	if (strncmp (d_name, USR_DATA_DIR, strlen (d_name)) == 0)
 	{
 		lunion_create_dir (path, "/tools");
 		lunion_create_dir (path, "/runtime");
 		lunion_create_dir (path, "/logs");
 	}
 
-	if (strncmp (dirname, CONFIG_DIR, strlen (dirname)) == 0)
+	if (strncmp (d_name, CONFIG_DIR, strlen (d_name)) == 0)
 	{
 		lunion_create_dir (path, "/games");
 	}
 
-	if (strncmp (dirname, CACHE_DIR, strlen (dirname)) == 0)
+	if (strncmp (d_name, CACHE_DIR, strlen (d_name)) == 0)
 	{
 		lunion_create_dir (path, "/downloads");
 		lunion_create_dir (path, "/tmp");
@@ -325,6 +325,7 @@ int lunion_init_dirs ()
 		return EXIT_FAILURE;
 	}
 
+	// TODO Check errors
 	lunion_init_usr_specific_data (home, USR_DATA_DIR);
 	lunion_init_usr_specific_data (home, CONFIG_DIR);
 	lunion_init_usr_specific_data (home, CACHE_DIR);
