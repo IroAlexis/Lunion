@@ -138,7 +138,7 @@ int test_lunion_get_absolute_path ()
 
 	path = lunion_get_absolute_path (file);
 	fprintf (stderr, "[+] test:: lunion_get_absolute_path: ");
-	if (!strcmp (path, "/usr/bin/env"))
+	if (strcmp (path, "/usr/bin"))
 	{
 		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
 		free (path);
