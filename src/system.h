@@ -31,30 +31,66 @@ typedef struct _LunionList LunionList;
 
 
 
-int lunion_create_dir (const char* path, const char* dirname);
-
-
+/*!
+ * @brief Convert the game name to a name compatible with the Unix-style
+ * @param text Game name
+ * @return A pointer to the new game name allocated, NULL otherwise
+ */
 char* lunion_convert_to_unix_style (const char* text);
 
 
-int lunion_detect_file (const char* path, const char* dirname, const char* filename);
+/*!
+ * @brief Create a directory
+ * @param path Path where we create the directory
+ * @param dirname Name directory
+ * @return EXIT_SUCCESS if you create the directory, EXIT_FAILURE otherwise
+ */
+int lunion_create_dir (const char* path, const char* dirname);
 
 
+/*!
+ * @brief Display the LunionList content
+ * @param lst The list
+ */
 void lunion_display_list (LunionList* lst);
 
 
+/*!
+ * @brief Clear the LunionList content
+ * @param lst The LunionList pointer to be deallocated
+ */
 void lunion_free_list (LunionList** lst);
 
 
+/*!
+ * @brief Recover only the absolute path a file
+ * @param file The file path
+ * @return A pointer to the absolute path allocated, NULL otherwise
+ */
 char* lunion_get_absolute_path (const char* file);
 
 
+/*!
+ * @brief Initialize the Lunion directories in the home directory
+ * @return (WIP)
+ */
 int lunion_init_dirs ();
 
 
+/*!
+ * @brief Set an environement variable
+ * @param name Name environement variable
+ * @param value Value environement variable
+ * @return EXIT_SUCCESS if we set the environement variable, EXIT_FAILURE otherwise
+ */
 int lunion_set_env_var (const char* name, const char* value);
 
 
+/*!
+ * @brief Free an environement variable
+ * @param name Name environement variable
+ * @return EXIT_SUCCESS if we free the environement variable, EXIT_FAILURE otherwise
+ */
 int lunion_unset_env_var (const char* name);
 
 
