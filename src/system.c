@@ -86,16 +86,16 @@ char* lunion_convert_to_unix_style (const char* text)
 	int nx;
 	int r_memb = 0;
 
-	len = strlen (text) + 1;
+	len = strlen (text);
 
-	name = (char*) calloc (len, len * sizeof (char));
+	name = (char*) malloc ((len + 1) * sizeof (char));
 	if (NULL == name)
 	{
 		fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Allocation problem\n");
 		return NULL;
 	}
 
-	for (tx = 0, nx = 0; tx < strlen(text); tx++)
+	for (tx = 0, nx = 0; tx < len; tx++)
 	{
 		if ((text[tx] >= 'a' && text[tx] <= 'z') || (text[tx] >= '0' && text[tx] <= '9'))
 		{
@@ -127,11 +127,11 @@ char* lunion_convert_to_unix_style (const char* text)
 			r_memb += 1;
 	}
 	// Add the '\0' char
-	name[++nx] = text[tx];
+	name[nx] = text[tx];
 
 	if (r_memb != 0)
 	{
-		name = (char*) realloc (name, len - (r_memb * sizeof(char)));
+		name = (char*) realloc (name, ((len + 1) - r_memb) * sizeof(char));
 		if (NULL == name)
 		{
 			fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Reallocation problem\n");
