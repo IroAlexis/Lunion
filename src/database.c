@@ -24,6 +24,37 @@
 
 
 
+static int callback (void* not_used, int argc, char** argv, char** col_name)
+{
+	int ix;
+
+	for (ix = 0; ix < argc; ix++)
+	{
+		fprintf (stderr, "%s = %s\n", col_name[ix], argv[ix] ? argv [ix] : "NULL");
+	}
+
+	return EXIT_SUCCESS;
+}
+
+/*!
+ * @brief Create a table in the database
+ */
+static int lunion_create_table (sqlite3* db, const char* sql)
+{
+	char* errmsg = NULL;
+
+	if (sqlite3_exec (db, sql, callback, 0, &errmsg) != SQLITE_OK)
+	{
+		fprintf (stderr, "[+] err:: lunion_create_table: Error\n");
+		sqlite3_free (errmsg);
+		return EXIT_FAILURE;
+	}
+
+	free (errmsg);
+	return EXIT_FAILURE;
+}
+
+
 int lunion_close_database (sqlite3** db)
 {
 	assert (db != NULL);
@@ -48,7 +79,27 @@ sqlite3* lunion_connect_database (const char* f_name)
 }
 
 
-int lunion_init_tables (sqlite3* db)
+// TODO Check the errors and the case where the tables already exist
+// For the last, return an specific error
+int lunion_init_tables (sqlite3** db)
 {
+	char* sql = NULL;
+
+	sql = "CREATE TABLE game(" \
+	      "id INTEGER PRIMARY KEY not null," \
+	      "name TEXT," \
+	      "slug TEXT not null);";
+	lunion_create_table (*db, sql);
+
+	sql = "CREATE TABLE gamesource(" \
+	      "id INTEGER PRIMARY KEY  not null," \
+	      "name TEXT not null);";
+	lunion_create_table (*db, sql);
+
+	sql = "CREATE TABLE plateform(" \
+	      "id INTEGER PRIMARY KEY  not null," \
+	      "os TEXT not null);";
+	lunion_create_table (*db, sql);
+
 	return EXIT_FAILURE;
 }

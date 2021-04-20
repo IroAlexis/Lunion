@@ -38,4 +38,7 @@ int lunion_close_database (sqlite3** db);
  */
 sqlite3* lunion_connect_database (const char* f_name);
 
+
+int lunion_init_tables (sqlite3** db);
+
 #endif
