@@ -9,14 +9,15 @@
 
 ## In Progress
 ### 0.1_alpha1
-Add a game and launch this game (just click on cover) :
-* Click on `Add a game` and select the plateform (we return a value that can be identifate the selected plateform)
-* Open a GtkDialog with GtkListBox :
-  * Fill the filed `Name` (slug build automaticly)
-  * Fill the field `Prefix directory` (if windows is selected)
-  * Choose the file in the field `Executable`
-  * The field `Working directory` is fill automaticly fom `Executable` (state : `insensitive`)
-  * Fill the field `Argument(s)`
+* Database creation and implement basic queries
+* Add a game and launch this game (just click on cover) :
+  * Click on `Add a game` and select the plateform (we return a value that can be identifate the selected plateform)
+  * Open a GtkDialog with GtkListBox :
+    * Fill the filed `Name` (slug build automaticly)
+    * Fill the field `Prefix directory` (if windows is selected)
+    * Choose the file in the field `Executable`
+    * The field `Working directory` is fill automaticly fom `Executable` (state : `insensitive`)
+    * Fill the field `Argument(s)`
 
 
 ## Features
