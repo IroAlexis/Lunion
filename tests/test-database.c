@@ -29,30 +29,31 @@
 
 
 
-int test_lunion_database ()
+int test_lunion_close_database (sqlite3** db)
 {
-	sqlite3* db = NULL;
-
-	db = lunion_connect_database ("/tmp/test.db");
-
-	if (NULL == db)
+	fprintf (stderr, "[+] test:: test_lunion_close_database: ");
+	if (lunion_close_database (db) != SQLITE_OK)
 	{
-		fprintf (stderr, "[+] test:: test_lunion_database: ");
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
-		return EXIT_FAILURE;
-	}
-
-	// Capture error for the test
-	lunion_init_tables (&db);
-
-	if (lunion_close_database (&db) != SQLITE_OK)
-	{
-		fprintf (stderr, "[+] test:: test_lunion_database: ");
 		fprintf (stderr, ANSI_COLOR_RED "close: FAILED\n" ANSI_COLOR_RESET);
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, "[+] test:: test_lunion_database: ");
+	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	return EXIT_SUCCESS;
+}
+
+
+int test_lunion_connect_database (sqlite3** db)
+{
+	*db = lunion_connect_database ("/tmp/test.db");
+
+	fprintf (stderr, "[+] test:: test_lunion_connect_database: ");
+	if (NULL == *db)
+	{
+		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		return EXIT_FAILURE;
+	}
+
 	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
 	return EXIT_SUCCESS;
 }
@@ -60,5 +61,12 @@ int test_lunion_database ()
 
 int main ()
 {
-	test_lunion_database ();
+	sqlite3* db = NULL;
+
+	test_lunion_connect_database (&db);
+
+	// TODO Capture error for the test
+	lunion_init_tables (&db);
+
+	test_lunion_close_database (&db);
 }
