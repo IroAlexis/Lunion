@@ -34,7 +34,8 @@ int test_lunion_close_database (sqlite3** db)
 	fprintf (stderr, "[+] test:: test_lunion_close_database: ");
 	if (lunion_close_database (db) != SQLITE_OK)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "close: FAILED\n" ANSI_COLOR_RESET);
+		fprintf (stderr, "memory leak: \n");
+		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
 		return EXIT_FAILURE;
 	}
 
