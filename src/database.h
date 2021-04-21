@@ -55,4 +55,8 @@ int lunion_init_gamesource_table (sqlite3** db);
  */
 int lunion_init_tables (sqlite3** db);
 
+
+int lunion_verif_gamesource (sqlite3* db, const char* name);
+
+
 #endif

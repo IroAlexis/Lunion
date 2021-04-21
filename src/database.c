@@ -91,6 +91,7 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
+	// FIXME ? Not sure for this
 	if (sqlite3_step (stmt) == SQLITE_ROW)
 		fprintf (stderr, "[+] info:: lunion_add_database_game: %s: %s\n",
 		         sqlite3_column_text (stmt, 0),
@@ -161,12 +162,17 @@ sqlite3* lunion_connect_database (const char* f_name)
 int lunion_init_gamesource_table (sqlite3** db)
 {
 	// 1 local, 2 gog, 3 steam, 4 epicgames
-	// TODO Verif that the gamesource are already present before add them
-	// We don't want duplication in the gamesource table
-	lunion_add_database_gamesource (*db, "local");
-	lunion_add_database_gamesource (*db, "gog");
-	lunion_add_database_gamesource (*db, "steam");
-	lunion_add_database_gamesource (*db, "epicgames");
+	if (lunion_verif_gamesource (*db, "local") != EXIT_FAILURE)
+		lunion_add_database_gamesource (*db, "local");
+
+	if (lunion_verif_gamesource (*db, "gog") != EXIT_FAILURE)
+		lunion_add_database_gamesource (*db, "gog");
+
+	if (lunion_verif_gamesource (*db, "steam") != EXIT_FAILURE)
+		lunion_add_database_gamesource (*db, "steam");
+
+	if (lunion_verif_gamesource (*db, "epicgames") != EXIT_FAILURE)
+		lunion_add_database_gamesource (*db, "epicgames");
 
 	return EXIT_SUCCESS;
 }
@@ -196,6 +202,34 @@ int lunion_init_tables (sqlite3** db)
 	      "os TEXT not null);";
 	if (lunion_exec_command (*db, sql) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'plateform' already exist\n");
+
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_verif_gamesource (sqlite3* db, const char* name)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+	int ret;
+	int tmp;
+
+	sql = "SELECT name FROM gamesource WHERE name=@name;";
+
+	ret = sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0);
+	if (ret == SQLITE_OK)
+	{
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
+
+	ret = sqlite3_step (p_stmt);
+	sqlite3_finalize (p_stmt);
+
+	if (ret == SQLITE_ROW)
+		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
