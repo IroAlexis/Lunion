@@ -51,7 +51,7 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 	switch (ret)
 	{
 		case SQLITE_OK:
-			free (errmsg);
+			sqlite3_free (errmsg);
 			break;
 
 		default:
