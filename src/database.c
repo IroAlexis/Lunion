@@ -47,7 +47,7 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 	char* errmsg = NULL;
 	int ret;
 
-	ret = sqlite3_exec (db, sql, callback, 0, &errmsg);
+	ret = sqlite3_exec (db, sql, 0, 0, &errmsg);
 
 	switch (ret)
 	{
@@ -71,33 +71,24 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 {
 	char* sql = NULL;
-	sqlite3_stmt* stmt = NULL;
-	int ret;
-	int tmp;
-
+	sqlite3_stmt* p_stmt = NULL;
 
 	sql = "INSERT INTO game(name,slug)" \
 	      "VALUES (@name, @slug);";
 
-	ret = sqlite3_prepare_v2 (db, sql, -1, &stmt, 0);
-	if (ret == SQLITE_OK)
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
-		tmp = sqlite3_bind_parameter_index(stmt, "@name");
-		sqlite3_bind_text (stmt, tmp, name, -1, 0);
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 
-		tmp = sqlite3_bind_parameter_index(stmt, "@slug");
-		sqlite3_bind_text (stmt, tmp, slug, -1, 0);
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@slug");
+		sqlite3_bind_text (p_stmt, tmp, slug, -1, 0);
 	}
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
-	// FIXME ? Not sure for this
-	if (sqlite3_step (stmt) == SQLITE_ROW)
-		fprintf (stderr, "[+] info:: lunion_add_database_game: %s: %s\n",
-		         sqlite3_column_text (stmt, 0),
-		         sqlite3_column_text (stmt, 1));
-
-	sqlite3_finalize (stmt);
+	sqlite3_step (p_stmt);
+	sqlite3_finalize (p_stmt);
 
 	return EXIT_SUCCESS;
 }
@@ -107,28 +98,19 @@ int lunion_add_database_gamesource (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
 	sqlite3_stmt* stmt = NULL;
-	int ret;
-	int tmp;
-
 
 	sql = "INSERT INTO gamesource(name)" \
 	      "VALUES (@name);";
 
-	ret = sqlite3_prepare_v2 (db, sql, -1, &stmt, 0);
-	if (ret == SQLITE_OK)
+	if (sqlite3_prepare_v2 (db, sql, -1, &stmt, 0) == SQLITE_OK)
 	{
-		tmp = sqlite3_bind_parameter_index(stmt, "@name");
+		int tmp = sqlite3_bind_parameter_index(stmt, "@name");
 		sqlite3_bind_text (stmt, tmp, name, -1, 0);
 	}
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_gamesource: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
-	ret = sqlite3_step (stmt);
-	if (ret == SQLITE_ROW)
-		fprintf (stderr, "[+] info:: lunion_add_database_gamesource: %s: %s\n",
-		         sqlite3_column_text (stmt, 0),
-		         sqlite3_column_text (stmt, 1));
-
+	sqlite3_step (stmt);
 	sqlite3_finalize (stmt);
 
 	return EXIT_SUCCESS;
@@ -178,8 +160,7 @@ int lunion_init_gamesource_table (sqlite3** db)
 }
 
 
-// TODO We don't cover the error returns for the moment
-// It is a little bit problematic for the test
+// FIXME Problematic cover
 int lunion_init_tables (sqlite3** db)
 {
 	char* sql = NULL;
@@ -212,18 +193,16 @@ int lunion_verif_gamesource (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 	int ret;
-	int tmp;
 
 	sql = "SELECT name FROM gamesource WHERE name=@name;";
 
-	ret = sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0);
-	if (ret == SQLITE_OK)
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
-		tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
+		fprintf (stderr, "[+] err:: lunion_verif_gamesource: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
 	ret = sqlite3_step (p_stmt);
 	sqlite3_finalize (p_stmt);
