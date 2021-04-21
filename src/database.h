@@ -23,6 +23,12 @@
 
 
 
+int lunion_add_database_game (sqlite3* db, const char* name, const char* slug);
+
+
+int lunion_add_database_gamesource (sqlite3* db, const char* name);
+
+
 /*!
  * @brief Close the database stream
  * @param db Double pointer to the database stream
