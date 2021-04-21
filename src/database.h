@@ -39,6 +39,11 @@ int lunion_close_database (sqlite3** db);
 sqlite3* lunion_connect_database (const char* f_name);
 
 
+/*!
+ * @brief Initialize the database tables
+ * @param db A double pointer to the database stream
+ * @return EXIT_SUCCESS, EXIT_FAILURE otherwise
+ */
 int lunion_init_tables (sqlite3** db);
 
 #endif

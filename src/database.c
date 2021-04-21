@@ -37,21 +37,31 @@ static int callback (void* not_used, int argc, char** argv, char** col_name)
 }
 
 /*!
- * @brief Create a table in the database
+ * @brief Execute a sql command in the databse
+ * @param db A pointer to the database stream
+ * @return A sqlite3 error code (https://www.sqlite.org/rescode.html#result_code_meanings)
  */
-static int lunion_create_table (sqlite3* db, const char* sql)
+static int lunion_exec_command (sqlite3* db, const char* sql)
 {
 	char* errmsg = NULL;
+	int ret;
 
-	if (sqlite3_exec (db, sql, callback, 0, &errmsg) != SQLITE_OK)
+	ret = sqlite3_exec (db, sql, callback, 0, &errmsg);
+
+	switch (ret)
 	{
-		fprintf (stderr, "[+] err:: lunion_create_table: Error\n");
-		sqlite3_free (errmsg);
-		return EXIT_FAILURE;
+		case SQLITE_OK:
+			free (errmsg);
+			break;
+
+		default:
+			fprintf (stderr, "[+] err:: lunion_exec_command: SQL Error %d\n", ret);
+		case SQLITE_ERROR:
+			sqlite3_free (errmsg);
+			break;
 	}
 
-	free (errmsg);
-	return EXIT_FAILURE;
+	return ret;
 }
 
 
@@ -79,8 +89,8 @@ sqlite3* lunion_connect_database (const char* f_name)
 }
 
 
-// TODO Check the errors and the case where the tables already exist
-// For the last, return an specific error
+// TODO We don't cover the error returns for the moment
+// It is a little bit problematic for the test
 int lunion_init_tables (sqlite3** db)
 {
 	char* sql = NULL;
@@ -89,17 +99,21 @@ int lunion_init_tables (sqlite3** db)
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT," \
 	      "slug TEXT not null);";
-	lunion_create_table (*db, sql);
+	if (lunion_exec_command (*db, sql) != SQLITE_OK)
+		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'game' already exist\n");
+
 
 	sql = "CREATE TABLE gamesource(" \
 	      "id INTEGER PRIMARY KEY  not null," \
 	      "name TEXT not null);";
-	lunion_create_table (*db, sql);
+	if (lunion_exec_command (*db, sql) != SQLITE_OK)
+		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'gamesource' already exist\n");
 
 	sql = "CREATE TABLE plateform(" \
 	      "id INTEGER PRIMARY KEY  not null," \
 	      "os TEXT not null);";
-	lunion_create_table (*db, sql);
+	if (lunion_exec_command (*db, sql) != SQLITE_OK)
+		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'plateform' already exist\n");
 
-	return EXIT_FAILURE;
+	return EXIT_SUCCESS;
 }
