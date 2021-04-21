@@ -45,6 +45,9 @@ int lunion_close_database (sqlite3** db);
 sqlite3* lunion_connect_database (const char* f_name);
 
 
+int lunion_init_gamesource_table (sqlite3** db);
+
+
 /*!
  * @brief Initialize the database tables
  * @param db A double pointer to the database stream

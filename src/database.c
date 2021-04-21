@@ -67,7 +67,7 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 }
 
 
-// TODO The parameters aren't not sure for the moment
+// FIXME The parameters aren't not sure for the moment
 int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 {
 	char* sql = NULL;
@@ -155,6 +155,20 @@ sqlite3* lunion_connect_database (const char* f_name)
 	}
 
 	return db;
+}
+
+
+int lunion_init_gamesource_table (sqlite3** db)
+{
+	// 1 local, 2 gog, 3 steam, 4 epicgames
+	// TODO Verif that the gamesource are already present before add them
+	// We don't want duplication in the gamesource table
+	lunion_add_database_gamesource (*db, "local");
+	lunion_add_database_gamesource (*db, "gog");
+	lunion_add_database_gamesource (*db, "steam");
+	lunion_add_database_gamesource (*db, "epicgames");
+
+	return EXIT_SUCCESS;
 }
 
 
