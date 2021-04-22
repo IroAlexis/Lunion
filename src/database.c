@@ -25,49 +25,27 @@
 
 
 
-static int callback (void* not_used, int argc, char** argv, char** col_name)
+/*!
+ * @brief Execute a sql command in the databse
+ * @param db A pointer to the database stream
+ * @return EXIT_SUCCESS if the command execute correctly, EXIT_FAILURE otherwise
+ */
+static int lunion_exec_command (sqlite3* db, const char* sql)
 {
-	int ix;
+	sqlite3_stmt* p_stmt = NULL;
 
-	for (ix = 0; ix < argc; ix++)
-	{
-		fprintf (stderr, "%s = %s\n", col_name[ix], argv[ix] ? argv [ix] : "NULL");
-	}
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
+		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
+
+	sqlite3_step (p_stmt);
+
+	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
 
-/*!
- * @brief Execute a sql command in the databse
- * @param db A pointer to the database stream
- * @return A sqlite3 error code (https://www.sqlite.org/rescode.html#result_code_meanings)
- */
-static int lunion_exec_command (sqlite3* db, const char* sql)
-{
-	char* errmsg = NULL;
-	int ret;
 
-	ret = sqlite3_exec (db, sql, 0, 0, &errmsg);
-
-	switch (ret)
-	{
-		case SQLITE_OK:
-			sqlite3_free (errmsg);
-			break;
-
-		default:
-			fprintf (stderr, "[+] err:: lunion_exec_command: SQL Error %d\n", ret);
-
-		case SQLITE_ERROR:
-			sqlite3_free (errmsg);
-			break;
-	}
-
-	return ret;
-}
-
-
-// FIXME The parameters aren't not sure for the moment
 int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 {
 	char* sql = NULL;
@@ -85,7 +63,7 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 		sqlite3_bind_text (p_stmt, tmp, slug, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
+		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
 
 	sqlite3_step (p_stmt);
 
@@ -110,7 +88,7 @@ int lunion_add_database_gamesource (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_database_gamesource: Failed to execute statement: %s\n", sqlite3_errmsg(db));
+		fprintf (stderr, "[+] err:: lunion_add_database_gamesource: %s\n", sqlite3_errmsg(db));
 
 	sqlite3_step (p_stmt);
 
@@ -168,31 +146,31 @@ int lunion_init_gamesource_table (sqlite3** db)
 }
 
 
-// FIXME Problematic cover
-int lunion_init_tables (sqlite3** db)
+int lunion_init_database (sqlite3** db)
 {
 	char* sql = NULL;
+	int ret = EXIT_SUCCESS;
 
 	sql = "CREATE TABLE game(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null," \
 	      "slug TEXT not null);";
-	if (lunion_exec_command (*db, sql) != SQLITE_OK)
-		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'game' already exist\n");
+	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
+		ret = EXIT_FAILURE;
 
 	sql = "CREATE TABLE gamesource(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
-	if (lunion_exec_command (*db, sql) != SQLITE_OK)
-		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'gamesource' already exist\n");
+	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
+		ret = EXIT_FAILURE;
 
 	sql = "CREATE TABLE plateform(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "os TEXT not null);";
-	if (lunion_exec_command (*db, sql) != SQLITE_OK)
-		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'plateform' already exist\n");
+	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
+		ret = EXIT_FAILURE;
 
-	return EXIT_SUCCESS;
+	return ret;
 }
 
 

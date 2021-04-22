@@ -53,7 +53,7 @@ int lunion_init_gamesource_table (sqlite3** db);
  * @param db A double pointer to the database stream
  * @return EXIT_SUCCESS, EXIT_FAILURE otherwise
  */
-int lunion_init_tables (sqlite3** db);
+int lunion_init_database (sqlite3** db);
 
 
 int lunion_verif_gamesource (sqlite3* db, const char* name);

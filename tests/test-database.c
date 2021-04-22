@@ -60,13 +60,13 @@ int test_lunion_connect_database (sqlite3** db)
 }
 
 
-int test_lunion_init_tables(sqlite3** db)
+int test_lunion_init_database(sqlite3** db)
 {
 	int ret;
 
-	ret = lunion_init_tables (db);
+	ret = lunion_init_database (db);
 
-	fprintf (stderr, "[+] test:: lunion_init_tables: ");
+	fprintf (stderr, "[+] test:: lunion_init_database: ");
 	if (ret != EXIT_SUCCESS)
 	{
 		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
@@ -84,7 +84,7 @@ int main ()
 
 	test_lunion_connect_database (&db);
 
-	test_lunion_init_tables (&db);
+	test_lunion_init_database (&db);
 	lunion_init_gamesource_table (&db);
 	lunion_add_database_game (db, "League of Legends", lunion_convert_to_unix_style ("League of Legends"));
 
