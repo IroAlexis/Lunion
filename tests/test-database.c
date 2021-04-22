@@ -29,6 +29,23 @@
 
 
 
+int test_lunion_add_database_game (sqlite3** db, const char* g_name)
+{
+	char* slug = NULL;
+
+	slug = lunion_convert_to_unix_style (g_name);
+
+	if (lunion_add_database_game (*db, g_name, slug) != EXIT_SUCCESS)
+	{
+		free (slug);
+		return EXIT_FAILURE;
+	}
+
+	free (slug);
+	return EXIT_SUCCESS;
+}
+
+
 int test_lunion_close_database (sqlite3** db)
 {
 	fprintf (stderr, "[+] test:: lunion_close_database: ");
@@ -85,7 +102,9 @@ int main ()
 	test_lunion_connect_database (&db);
 
 	test_lunion_init_database (&db);
-	lunion_add_database_game (db, "League of Legends", lunion_convert_to_unix_style ("League of Legends"));
+	test_lunion_add_database_game (&db, "League of Legends");
+	test_lunion_add_database_game (&db, "The Medium");
+	test_lunion_add_database_game (&db, "Shadowrun: Dragonfall - Director's Cut");
 
 	test_lunion_close_database (&db);
 }
