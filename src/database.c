@@ -174,11 +174,13 @@ int lunion_init_gamesource_table (sqlite3** db)
 int lunion_init_plateform_table (sqlite3** db)
 {
 	// 1 linux, 2 windows
-	if (lunion_add_database_plateform (*db, "linux") == EXIT_FAILURE)
-		return EXIT_FAILURE;
+	if (lunion_verif_plateform (*db, "linux") != EXIT_FAILURE)
+		if (lunion_add_database_plateform (*db, "linux") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
-	if (lunion_add_database_plateform (*db, "windows") == EXIT_FAILURE)
-		return EXIT_FAILURE;
+	if (lunion_verif_plateform (*db, "windows") != EXIT_FAILURE)
+		if (lunion_add_database_plateform (*db, "windows") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
@@ -229,7 +231,33 @@ int lunion_verif_gamesource (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_verif_gamesource: Failed to execute statement: %s\n", sqlite3_errmsg(db));
+		fprintf (stderr, "[+] err:: lunion_verif_gamesource: %s\n", sqlite3_errmsg(db));
+
+	ret = sqlite3_step (p_stmt);
+	sqlite3_finalize (p_stmt);
+
+	if (ret == SQLITE_ROW)
+		return EXIT_FAILURE;
+
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_verif_plateform (sqlite3* db, const char* name)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+	int ret;
+
+	sql = "SELECT name FROM plateform WHERE name=@name;";
+
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_verif_plateform: %s\n", sqlite3_errmsg(db));
 
 	ret = sqlite3_step (p_stmt);
 	sqlite3_finalize (p_stmt);
