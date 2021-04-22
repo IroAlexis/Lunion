@@ -23,12 +23,31 @@
 
 
 
+/*!
+ * @brief Add a game into the game table database
+ * @param db A pointer to the database stream
+ * @param name Game name
+ * @param slug Game slug
+ * @return EXIT_SUCCESS if the game is adding in the database, EXIT_FAILURE otherwise
+ */
 int lunion_add_game (sqlite3* db, const char* name, const char* slug);
 
 
+/*!
+ * @brief Add a game source into the gamesource table database
+ * @param db A pointer to the database stream
+ * @param name Game source name
+ * @return EXIT_SUCCESS if the game source is adding in the database, EXIT_FAILURE otherwise
+ */
 int lunion_add_gamesource (sqlite3* db, const char* name);
 
 
+/*!
+ * @brief Add a plateform into the plateform table database
+ * @param db A pointer to the database stream
+ * @param name Plateform name
+ * @return EXIT_SUCCESS if the plateform is adding in the database, EXIT_FAILURE otherwise
+ */
 int lunion_add_plateform (sqlite3* db, const char* name);
 
 
@@ -40,6 +59,12 @@ int lunion_add_plateform (sqlite3* db, const char* name);
 int lunion_close_database (sqlite3** db);
 
 
+/*!
+ * @brief Delete a game in the database from his id
+ * @param db A pointer to the database stream
+ * @param id Id game in the database
+ * @return EXIT_SUCCESS if the game is deleting in the database, EXIT_FAILURE otherwise
+ */
 int lunion_delete_game (sqlite3* db, int id);
 
 
@@ -51,9 +76,23 @@ int lunion_delete_game (sqlite3* db, int id);
 sqlite3* lunion_connect_database (const char* f_name);
 
 
+/*!
+ * @brief Initialize the gamesource table
+ * @param db A pointer to the database stream
+ * @return EXIT_SUCCESS if the table is already initialize or
+ *                      the initialization doesn't encounter any problem,
+ *         EXIT_FAILURE otherwise
+ */
 int lunion_init_gamesource (sqlite3* db);
 
 
+/*!
+ * @brief Initialize the plateform table
+ * @param db A pointer to the database stream
+ * @return EXIT_SUCCESS if the table is already initialize or
+ *                      the initialization doesn't encounter any problem,
+ *         EXIT_FAILURE otherwise
+ */
 int lunion_init_plateform (sqlite3* db);
 
 
