@@ -26,7 +26,7 @@
 
 
 /*!
- * @brief Execute a sql command in the databse
+ * @brief Execute a sql command in the database
  * @param db A pointer to the database stream
  * @return EXIT_SUCCESS if the command execute correctly, EXIT_FAILURE otherwise
  */
@@ -99,6 +99,31 @@ int lunion_add_database_gamesource (sqlite3* db, const char* name)
 }
 
 
+int lunion_add_database_plateform (sqlite3* db, const char* name)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+
+	sql = "INSERT INTO plateform(name)" \
+	      "VALUES (@name);";
+
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_add_database_plateform: %s\n", sqlite3_errmsg(db));
+
+	sqlite3_step (p_stmt);
+
+	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+		return EXIT_FAILURE;
+
+	return EXIT_SUCCESS;
+}
+
+
 int lunion_close_database (sqlite3** db)
 {
 	assert (db != NULL);
@@ -141,6 +166,19 @@ int lunion_init_gamesource_table (sqlite3** db)
 	if (lunion_verif_gamesource (*db, "epicgames") != EXIT_FAILURE)
 		if (lunion_add_database_gamesource (*db, "epicgames") == EXIT_FAILURE)
 			return EXIT_FAILURE;
+
+	return EXIT_SUCCESS;
+}
+
+
+int lunion_init_plateform_table (sqlite3** db)
+{
+	// 1 linux, 2 windows
+	if (lunion_add_database_plateform (*db, "linux") == EXIT_FAILURE)
+		return EXIT_FAILURE;
+
+	if (lunion_add_database_plateform (*db, "windows") == EXIT_FAILURE)
+		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }

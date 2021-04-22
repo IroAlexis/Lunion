@@ -29,6 +29,9 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug);
 int lunion_add_database_gamesource (sqlite3* db, const char* name);
 
 
+int lunion_add_database_plateform (sqlite3* db, const char* name);
+
+
 /*!
  * @brief Close the database stream
  * @param db Double pointer to the database stream
@@ -46,6 +49,9 @@ sqlite3* lunion_connect_database (const char* f_name);
 
 
 int lunion_init_gamesource_table (sqlite3** db);
+
+
+int lunion_init_plateform_table (sqlite3** db);
 
 
 /*!
