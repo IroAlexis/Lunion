@@ -99,7 +99,7 @@ There is a full list of environment variables available [here](https://www.mesa3
 
 Tips and tricks
 ---------------
-* **Change Windows version : `winecfg /v win10` requires Wine 5.7+**
+* **Change Windows version : `winecfg -v win10` requires Wine 5.7+**
 * Media Foundation workaround for Wine: https://github.com/z0z0z/mf-install or https://github.com/z0z0z/mf-installcab
 * Freeze Wine, use this commande: `WINEPREFIX=/path/to/prefix/ /path/to/wineserver -k`
 * Using winetricks without GUI: `winetricks -q`
