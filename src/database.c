@@ -118,7 +118,7 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO game(name,slug) VALUES (@name, @slug);";
+	sql = "INSERT INTO game (name,slug) VALUES (@name, @slug);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -139,7 +139,7 @@ int lunion_add_gamesource (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO gamesource(name) VALUES (@name);";
+	sql = "INSERT INTO gamesource (name) VALUES (@name);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -157,7 +157,7 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO plateform(name) VALUES (@name);";
+	sql = "INSERT INTO plateform (name) VALUES (@name);";
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
@@ -258,7 +258,7 @@ void lunion_init_database (sqlite3* db)
 
 	fprintf (stdout, "[+] info:: lunion: Initializing database...\n");
 
-	sql = "CREATE TABLE game(" \
+	sql = "CREATE TABLE game (" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null," \
 	      "slug TEXT not null);";
@@ -266,14 +266,14 @@ void lunion_init_database (sqlite3* db)
 	if (ret != SQLITE_OK)
 		lunion_exec_command (db, sql);
 
-	sql = "CREATE TABLE gamesource(" \
+	sql = "CREATE TABLE gamesource (" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
 	ret = sqlite3_table_column_metadata (db, NULL, "gamesource", NULL, NULL, NULL, NULL, NULL, NULL);
 	if (ret != SQLITE_OK)
 		lunion_exec_command (db, sql);
 
-	sql = "CREATE TABLE plateform(" \
+	sql = "CREATE TABLE plateform (" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
 	ret = sqlite3_table_column_metadata (db, NULL, "plateform", NULL, NULL, NULL, NULL, NULL, NULL);
