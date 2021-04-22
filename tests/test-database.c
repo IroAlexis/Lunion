@@ -29,13 +29,13 @@
 
 
 
-int test_lunion_add_database_game (sqlite3** db, const char* g_name)
+int test_lunion_add_game (sqlite3** db, const char* g_name)
 {
 	char* slug = NULL;
 
 	slug = lunion_convert_to_unix_style (g_name);
 
-	if (lunion_add_database_game (*db, g_name, slug) != EXIT_SUCCESS)
+	if (lunion_add_game (*db, g_name, slug) != EXIT_SUCCESS)
 	{
 		free (slug);
 		return EXIT_FAILURE;
@@ -102,9 +102,10 @@ int main ()
 	test_lunion_connect_database (&db);
 
 	test_lunion_init_database (&db);
-	test_lunion_add_database_game (&db, "League of Legends");
-	test_lunion_add_database_game (&db, "The Medium");
-	test_lunion_add_database_game (&db, "Shadowrun: Dragonfall - Director's Cut");
+	test_lunion_add_game (&db, "Thronebreaker: The Witcher Tales");
+	test_lunion_add_game (&db, "Horizon Zero Dawn™ Complete Edition");
+	test_lunion_add_game (&db, "Assassin's Creed®: Director's Cut");
+	lunion_delete_game (db, 1);
 
 	test_lunion_close_database (&db);
 }
