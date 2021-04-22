@@ -40,6 +40,9 @@ int lunion_add_database_plateform (sqlite3* db, const char* name);
 int lunion_close_database (sqlite3** db);
 
 
+int lunion_delete_database_game (sqlite3* db, int id);
+
+
 /*!
  * @brief Open a database stream
  * @param f_name File name

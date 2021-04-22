@@ -25,6 +25,17 @@
 
 
 
+static int lunion_send_statment (sqlite3_stmt* p_stmt)
+{
+	sqlite3_step (p_stmt);
+
+	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+		return EXIT_FAILURE;
+
+	return EXIT_SUCCESS;
+}
+
+
 /*!
  * @brief Execute a sql command in the database
  * @param db A pointer to the database stream
@@ -37,12 +48,7 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
 
-	sqlite3_step (p_stmt);
-
-	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
-		return EXIT_FAILURE;
-
-	return EXIT_SUCCESS;
+	return lunion_send_statment (p_stmt);
 }
 
 
@@ -58,7 +64,6 @@ static int lunion_verif_gamesource (sqlite3* db, const char* name)
 	int ret;
 
 	sql = "SELECT name FROM gamesource WHERE name=@name;";
-
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -89,7 +94,6 @@ static int lunion_verif_plateform (sqlite3* db, const char* name)
 	int ret;
 
 	sql = "SELECT name FROM plateform WHERE name=@name;";
-
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -113,9 +117,7 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO game(name,slug)" \
-	      "VALUES (@name, @slug);";
-
+	sql = "INSERT INTO game(name,slug) VALUES (@name, @slug);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -127,12 +129,7 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
 
-	sqlite3_step (p_stmt);
-
-	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
-		return EXIT_FAILURE;
-
-	return EXIT_SUCCESS;
+	return lunion_send_statment (p_stmt);
 }
 
 
@@ -141,9 +138,7 @@ int lunion_add_database_gamesource (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO gamesource(name)" \
-	      "VALUES (@name);";
-
+	sql = "INSERT INTO gamesource(name) VALUES (@name);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
@@ -152,12 +147,7 @@ int lunion_add_database_gamesource (sqlite3* db, const char* name)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_gamesource: %s\n", sqlite3_errmsg(db));
 
-	sqlite3_step (p_stmt);
-
-	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
-		return EXIT_FAILURE;
-
-	return EXIT_SUCCESS;
+	return lunion_send_statment (p_stmt);
 }
 
 
@@ -166,8 +156,7 @@ int lunion_add_database_plateform (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	sql = "INSERT INTO plateform(name)" \
-	      "VALUES (@name);";
+	sql = "INSERT INTO plateform(name) VALUES (@name);";
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
@@ -177,12 +166,7 @@ int lunion_add_database_plateform (sqlite3* db, const char* name)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_plateform: %s\n", sqlite3_errmsg(db));
 
-	sqlite3_step (p_stmt);
-
-	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
-		return EXIT_FAILURE;
-
-	return EXIT_SUCCESS;
+	return lunion_send_statment (p_stmt);
 }
 
 
@@ -207,6 +191,24 @@ sqlite3* lunion_connect_database (const char* f_name)
 	}
 
 	return db;
+}
+
+
+int lunion_delete_database_game (sqlite3* db, int id)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+
+	sql = "DELETE FROM game WHERE id=@id;";
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@id");
+		sqlite3_bind_int (p_stmt, tmp, id);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_delete_database_game: %s\n", sqlite3_errmsg(db));
+
+	return lunion_send_statment (p_stmt);
 }
 
 
