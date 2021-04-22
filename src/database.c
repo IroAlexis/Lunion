@@ -167,19 +167,19 @@ int lunion_init_tables (sqlite3** db)
 
 	sql = "CREATE TABLE game(" \
 	      "id INTEGER PRIMARY KEY not null," \
-	      "name TEXT," \
+	      "name TEXT not null," \
 	      "slug TEXT not null);";
 	if (lunion_exec_command (*db, sql) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'game' already exist\n");
 
 	sql = "CREATE TABLE gamesource(" \
-	      "id INTEGER PRIMARY KEY  not null," \
+	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
 	if (lunion_exec_command (*db, sql) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'gamesource' already exist\n");
 
 	sql = "CREATE TABLE plateform(" \
-	      "id INTEGER PRIMARY KEY  not null," \
+	      "id INTEGER PRIMARY KEY not null," \
 	      "os TEXT not null);";
 	if (lunion_exec_command (*db, sql) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_init_tables: The table 'plateform' already exist\n");
