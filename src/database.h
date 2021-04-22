@@ -62,10 +62,4 @@ int lunion_init_plateform_table (sqlite3** db);
 int lunion_init_database (sqlite3** db);
 
 
-int lunion_verif_gamesource (sqlite3* db, const char* name);
-
-
-int lunion_verif_plateform (sqlite3* db, const char* name);
-
-
 #endif
