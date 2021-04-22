@@ -85,7 +85,6 @@ int main ()
 	test_lunion_connect_database (&db);
 
 	test_lunion_init_database (&db);
-	lunion_init_gamesource_table (&db);
 	lunion_add_database_game (db, "League of Legends", lunion_convert_to_unix_style ("League of Legends"));
 
 	test_lunion_close_database (&db);

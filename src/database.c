@@ -204,9 +204,12 @@ int lunion_init_database (sqlite3** db)
 
 	sql = "CREATE TABLE plateform(" \
 	      "id INTEGER PRIMARY KEY not null," \
-	      "os TEXT not null);";
+	      "name TEXT not null);";
 	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
 		ret = EXIT_FAILURE;
+
+	lunion_init_gamesource_table (db);
+	lunion_init_plateform_table (db);
 
 	return ret;
 }
