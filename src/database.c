@@ -88,7 +88,9 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 		fprintf (stderr, "[+] err:: lunion_add_database_game: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
 	sqlite3_step (p_stmt);
-	sqlite3_finalize (p_stmt);
+
+	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
@@ -97,21 +99,23 @@ int lunion_add_database_game (sqlite3* db, const char* name, const char* slug)
 int lunion_add_database_gamesource (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
-	sqlite3_stmt* stmt = NULL;
+	sqlite3_stmt* p_stmt = NULL;
 
 	sql = "INSERT INTO gamesource(name)" \
 	      "VALUES (@name);";
 
-	if (sqlite3_prepare_v2 (db, sql, -1, &stmt, 0) == SQLITE_OK)
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
-		int tmp = sqlite3_bind_parameter_index(stmt, "@name");
-		sqlite3_bind_text (stmt, tmp, name, -1, 0);
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
 		fprintf (stderr, "[+] err:: lunion_add_database_gamesource: Failed to execute statement: %s\n", sqlite3_errmsg(db));
 
-	sqlite3_step (stmt);
-	sqlite3_finalize (stmt);
+	sqlite3_step (p_stmt);
+
+	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
@@ -145,16 +149,20 @@ int lunion_init_gamesource_table (sqlite3** db)
 {
 	// 1 local, 2 gog, 3 steam, 4 epicgames
 	if (lunion_verif_gamesource (*db, "local") != EXIT_FAILURE)
-		lunion_add_database_gamesource (*db, "local");
+		if (lunion_add_database_gamesource (*db, "local") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
 	if (lunion_verif_gamesource (*db, "gog") != EXIT_FAILURE)
-		lunion_add_database_gamesource (*db, "gog");
+		if (lunion_add_database_gamesource (*db, "gog") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
 	if (lunion_verif_gamesource (*db, "steam") != EXIT_FAILURE)
-		lunion_add_database_gamesource (*db, "steam");
+		if (lunion_add_database_gamesource (*db, "steam") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
 	if (lunion_verif_gamesource (*db, "epicgames") != EXIT_FAILURE)
-		lunion_add_database_gamesource (*db, "epicgames");
+		if (lunion_add_database_gamesource (*db, "epicgames") == EXIT_FAILURE)
+			return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
