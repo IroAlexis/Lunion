@@ -213,70 +213,75 @@ int lunion_delete_game (sqlite3* db, int id)
 }
 
 
-int lunion_init_gamesource (sqlite3** db)
+int lunion_init_gamesource (sqlite3* db)
 {
 	// 1 local, 2 gog, 3 steam, 4 epicgames
-	if (lunion_verif_gamesource (*db, "local") != EXIT_FAILURE)
-		if (lunion_add_gamesource (*db, "local") == EXIT_FAILURE)
+	if (lunion_verif_gamesource (db, "local") != EXIT_FAILURE)
+		if (lunion_add_gamesource (db, "local") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
-	if (lunion_verif_gamesource (*db, "gog") != EXIT_FAILURE)
-		if (lunion_add_gamesource (*db, "gog") == EXIT_FAILURE)
+	if (lunion_verif_gamesource (db, "gog") != EXIT_FAILURE)
+		if (lunion_add_gamesource (db, "gog") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
-	if (lunion_verif_gamesource (*db, "steam") != EXIT_FAILURE)
-		if (lunion_add_gamesource (*db, "steam") == EXIT_FAILURE)
+	if (lunion_verif_gamesource (db, "steam") != EXIT_FAILURE)
+		if (lunion_add_gamesource (db, "steam") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
-	if (lunion_verif_gamesource (*db, "epicgames") != EXIT_FAILURE)
-		if (lunion_add_gamesource (*db, "epicgames") == EXIT_FAILURE)
+	if (lunion_verif_gamesource (db, "epicgames") != EXIT_FAILURE)
+		if (lunion_add_gamesource (db, "epicgames") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
 
 
-int lunion_init_plateform (sqlite3** db)
+int lunion_init_plateform (sqlite3* db)
 {
 	// 1 linux, 2 windows
-	if (lunion_verif_plateform (*db, "linux") != EXIT_FAILURE)
-		if (lunion_add_plateform (*db, "linux") == EXIT_FAILURE)
+	if (lunion_verif_plateform (db, "linux") != EXIT_FAILURE)
+		if (lunion_add_plateform (db, "linux") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
-	if (lunion_verif_plateform (*db, "windows") != EXIT_FAILURE)
-		if (lunion_add_plateform (*db, "windows") == EXIT_FAILURE)
+	if (lunion_verif_plateform (db, "windows") != EXIT_FAILURE)
+		if (lunion_add_plateform (db, "windows") == EXIT_FAILURE)
 			return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
 }
 
 
-int lunion_init_database (sqlite3** db)
+void lunion_init_database (sqlite3* db)
 {
 	char* sql = NULL;
-	int ret = EXIT_SUCCESS;
+	int ret;
+
+	fprintf (stdout, "[+] info:: lunion: Initializing database...\n");
 
 	sql = "CREATE TABLE game(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null," \
 	      "slug TEXT not null);";
-	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
-		ret = EXIT_FAILURE;
+	ret = sqlite3_table_column_metadata (db, NULL, "game", NULL, NULL, NULL, NULL, NULL, NULL);
+	if (ret != SQLITE_OK)
+		lunion_exec_command (db, sql);
 
 	sql = "CREATE TABLE gamesource(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
-	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
-		ret = EXIT_FAILURE;
+	ret = sqlite3_table_column_metadata (db, NULL, "gamesource", NULL, NULL, NULL, NULL, NULL, NULL);
+	if (ret != SQLITE_OK)
+		lunion_exec_command (db, sql);
 
 	sql = "CREATE TABLE plateform(" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
-	if (lunion_exec_command (*db, sql) == EXIT_FAILURE)
-		ret = EXIT_FAILURE;
+	ret = sqlite3_table_column_metadata (db, NULL, "plateform", NULL, NULL, NULL, NULL, NULL, NULL);
+	if (ret != SQLITE_OK)
+		lunion_exec_command (db, sql);
 
 	lunion_init_gamesource (db);
 	lunion_init_plateform (db);
 
-	return ret;
+	fprintf (stdout, "[+] info:: lunion: Database initialization complete\n");
 }

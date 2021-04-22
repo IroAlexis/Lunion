@@ -79,19 +79,11 @@ int test_lunion_connect_database (sqlite3** db)
 
 int test_lunion_init_database(sqlite3** db)
 {
-	int ret;
+	fprintf (stderr, "[+] test:: lunion_init_database: rework the test\n");
 
-	ret = lunion_init_database (db);
+	lunion_init_database (*db);
 
-	fprintf (stderr, "[+] test:: lunion_init_database: ");
-	if (ret != EXIT_SUCCESS)
-	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
-		return EXIT_FAILURE;
-	}
-
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
-	return EXIT_SUCCESS;
+	return EXIT_FAILURE;
 }
 
 

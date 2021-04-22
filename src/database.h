@@ -51,18 +51,17 @@ int lunion_delete_game (sqlite3* db, int id);
 sqlite3* lunion_connect_database (const char* f_name);
 
 
-int lunion_init_gamesource (sqlite3** db);
+int lunion_init_gamesource (sqlite3* db);
 
 
-int lunion_init_plateform (sqlite3** db);
+int lunion_init_plateform (sqlite3* db);
 
 
 /*!
  * @brief Initialize the database tables
- * @param db A double pointer to the database stream
- * @return EXIT_SUCCESS, EXIT_FAILURE otherwise
+ * @param db A pointer to the database stream
  */
-int lunion_init_database (sqlite3** db);
+void lunion_init_database (sqlite3* db);
 
 
 #endif
