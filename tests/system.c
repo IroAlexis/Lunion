@@ -30,18 +30,31 @@
 
 
 
+static void test_failure (const char* msg)
+{
+	fprintf (stderr, "%s", msg);
+	fprintf (stderr, ANSI_COLOR_RED "FAILURE\n"  ANSI_COLOR_RESET);
+}
+
+
+static void test_success (const char* msg)
+{
+	fprintf (stderr, "%s", msg);
+	fprintf (stderr, ANSI_COLOR_GREEN "SUCCESS\n"  ANSI_COLOR_RESET);
+}
+
+
 int test_lunion_set_env_var (const char* name, const char* value)
 {
 	lunion_set_env_var (name, value);
 
-	fprintf (stderr, "[+] test:: lunion_set_env_var: ");
 	if (getenv (name) == NULL)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_set_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_set_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -50,14 +63,13 @@ int test_error_lunion_set_env_var (const char* name, const char* value)
 {
 	lunion_set_env_var (name, value);
 
-	fprintf (stderr, "[+] test_err:: lunion_set_env_var: ");
 	if (getenv (name) != NULL)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test_err:: lunion_set_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test_err:: lunion_set_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -66,14 +78,13 @@ int test_lunion_get_env_var (const char* name)
 {
 	char* value = getenv (name);
 
-	fprintf (stderr, "[+] test:: lunion_get_env_var: ");
 	if (value == NULL)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_get_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_get_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -82,14 +93,13 @@ int test_error_lunion_get_env_var (const char* name)
 {
 	char* value = getenv (name);
 
-	fprintf (stderr, "[+] test_err:: lunion_get_env_var: ");
 	if (value != NULL)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test_err:: lunion_get_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test_err:: lunion_get_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -98,18 +108,18 @@ int test_lunion_unset_env_var (const char* name)
 {
 	lunion_unset_env_var (name);
 
-	fprintf (stderr, "[+] test:: lunion_unset_env_var: ");
 	if (getenv (name) != NULL)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_unset_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_unset_env_var: ");
 	return EXIT_SUCCESS;
 }
 
 
+// FIXME We don't compare the result and the expected
 int test_lunion_convert_to_unix_style (const char* text)
 {
 	char* t_new = NULL;
@@ -117,14 +127,14 @@ int test_lunion_convert_to_unix_style (const char* text)
 	t_new = lunion_convert_to_unix_style (text);
 	if (NULL == t_new)
 	{
-		fprintf (stderr, "[+] test:: lunion_convert_to_unix_style: ");
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
-
+		test_failure ("[+] test:: lunion_convert_to_unix_style: ");
 		free (t_new);
+
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, "[+] test:: lunion_convert_to_unix_style: %s | %s\n", text, t_new);
+	test_success ("[+] test:: lunion_convert_to_unix_style: ");
+	fprintf (stderr, "   > %s | %s\n", text, t_new); // In waiting fix this test
 	free (t_new);
 
 	return EXIT_SUCCESS;
@@ -137,16 +147,15 @@ int test_lunion_get_absolute_path ()
 	char* path = NULL;
 
 	path = lunion_get_absolute_path (file);
-	fprintf (stderr, "[+] test:: lunion_get_absolute_path: ");
 	if (strcmp (path, "/usr/bin"))
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_get_absolute_path: ");
 		free (path);
 
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_get_absolute_path: ");
 	free (path);
 
 	return EXIT_SUCCESS;
