@@ -119,23 +119,30 @@ int test_lunion_unset_env_var (const char* name)
 }
 
 
-// FIXME We don't compare the result and the expected
-int test_lunion_convert_to_unix_style (const char* text)
+int test_lunion_convert_to_unix_style (const char* text, const char* exp)
 {
-	char* t_new = NULL;
+	char* unx = NULL;
 
-	t_new = lunion_convert_to_unix_style (text);
-	if (NULL == t_new)
+	unx = lunion_convert_to_unix_style (text);
+	if (NULL == unx)
 	{
 		test_failure ("[+] test:: lunion_convert_to_unix_style: ");
-		free (t_new);
+		free (unx);
+
+		return EXIT_FAILURE;
+	}
+
+	if (strncmp (exp, unx, strlen (exp)) != 0)
+	{
+		fprintf (stderr, "[+] test:: lunion_convert_to_unix_style: '%s' '%s'\n", exp, unx);
+		test_failure ("[+] test:: lunion_convert_to_unix_style: ");
+		free (unx);
 
 		return EXIT_FAILURE;
 	}
 
 	test_success ("[+] test:: lunion_convert_to_unix_style: ");
-	fprintf (stderr, "   > %s | %s\n", text, t_new); // In waiting fix this test
-	free (t_new);
+	free (unx);
 
 	return EXIT_SUCCESS;
 }
@@ -172,10 +179,10 @@ int main ()
 
 	test_lunion_unset_env_var ("WINEDLLOVERRIDES");
 
-	test_lunion_convert_to_unix_style ("no_mans_sky");
-	test_lunion_convert_to_unix_style ("Shadowrun: Dragonfall - Director's Cut");
-	test_lunion_convert_to_unix_style ("Beyond Good & Evil™");
-	test_lunion_convert_to_unix_style ("The Witcher  3     ");
+	test_lunion_convert_to_unix_style ("no_mans_sky", "no-mans-sky");
+	test_lunion_convert_to_unix_style ("Shadowrun: Dragonfall - Director's Cut", "shadowrun-dragonfall-directors-cut");
+	test_lunion_convert_to_unix_style ("Beyond Good & Evil™", "beyond-good-evil");
+	test_lunion_convert_to_unix_style ("The Witcher  3     ", "the-witcher-3");
 
 	test_lunion_get_absolute_path ();
 }
