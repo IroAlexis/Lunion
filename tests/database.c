@@ -91,6 +91,20 @@ int test_lunion_connect_database (sqlite3** db)
 }
 
 
+int test_lunion_delete_game (sqlite3** db, int id)
+{
+	// TODO Need a comparaison function for return correctly the test state
+	if (lunion_delete_game (*db, id) != EXIT_SUCCESS)
+	{
+		test_failure ("[+] test:: lunion_delete_game: ");
+		return EXIT_FAILURE;
+	}
+
+	test_success ("[+] test:: lunion_delete_game: ");
+	return EXIT_SUCCESS;
+}
+
+
 int test_lunion_init_database(sqlite3** db)
 {
 	fprintf (stderr, "[+] test:: lunion_init_database: rework the test\n");
@@ -111,7 +125,7 @@ int main ()
 	test_lunion_add_game (&db, "Thronebreaker: The Witcher Tales");
 	test_lunion_add_game (&db, "Horizon Zero Dawn™ Complete Edition");
 	test_lunion_add_game (&db, "Assassin's Creed®: Director's Cut");
-	lunion_delete_game (db, 1);
+	test_lunion_delete_game (&db, 1);
 
 	test_lunion_close_database (&db);
 }
