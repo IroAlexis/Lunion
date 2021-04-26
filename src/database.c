@@ -285,3 +285,39 @@ void lunion_init_database (sqlite3* db)
 
 	fprintf (stdout, "[+] info:: lunion: Database initialization complete\n");
 }
+
+
+int lunion_update_game (sqlite3* db, int id, char* n_name, char* n_slug)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+
+	if (n_name != NULL && n_slug != NULL)
+		sql = "UPDATE game SET name=@name, slug=@slug WHERE id=@id;";
+	else if (NULL == n_slug)
+		sql = "UPDATE game SET name=@name WHERE id=@id;";
+	else if (NULL == n_name)
+		sql = "UPDATE game SET slug=@slug WHERE id=@id;";
+	else
+		return EXIT_FAILURE;
+
+
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		if (tmp != 0)
+			sqlite3_bind_text (p_stmt, tmp, n_name, -1, 0);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@slug");
+		if (tmp != 0)
+			sqlite3_bind_text (p_stmt, tmp, n_slug, -1, 0);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@id");
+		if (tmp != 0)
+			sqlite3_bind_int (p_stmt, tmp, id);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_update_game: %s\n", sqlite3_errmsg(db));
+
+	return lunion_send_statment (p_stmt);
+}
