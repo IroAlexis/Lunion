@@ -25,7 +25,7 @@
 
 
 
-static int lunion_send_statment (sqlite3_stmt* p_stmt)
+static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
 	sqlite3_step (p_stmt);
 
@@ -48,12 +48,12 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
 		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
 
 
 /*!
- * @brief that the game source isn't already exist
+ * @brief Verif that the game source isn't already exist
  * @param name Game source name (local, gog, steam, epicgames)
  * @return EXIT_SUCCESS if the game source isn't exist, EXIT_FAILURE otherwise
  */
@@ -102,7 +102,7 @@ static int lunion_verif_plateform (sqlite3* db, const char* name)
 	else
 		fprintf (stderr, "[+] err:: lunion_verif_plateform: %s\n", sqlite3_errmsg(db));
 
-	// We can't use lunion_send_statment here
+	// We can't use lunion_send_statement here
 	ret = sqlite3_step (p_stmt);
 	sqlite3_finalize (p_stmt);
 
@@ -130,7 +130,7 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_game: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
 
 
@@ -148,7 +148,7 @@ int lunion_add_gamesource (sqlite3* db, const char* name)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_gamesource: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
 
 
@@ -167,7 +167,7 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 	else
 		fprintf (stderr, "[+] err:: lunion_add_plateform: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
 
 
@@ -209,7 +209,7 @@ int lunion_delete_game (sqlite3* db, int id)
 	else
 		fprintf (stderr, "[+] err:: lunion_delete_game: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
 
 
@@ -319,5 +319,5 @@ int lunion_update_game (sqlite3* db, int id, char* n_name, char* n_slug)
 	else
 		fprintf (stderr, "[+] err:: lunion_update_game: %s\n", sqlite3_errmsg(db));
 
-	return lunion_send_statment (p_stmt);
+	return lunion_send_statement (p_stmt);
 }
