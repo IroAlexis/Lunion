@@ -44,8 +44,9 @@ System requirements (Recommended)
 * libadwaita-git
 * libzip
 * sqlite3
-* wine or wine-staging (*optionnal*)
+* wine/wine-staging (*optionnal*)
 * winetricks (*optionnal*)
+* vkd3d (*optionnal*)
 
 
 
