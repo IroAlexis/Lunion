@@ -93,8 +93,35 @@ int test_lunion_connect_database (sqlite3** db)
 
 int test_lunion_delete_game (sqlite3** db, int id)
 {
-	// TODO Need a comparaison function for return correctly the test state
-	if (lunion_delete_game (*db, id) != EXIT_SUCCESS)
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+	int ret;
+
+	if (lunion_delete_game (*db, id) == EXIT_FAILURE)
+	{
+		test_failure ("[+] test:: lunion_delete_game: ");
+		return EXIT_FAILURE;
+	}
+
+	// Search the game in the database for verify that it is deleted
+	sql = "SELECT * FROM game WHERE id=@id";
+	if (sqlite3_prepare_v2 (*db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@id");
+		sqlite3_bind_int (p_stmt, tmp, id);
+	}
+	else
+		fprintf (stderr, "[+] test:: lunion_delete_game: %s\n", sqlite3_errmsg(*db));
+
+	ret = sqlite3_step (p_stmt);
+	sqlite3_finalize (p_stmt);
+
+	if (ret == SQLITE_ROW)
+	{
+		test_failure ("[+] test:: lunion_delete_game: Not deleted: ");
+		return EXIT_FAILURE;
+	}
+	if (ret != SQLITE_DONE)
 	{
 		test_failure ("[+] test:: lunion_delete_game: ");
 		return EXIT_FAILURE;
