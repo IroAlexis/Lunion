@@ -29,6 +29,20 @@
 
 
 
+static void test_failure (const char* msg)
+{
+	fprintf (stderr, "%s", msg);
+	fprintf (stderr, ANSI_COLOR_RED "FAILURE\n"  ANSI_COLOR_RESET);
+}
+
+
+static void test_success (const char* msg)
+{
+	fprintf (stderr, "%s", msg);
+	fprintf (stderr, ANSI_COLOR_GREEN "SUCCESS\n"  ANSI_COLOR_RESET);
+}
+
+
 int test_lunion_add_game (sqlite3** db, const char* g_name)
 {
 	char* slug = NULL;
@@ -38,25 +52,27 @@ int test_lunion_add_game (sqlite3** db, const char* g_name)
 	if (lunion_add_game (*db, g_name, slug) != EXIT_SUCCESS)
 	{
 		free (slug);
+		test_failure ("[+] test:: lunion_add_game: ");
+
 		return EXIT_FAILURE;
 	}
 
 	free (slug);
+	test_success ("[+] test:: lunion_add_game: ");
+
 	return EXIT_SUCCESS;
 }
 
 
 int test_lunion_close_database (sqlite3** db)
 {
-	fprintf (stderr, "[+] test:: lunion_close_database: ");
 	if (lunion_close_database (db) != SQLITE_OK)
 	{
-		fprintf (stderr, "memory leak: \n");
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_close_database: memory leak: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_close_database: ");
 	return EXIT_SUCCESS;
 }
 
@@ -64,15 +80,13 @@ int test_lunion_close_database (sqlite3** db)
 int test_lunion_connect_database (sqlite3** db)
 {
 	*db = lunion_connect_database ("/tmp/test.db");
-
-	fprintf (stderr, "[+] test:: lunion_connect_database: ");
 	if (NULL == *db)
 	{
-		fprintf (stderr, ANSI_COLOR_RED "FAILED\n" ANSI_COLOR_RESET);
+		test_failure ("[+] test:: lunion_connect_database: ");
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stderr, ANSI_COLOR_GREEN "DONE\n" ANSI_COLOR_RESET);
+	test_success ("[+] test:: lunion_connect_database: ");
 	return EXIT_SUCCESS;
 }
 
