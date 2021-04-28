@@ -171,6 +171,51 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 }
 
 
+int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char* path, const char* exec, const char* version)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+
+	if (version != NULL && exec != NULL)
+		sql = "INSERT INTO game (name, type, path, exec, version) VALUES (@name, @type, @path, @version);";
+	else if (exec != NULL && version == NULL)
+		sql = "INSERT INTO game (name, type, path, exec) VALUES (@name, @type, @path, @exec);";
+	else if (exec == NULL && version != NULL)
+		sql = "INSERT INTO game (name, type, path, version) VALUES (@name, @type, @path, @version);";
+	else
+		sql = "INSERT INTO game (name, type, path) VALUES (@name, @type, @path);";
+
+
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
+		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@type");
+		sqlite3_bind_text (p_stmt, tmp, type, -1, 0);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@path");
+		sqlite3_bind_text (p_stmt, tmp, exec, -1, 0);
+
+		if (exec != NULL)
+		{
+			tmp = sqlite3_bind_parameter_index(p_stmt, "@exec");
+			sqlite3_bind_text (p_stmt, tmp, exec, -1, 0);
+		}
+
+		if (version != NULL)
+		{
+			tmp = sqlite3_bind_parameter_index(p_stmt, "@version");
+			sqlite3_bind_text (p_stmt, tmp, version, -1, 0);
+		}
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_add_tool: %s\n", sqlite3_errmsg(db));
+
+	return lunion_send_statement (p_stmt);
+}
+
+
 int lunion_close_database (sqlite3** db)
 {
 	assert (db != NULL);
@@ -277,6 +322,17 @@ void lunion_init_database (sqlite3* db)
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null);";
 	ret = sqlite3_table_column_metadata (db, NULL, "plateform", NULL, NULL, NULL, NULL, NULL, NULL);
+	if (ret != SQLITE_OK)
+		lunion_exec_command (db, sql);
+
+	sql = "CREATE TABLE tool (" \
+	      "id INTEGER PRIMARY KEY not null," \
+	      "name TEXT not null," \
+	      "type TEXT not null," \
+	      "path TEXT not null," \
+	      "exec TEXT," \
+	      "version TEXT);";
+	ret = sqlite3_table_column_metadata (db, NULL, "tool", NULL, NULL, NULL, NULL, NULL, NULL);
 	if (ret != SQLITE_OK)
 		lunion_exec_command (db, sql);
 
