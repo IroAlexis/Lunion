@@ -55,6 +55,19 @@ int test_lunion_add_game (sqlite3** db, const char* g_name, const char* slug)
 }
 
 
+int test_lunion_add_tool (sqlite3** db, const char* name, const char* type, const char* path, const char* exec, const char* version)
+{
+	if (lunion_add_tool (*db, name, type, path, exec, version) != EXIT_SUCCESS)
+	{
+		test_failure ("[+] test:: lunion_add_tool: ");
+		return EXIT_FAILURE;
+	}
+
+	test_success ("[+] test:: lunion_add_tool: ");
+	return EXIT_SUCCESS;
+}
+
+
 int test_lunion_close_database (sqlite3** db)
 {
 	if (lunion_close_database (db) != SQLITE_OK)
@@ -143,6 +156,9 @@ int main ()
 	test_lunion_add_game (&db, "Thronebreaker: The Witcher Tales", "thronebreaker-the-witcher-tales");
 	test_lunion_add_game (&db, "Horizon Zero Dawn™ Complete Edition", "horizon-zero-dawn-complete-edition");
 	test_lunion_add_game (&db, "Assassin's Creed®: Director's Cut", "assassins-creed-directors-cut");
+	test_lunion_add_tool (&db, "Lunion Play", "wine", "/opt/lunion-play-git/bin", NULL, "lunion-play-git-6.7-1");
+	test_lunion_add_tool (&db, "Lunion Play", "wine", "/home/iroalexis/Projects/wine-tkg-git/wine-tkg-git/non-makepkg-builds/wine-staging-tkg-6.7-1/bin", NULL, NULL);
+	test_lunion_add_tool (&db, "MelonDS", "ds", "/home/iroalexis/Downloads/melonds", "melonds", NULL);
 	test_lunion_delete_game (&db, 1);
 
 	test_lunion_close_database (&db);
