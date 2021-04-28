@@ -186,13 +186,13 @@ int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char
 	sqlite3_stmt* p_stmt = NULL;
 
 	if (version != NULL && exec != NULL)
-		sql = "INSERT INTO game (name, type, path, exec, version) VALUES (@name, @type, @path, @version);";
+		sql = "INSERT INTO tool (name, type, path, exec, version) VALUES (@name, @type, @path, @exec, @version);";
 	else if (exec != NULL && version == NULL)
-		sql = "INSERT INTO game (name, type, path, exec) VALUES (@name, @type, @path, @exec);";
+		sql = "INSERT INTO tool (name, type, path, exec) VALUES (@name, @type, @path, @exec);";
 	else if (exec == NULL && version != NULL)
-		sql = "INSERT INTO game (name, type, path, version) VALUES (@name, @type, @path, @version);";
+		sql = "INSERT INTO tool (name, type, path, version) VALUES (@name, @type, @path, @version);";
 	else
-		sql = "INSERT INTO game (name, type, path) VALUES (@name, @type, @path);";
+		sql = "INSERT INTO tool (name, type, path) VALUES (@name, @type, @path);";
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
@@ -203,7 +203,7 @@ int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char
 		sqlite3_bind_text (p_stmt, tmp, type, -1, 0);
 
 		tmp = sqlite3_bind_parameter_index(p_stmt, "@path");
-		sqlite3_bind_text (p_stmt, tmp, exec, -1, 0);
+		sqlite3_bind_text (p_stmt, tmp, path, -1, 0);
 
 		if (exec != NULL)
 		{
