@@ -127,6 +127,9 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
+	if (name == NULL || slug == NULL)
+		return EXIT_FAILURE;
+
 	sql = "INSERT INTO game (name,slug) VALUES (@name, @slug);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
@@ -148,6 +151,9 @@ int lunion_add_gamesource (sqlite3* db, const char* name)
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
+	if (name == NULL)
+		return EXIT_FAILURE;
+
 	sql = "INSERT INTO gamesource (name) VALUES (@name);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
@@ -165,6 +171,9 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
+
+	if (name == NULL)
+		return EXIT_FAILURE;
 
 	sql = "INSERT INTO plateform (name) VALUES (@name);";
 
