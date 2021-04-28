@@ -185,6 +185,9 @@ int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
+	if (name == NULL || type == NULL || path == NULL)
+		return EXIT_FAILURE;
+
 	if (version != NULL && exec != NULL)
 		sql = "INSERT INTO tool (name, type, path, exec, version) VALUES (@name, @type, @path, @exec, @version);";
 	else if (exec != NULL && version == NULL)
