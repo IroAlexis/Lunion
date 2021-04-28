@@ -27,9 +27,18 @@
 
 static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
-	sqlite3_step (p_stmt);
+	int ret;
+	int flag;
 
-	if (sqlite3_finalize (p_stmt) != SQLITE_OK)
+	ret = sqlite3_step (p_stmt);
+	if (ret != SQLITE_DONE && ret != SQLITE_ROW)
+	{
+		fprintf (stderr, "[+] err:: lunion_send_statement: code error (%d)\n", ret);
+		flag = EXIT_FAILURE;
+	}
+
+	ret = sqlite3_finalize (p_stmt);
+	if (flag == EXIT_FAILURE || ret != SQLITE_OK)
 		return EXIT_FAILURE;
 
 	return EXIT_SUCCESS;
@@ -184,7 +193,6 @@ int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char
 		sql = "INSERT INTO game (name, type, path, version) VALUES (@name, @type, @path, @version);";
 	else
 		sql = "INSERT INTO game (name, type, path) VALUES (@name, @type, @path);";
-
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
