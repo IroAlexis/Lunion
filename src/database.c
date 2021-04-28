@@ -27,8 +27,8 @@
 
 static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
-	int ret;
-	int flag;
+	int ret = 0;
+	int flag = EXIT_SUCCESS;
 
 	ret = sqlite3_step (p_stmt);
 	if (ret != SQLITE_DONE && ret != SQLITE_ROW)
