@@ -189,30 +189,27 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 }
 
 
-int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char* path, const char* exec, const char* version)
+int lunion_add_tool (sqlite3* db, const char* name, const char* path, const char* exec, const char* version)
 {
 	char* sql = NULL;
 	sqlite3_stmt* p_stmt = NULL;
 
-	if (name == NULL || type == NULL || path == NULL)
+	if (name == NULL || path == NULL)
 		return EXIT_FAILURE;
 
 	if (version != NULL && exec != NULL)
-		sql = "INSERT INTO tool (name, type, path, exec, version) VALUES (@name, @type, @path, @exec, @version);";
+		sql = "INSERT INTO tool (name, path, exec, version) VALUES (@name, @path, @exec, @version);";
 	else if (exec != NULL && version == NULL)
-		sql = "INSERT INTO tool (name, type, path, exec) VALUES (@name, @type, @path, @exec);";
+		sql = "INSERT INTO tool (name, path, exec) VALUES (@name, @path, @exec);";
 	else if (exec == NULL && version != NULL)
-		sql = "INSERT INTO tool (name, type, path, version) VALUES (@name, @type, @path, @version);";
+		sql = "INSERT INTO tool (name, path, version) VALUES (@name, @path, @version);";
 	else
-		sql = "INSERT INTO tool (name, type, path) VALUES (@name, @type, @path);";
+		sql = "INSERT INTO tool (name, path) VALUES (@name, @path);";
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@name");
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
-
-		tmp = sqlite3_bind_parameter_index(p_stmt, "@type");
-		sqlite3_bind_text (p_stmt, tmp, type, -1, 0);
 
 		tmp = sqlite3_bind_parameter_index(p_stmt, "@path");
 		sqlite3_bind_text (p_stmt, tmp, path, -1, 0);
@@ -348,7 +345,6 @@ void lunion_init_database (sqlite3* db)
 	sql = "CREATE TABLE tool (" \
 	      "id INTEGER PRIMARY KEY not null," \
 	      "name TEXT not null," \
-	      "type TEXT not null," \
 	      "path TEXT not null," \
 	      "exec TEXT," \
 	      "version TEXT);";
