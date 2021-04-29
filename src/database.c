@@ -28,18 +28,22 @@
 static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
 	int ret = 0;
-	int flag = EXIT_SUCCESS;
 
 	ret = sqlite3_step (p_stmt);
 	if (ret != SQLITE_DONE && ret != SQLITE_ROW)
 	{
-		fprintf (stderr, "[+] err:: lunion_send_statement: code error (%d)\n", ret);
-		flag = EXIT_FAILURE;
+		fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_step): code error (%d)\n", ret);
+
+		sqlite3_finalize (p_stmt);
+		return EXIT_FAILURE;
 	}
 
 	ret = sqlite3_finalize (p_stmt);
-	if (flag == EXIT_FAILURE || ret != SQLITE_OK)
+	if (ret != SQLITE_OK)
+	{
+		fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_finalize): code error (%d)\n", ret);
 		return EXIT_FAILURE;
+	}
 
 	return EXIT_SUCCESS;
 }
