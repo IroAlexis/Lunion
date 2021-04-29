@@ -41,5 +41,6 @@ export MANGOHUD_CONFIGFILE=$HOME/Games/mangohud.config
 cd $HOME/$GAMEDIR/windata/drive_c/
 
 echo "[+] info:: lunion-play: Starting..."
+echo "[-] info:: lunion-play: $(wine --version)"
 wine gameexe.exe && wineserver --wait
 #wine64 gameexe.exe && wineserver --wait
