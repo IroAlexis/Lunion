@@ -42,6 +42,16 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug);
 int lunion_add_gamesource (sqlite3* db, const char* name);
 
 
+int lunion_add_install (
+  sqlite3* db,
+  int gameId,
+  int plateformId,
+  int gamesourceId,
+  const char* dir,
+  const char* type
+);
+
+
 /*!
  * @brief Add a plateform into the plateform table database
  * @param db A pointer to the database stream

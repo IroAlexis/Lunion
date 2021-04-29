@@ -167,6 +167,33 @@ int lunion_add_gamesource (sqlite3* db, const char* name)
 }
 
 
+int lunion_add_install (sqlite3* db, int gameId, int plateformId, int gamesourceId, const char* dir, const char* type)
+{
+	char* sql = NULL;
+	sqlite3_stmt* p_stmt = NULL;
+
+	if (gameId <= 0 || plateformId <= 0 || gamesourceId <= 0 || dir == NULL || type == NULL)
+		return EXIT_FAILURE;
+
+	sql = "INSERT INTO install (gameId, dir, type) VALUES (@gameId, @dir, @type);";
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
+	{
+		int tmp = sqlite3_bind_parameter_index(p_stmt, "@gameId");
+		sqlite3_bind_int (p_stmt, tmp, gameId);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@dir");
+		sqlite3_bind_text (p_stmt, tmp, dir, -1, 0);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@type");
+		sqlite3_bind_text (p_stmt, tmp, type, -1, 0);
+	}
+	else
+		fprintf (stderr, "[+] err:: lunion_add_install: %s\n", sqlite3_errmsg(db));
+
+	return lunion_send_statement (p_stmt);
+}
+
+
 int lunion_add_plateform (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
@@ -344,11 +371,25 @@ void lunion_init_database (sqlite3* db)
 
 	sql = "CREATE TABLE tool (" \
 	      "id INTEGER PRIMARY KEY not null," \
-	      "name TEXT not null," \
-	      "path TEXT not null," \
-	      "exec TEXT," \
+	      "name    TEXT not null," \
+	      "path    TEXT not null," \
+	      "exec    TEXT," \
 	      "version TEXT);";
 	ret = sqlite3_table_column_metadata (db, NULL, "tool", NULL, NULL, NULL, NULL, NULL, NULL);
+	if (ret != SQLITE_OK)
+		lunion_exec_command (db, sql);
+
+	sql = "CREATE TABLE install (" \
+	      "id INTEGER PRIMARY KEY not null," \
+	      "gameId       INTEGER not null," \
+	      "plateformId  INTEGER not null," \
+	      "gamesourceId INTEGER not null," \
+	      "dir          TEXT not null," \
+	      "type         TEXT not null," \
+	      "FOREIGN KEY(gameId) REFERENCES game(id)," \
+	      "FOREIGN KEY(plateformId) REFERENCES plateform(id), " \
+	      "FOREIGN KEY(gamesourceId) REFERENCES gamesource(id));";
+	ret = sqlite3_table_column_metadata (db, NULL, "install", NULL, NULL, NULL, NULL, NULL, NULL);
 	if (ret != SQLITE_OK)
 		lunion_exec_command (db, sql);
 

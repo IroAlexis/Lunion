@@ -55,6 +55,19 @@ int test_lunion_add_game (sqlite3** db, const char* g_name, const char* slug)
 }
 
 
+int test_lunion_add_install (sqlite3** db, int gameId, int plateformId, int gamesourceId, const char* dir, const char* type)
+{
+	if (lunion_add_install (*db, gameId, plateformId, gamesourceId, dir, type) != EXIT_SUCCESS)
+	{
+		test_failure ("[+] test:: lunion_add_install: ");
+		return EXIT_FAILURE;
+	}
+
+	test_success ("[+] test:: lunion_add_install: ");
+	return EXIT_SUCCESS;
+}
+
+
 int test_lunion_add_tool (sqlite3** db, const char* name, const char* path, const char* exec, const char* version)
 {
 	if (lunion_add_tool (*db, name, path, exec, version) != EXIT_SUCCESS)
@@ -159,6 +172,7 @@ int main ()
 	test_lunion_add_tool (&db, "Lunion Play", "/opt/lunion-play-git/bin", NULL, "lunion-play-git-6.7-1");
 	test_lunion_add_tool (&db, "Lunion Play", "/home/iroalexis/Projects/wine-tkg-git/wine-tkg-git/non-makepkg-builds/wine-staging-tkg-6.7-1/bin", NULL, NULL);
 	test_lunion_add_tool (&db, "MelonDS", "/home/iroalexis/Downloads/melonds", "melonds", NULL);
+	test_lunion_add_install (&db, 69, 100, 42, "/home/iroalexis", "wine");
 	test_lunion_delete_game (&db, 1);
 
 	test_lunion_close_database (&db);
