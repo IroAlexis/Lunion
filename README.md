@@ -26,7 +26,7 @@ For the native games, Lunion detects if you have installed with your package man
 * [DXVK](https://github.com/doitsujin/dxvk), a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
 * [VKD3D-Proton](https://github.com/HansKristian-Work/vkd3d-proton), a fork of [VKD3D](https://source.winehq.org/git/vkd3d.git/), which aims to implement the full Direct3D 12 API on top of Vulkan
 
-How Lunion install and launch your games, you can know him [here](https://github.com/IroAlexis/lunion/blob/master/lunion-play.md). It can also be useful to know the Wine functioning.
+How Lunion install and launch your games, you can know him [here](https://github.com/IroAlexis/lunion/blob/master/lunion-play.md). It can also be useful for know the Wine functioning.
 
 
 
