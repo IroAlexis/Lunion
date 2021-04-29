@@ -51,7 +51,24 @@ int lunion_add_gamesource (sqlite3* db, const char* name);
 int lunion_add_plateform (sqlite3* db, const char* name);
 
 
-int lunion_add_tool (sqlite3* db, const char* name, const char* type, const char* path, const char* exec, const char* version);
+/*!
+ * @brief Add a tool into the tool table database
+ * @param db A pointer to the database stream
+ * @param name Tool name
+ * @param type Tool type (wine, ds,...)
+ * @param path Tool path directory
+ * @param exec Tool executable
+ * @param version Tool version
+ * @return EXIT_SUCCESS if the tool is adding in, the database, EXIT_FAILURE otherwise
+ */
+int lunion_add_tool (
+  sqlite3* db,
+  const char* name,
+  const char* type,
+  const char* path,
+  const char* exec,
+  const char* version
+);
 
 
 /*!
