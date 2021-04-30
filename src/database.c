@@ -428,10 +428,6 @@ int lunion_update_game (sqlite3* db, int id, char* n_name, char* n_slug)
 		tmp = sqlite3_bind_parameter_index(p_stmt, "@slug");
 		if (tmp != 0)
 			sqlite3_bind_text (p_stmt, tmp, n_slug, -1, 0);
-
-		tmp = sqlite3_bind_parameter_index(p_stmt, "@id");
-		if (tmp != 0)
-			sqlite3_bind_int (p_stmt, tmp, id);
 	}
 	else
 		fprintf (stderr, "[+] err:: lunion_update_game: %s\n", sqlite3_errmsg(db));
