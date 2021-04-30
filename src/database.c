@@ -179,11 +179,18 @@ int lunion_add_install (sqlite3* db, int gameId, int plateformId, int gamesource
 	if (gameId <= 0 || plateformId <= 0 || gamesourceId <= 0 || dir == NULL || type == NULL)
 		return EXIT_FAILURE;
 
-	sql = "INSERT INTO install (gameId, dir, type) VALUES (@gameId, @dir, @type);";
+	sql = "INSERT INTO install (gameId, plateformId, gamesourceId, dir, type) " \
+	      "VALUES (@gameId, @plateformId, @gamesourceId, @dir, @type);";
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) == SQLITE_OK)
 	{
 		int tmp = sqlite3_bind_parameter_index(p_stmt, "@gameId");
 		sqlite3_bind_int (p_stmt, tmp, gameId);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@plateformId");
+		sqlite3_bind_int (p_stmt, tmp, plateformId);
+
+		tmp = sqlite3_bind_parameter_index(p_stmt, "@gamesourceId");
+		sqlite3_bind_int (p_stmt, tmp, gamesourceId);
 
 		tmp = sqlite3_bind_parameter_index(p_stmt, "@dir");
 		sqlite3_bind_text (p_stmt, tmp, dir, -1, 0);
