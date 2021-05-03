@@ -373,8 +373,7 @@ void lunion_init_database (sqlite3* db)
 
 	fprintf (stdout, "[+] info:: lunion: Initializing database...\n");
 
-	// Don't sure that we can enable the foreign key support this way
-	if (lunion_exec_command (db, "PRAGMA foreign_key = ON;") == EXIT_FAILURE)
+	if (lunion_exec_command (db, "PRAGMA foreign_keys = ON;") == EXIT_FAILURE)
 	{
 		fprintf (stderr, "[!] err:: lunion_init_database: Need foreign key support (update sqlite3)\n");
 		exit (EXIT_FAILURE);
