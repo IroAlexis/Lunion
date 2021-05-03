@@ -73,7 +73,10 @@ static int lunion_send_statement (sqlite3_stmt* p_stmt)
 	ret = sqlite3_step (p_stmt);
 	if (ret != SQLITE_DONE && ret != SQLITE_ROW)
 	{
-		fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_step): code error (%d)\n", ret);
+		if (ret == SQLITE_CONSTRAINT)
+			fprintf (stderr, "[+] err:: lunion_send_statement: SQL constraint violation occurred\n");
+		else
+			fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_step): code error (%d)\n", ret);
 
 		sqlite3_finalize (p_stmt);
 		return EXIT_FAILURE;
