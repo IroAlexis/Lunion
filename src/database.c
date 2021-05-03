@@ -25,6 +25,47 @@
 
 
 
+/*!
+ * @brief Execute a sql command in the database
+ * @param db A pointer to the database stream
+ * @return EXIT_SUCCESS if the command execute correctly, EXIT_FAILURE otherwise
+ */
+static int lunion_exec_command (sqlite3* db, const char* sql);
+
+/*!
+ * @brief Send a sql request (statement)
+ * @param p_stmt A pointer to the database stream
+ * @return EXIT_SUCCESS if the sql request send correctly, EXIT_FAILURE otherwise
+ */
+static int lunion_send_statement (sqlite3_stmt* p_stmt);
+
+/*!
+ * @brief Verif that the game source isn't already exist
+ * @param name Game source name (local, gog, steam, epicgames)
+ * @return EXIT_SUCCESS if the game source isn't exist, EXIT_FAILURE otherwise
+ */
+static int lunion_verif_gamesource (sqlite3* db, const char* name);
+
+/*!
+ * @brief Verif that the plateform isn't already exist
+ * @param name Plateform name (linux or windows)
+ * @return EXIT_SUCCESS if the plateform isn't exist, EXIT_FAILURE otherwise
+ */
+static int lunion_verif_plateform (sqlite3* db, const char* name);
+
+
+
+static int lunion_exec_command (sqlite3* db, const char* sql)
+{
+	sqlite3_stmt* p_stmt = NULL;
+
+	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
+		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
+
+	return lunion_send_statement (p_stmt);
+}
+
+
 static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
 	int ret = 0;
@@ -49,27 +90,6 @@ static int lunion_send_statement (sqlite3_stmt* p_stmt)
 }
 
 
-/*!
- * @brief Execute a sql command in the database
- * @param db A pointer to the database stream
- * @return EXIT_SUCCESS if the command execute correctly, EXIT_FAILURE otherwise
- */
-static int lunion_exec_command (sqlite3* db, const char* sql)
-{
-	sqlite3_stmt* p_stmt = NULL;
-
-	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
-		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
-
-	return lunion_send_statement (p_stmt);
-}
-
-
-/*!
- * @brief Verif that the game source isn't already exist
- * @param name Game source name (local, gog, steam, epicgames)
- * @return EXIT_SUCCESS if the game source isn't exist, EXIT_FAILURE otherwise
- */
 static int lunion_verif_gamesource (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
@@ -95,11 +115,6 @@ static int lunion_verif_gamesource (sqlite3* db, const char* name)
 }
 
 
-/*!
- * @brief Verif that the plateform isn't already exist
- * @param name Plateform name (linux or windows)
- * @return EXIT_SUCCESS if the plateform isn't exist, EXIT_FAILURE otherwise
- */
 static int lunion_verif_plateform (sqlite3* db, const char* name)
 {
 	char* sql = NULL;
