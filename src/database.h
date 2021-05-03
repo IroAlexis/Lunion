@@ -42,6 +42,16 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug);
 int lunion_add_gamesource (sqlite3* db, const char* name);
 
 
+/*!
+ * @brief (Work In Progress) Add a installed game into the install table database
+ * @param db A pointer to the database stream
+ * @param gameId Id game from the game table
+ * @param plateformId Id plateform from the plateform table
+ * @param gamesourceId Id game source from the gamesource table
+ * @param dir Installation path
+ * @param type Tool type
+ * @return EXIT_SUCCESS if the installed game is adding in the database, EXIT_FAILURE otherwise
+ */
 int lunion_add_install (
   sqlite3* db,
   int gameId,
