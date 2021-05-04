@@ -135,7 +135,7 @@ char* lunion_convert_to_unix_style (const char* text)
 		name = (char*) realloc (name, ((len + 1) - r_memb) * sizeof(char));
 		if (NULL == name)
 		{
-			fprintf (stderr, "[-] err:: lunion_convert_to_unix_style: Reallocation problem\n");
+			lunion_print_err ("lunion_convert_to_unix_style", "Reallocation problem\n");
 			free (name);
 
 			return NULL;
@@ -152,7 +152,7 @@ int lunion_create_dir_alt (const char* path)
 
 	if (mkdir (path, 0777) != 0 && errno != EEXIST)
 	{
-		fprintf (stderr, "[-] err:: lunion_create_dir_alt: %s", path);
+		lunion_print_err ("lunion_create_dir_alt", path);
 		perror (": ");
 		return EXIT_FAILURE;
 	}
@@ -173,7 +173,7 @@ int lunion_create_dir (const char* path, const char* d_name)
 	tmp = strndup (path, strlen (path));
 	if (NULL == tmp)
 	{
-		fprintf (stderr, "[-] err:: lunion_create_dir: Allocation problem\n");
+		lunion_print_err ("lunion_create_dir", "Allocation problem\n");
 
 		free (tmp);
 		return EXIT_FAILURE;
@@ -236,7 +236,7 @@ void lunion_display_list (LunionList* lst)
 {
 	LunionList* tmp = NULL;
 
-	fprintf (stdout, "[-] info:: List of installed games\n");
+	lunion_print_info ("lunion", "List of installed games\n");
 
 	for (tmp = lst; tmp != NULL; tmp = tmp->next)
 		fprintf (stdout, "   > %s\n", tmp->d_name);
@@ -280,7 +280,7 @@ int lunion_init_usr_specific_data (const char* home, const char* d_name)
 	path = (char*) calloc (strlen (home) + 1, sizeof (char));
 	if (NULL == path)
 	{
-		fprintf (stderr, "[-] err:: lunion_init_usr_specific_data: Allocation problem\n");
+		lunion_print_err ("lunion_init_usr_specific_data", "Allocation problem\n");
 		return EXIT_FAILURE;
 	}
 
@@ -321,7 +321,7 @@ int lunion_init_dirs ()
 	home = getenv ("HOME");
 	if (NULL == home)
 	{
-		fprintf (stderr, "[-] err:: lunion_init_dirs: User path not found\n");
+		lunion_print_err ("lunion_init_dirs", "User path not found\n");
 		return EXIT_FAILURE;
 	}
 
@@ -371,6 +371,24 @@ LunionList* lunion_install_games_list (const char* path, DIR** stream, struct di
 */
 
 
+void lunion_print_err (const char* fct, const char* msg)
+{
+	fprintf (stderr, "[!] err:: %s: %s", fct, msg);
+}
+
+
+void lunion_print_debug (const char* fct, const char* msg)
+{
+	fprintf (stderr, "[-] debug:: %s: %s", fct, msg);
+}
+
+
+void lunion_print_info (const char* type, const char* msg)
+{
+	fprintf (stdout, "[+] info:: %s: %s", type, msg);
+}
+
+
 /* DEPRECATED
 LunionList* lunion_search_games (const char* path)
 {
@@ -401,19 +419,26 @@ int lunion_set_env_var (const char* name, const char* value)
 	assert (name != NULL);
 	assert (value != NULL);
 
+	char buffer[1024];
+
 	errno = 0;
 
 	if (setenv (name, value, 1))
 	{
 		if (errno == EINVAL)
-			fprintf (stderr, "[-] err:: lunion_set_env_var: %s: The variable name is void or contains an '=' character\n", name);
+		{
+			sprintf (buffer, "%s: The variable name is void or contains an '=' character", name);
+			lunion_print_err("lunion_set_env_var", buffer);
+		}
 		if (errno == ENOMEM)
-			fprintf (stderr, "[-] err:: lunion_set_env_var: Insufficient memory to add a new variable to the environment\n");
+			lunion_print_err("lunion_set_env_var", "Insufficient memory to add a new variable to the environment");
 
 		return EXIT_FAILURE;
 	}
 
-	fprintf (stdout, "[+] info:: %s=%s\n", name, value);
+	sprintf (buffer, "%s=%s", name, value);
+	lunion_print_info ("lunion-play", buffer);
+
 	return EXIT_SUCCESS;
 }
 
@@ -422,11 +447,15 @@ int lunion_unset_env_var (const char* name)
 {
 	assert (name != NULL);
 
+	char buffer[1024];
+
 	errno = 0;
 
 	if (unsetenv (name) && errno == EINVAL)
 	{
-		fprintf (stderr, "[-] err:: lunion_unset_env_var: %s: The name variable is void or contains an '=' character\n", name);
+		sprintf (buffer, " %s: The variable name is void or contains an '=' character", name);
+		lunion_print_err("lunion_unset_env_var", buffer);
+
 		return EXIT_FAILURE;
 	}
 

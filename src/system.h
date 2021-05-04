@@ -78,6 +78,30 @@ int lunion_init_dirs ();
 
 
 /*!
+ * @brief Display a error message
+ * @param fct Function name
+ * @param msg Message to display
+ */
+void lunion_print_err (const char* fct, const char* msg);
+
+
+/*!
+ * @brief Display a debug message
+ * @param fct Function name
+ * @param msg Message to display
+ */
+void lunion_print_debug (const char* fct, const char* msg);
+
+
+/*!
+ * @brief Display a debug message
+ * @param type (?)
+ * @param msg Message to display
+ */
+void lunion_print_info (const char* type, const char* msg);
+
+
+/*!
  * @brief Set an environement variable
  * @param name Name environement variable
  * @param value Value environement variable

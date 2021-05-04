@@ -60,7 +60,7 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 	sqlite3_stmt* p_stmt = NULL;
 
 	if (sqlite3_prepare_v2 (db, sql, -1, &p_stmt, 0) != SQLITE_OK)
-		fprintf (stderr, "[+] err:: lunion_add_database_game: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_database_game", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -68,15 +68,19 @@ static int lunion_exec_command (sqlite3* db, const char* sql)
 
 static int lunion_send_statement (sqlite3_stmt* p_stmt)
 {
+	char buffer[1024];
 	int ret = 0;
 
 	ret = sqlite3_step (p_stmt);
 	if (ret != SQLITE_DONE && ret != SQLITE_ROW)
 	{
 		if (ret == SQLITE_CONSTRAINT)
-			fprintf (stderr, "[+] err:: lunion_send_statement: SQL constraint violation occurred\n");
+			lunion_print_err ("lunion_send_statement", "SQL constraint violation occurred\n");
 		else
-			fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_step): code error (%d)\n", ret);
+		{
+			sprintf (buffer, "code error(%d)\n", ret);
+			lunion_print_err ("lunion_send_statement(sqlite3_step)", buffer);
+		}
 
 		sqlite3_finalize (p_stmt);
 		return EXIT_FAILURE;
@@ -85,7 +89,8 @@ static int lunion_send_statement (sqlite3_stmt* p_stmt)
 	ret = sqlite3_finalize (p_stmt);
 	if (ret != SQLITE_OK)
 	{
-		fprintf (stderr, "[+] err:: lunion_send_statement(sqlite3_finalize): code error (%d)\n", ret);
+		sprintf (buffer, "code error (%d)\n", ret);
+		lunion_print_err ("lunion_send_statement(sqlite3_finalize)", buffer);
 		return EXIT_FAILURE;
 	}
 
@@ -106,7 +111,7 @@ static int lunion_verif_gamesource (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_verif_gamesource: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_verif_gamesource", sqlite3_errmsg(db));
 
 	ret = sqlite3_step (p_stmt);
 	sqlite3_finalize (p_stmt);
@@ -131,7 +136,7 @@ static int lunion_verif_plateform (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_verif_plateform: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_verif_plateform", sqlite3_errmsg(db));
 
 	// We can't use lunion_send_statement here
 	ret = sqlite3_step (p_stmt);
@@ -162,7 +167,7 @@ int lunion_add_game (sqlite3* db, const char* name, const char* slug)
 		sqlite3_bind_text (p_stmt, tmp, slug, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_game: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_game", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -183,7 +188,7 @@ int lunion_add_gamesource (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_gamesource: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_gamesource", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -217,7 +222,7 @@ int lunion_add_install (sqlite3* db, int gameId, int plateformId, int gamesource
 		sqlite3_bind_text (p_stmt, tmp, type, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_install: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_install", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -239,7 +244,7 @@ int lunion_add_plateform (sqlite3* db, const char* name)
 		sqlite3_bind_text (p_stmt, tmp, name, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_plateform: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_plateform", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -283,7 +288,7 @@ int lunion_add_tool (sqlite3* db, const char* name, const char* path, const char
 		}
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_add_tool: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_add_tool", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -305,7 +310,7 @@ sqlite3* lunion_connect_database (const char* f_name)
 
 	if (sqlite3_open (f_name, &db) != SQLITE_OK)
 	{
-		fprintf (stderr, "[+] err:: lunion_connect_database: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_connect_database", sqlite3_errmsg(db));
 		return NULL;
 	}
 
@@ -325,7 +330,7 @@ int lunion_delete_game (sqlite3* db, int id)
 		sqlite3_bind_int (p_stmt, tmp, id);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_delete_game: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_delete_game", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }
@@ -374,11 +379,11 @@ void lunion_init_database (sqlite3* db)
 	char* sql = NULL;
 	int ret;
 
-	fprintf (stdout, "[+] info:: lunion: Initializing database...\n");
+	lunion_print_info ("lunion", "Initializing database...");
 
 	if (lunion_exec_command (db, "PRAGMA foreign_keys = ON;") == EXIT_FAILURE)
 	{
-		fprintf (stderr, "[!] err:: lunion_init_database: Need foreign key support (update sqlite3)\n");
+		lunion_print_err ("lunion_init_database", "Need foreign key support (update sqlite3)");
 		exit (EXIT_FAILURE);
 	}
 
@@ -421,9 +426,9 @@ void lunion_init_database (sqlite3* db)
 	      "gamesourceId INTEGER not null," \
 	      "dir          TEXT not null," \
 	      "type         TEXT not null," \
-	      "FOREIGN KEY(gameId) REFERENCES game(id)," \
-	      "FOREIGN KEY(plateformId) REFERENCES plateform(id), " \
-	      "FOREIGN KEY(gamesourceId) REFERENCES gamesource(id));";
+	      "FOREIGN KEY (gameId) REFERENCES game(id)," \
+	      "FOREIGN KEY (plateformId) REFERENCES plateform(id), " \
+	      "FOREIGN KEY (gamesourceId) REFERENCES gamesource(id));";
 	ret = sqlite3_table_column_metadata (db, NULL, "install", NULL, NULL, NULL, NULL, NULL, NULL);
 	if (ret != SQLITE_OK)
 		lunion_exec_command (db, sql);
@@ -431,7 +436,7 @@ void lunion_init_database (sqlite3* db)
 	lunion_init_gamesource (db);
 	lunion_init_plateform (db);
 
-	fprintf (stdout, "[+] info:: lunion: Database initialization complete\n");
+	lunion_print_info ("lunion", "Database initialization complete");
 }
 
 
@@ -461,7 +466,7 @@ int lunion_update_game (sqlite3* db, int id, char* n_name, char* n_slug)
 			sqlite3_bind_text (p_stmt, tmp, n_slug, -1, 0);
 	}
 	else
-		fprintf (stderr, "[+] err:: lunion_update_game: %s\n", sqlite3_errmsg(db));
+		lunion_print_err ("lunion_update_game", sqlite3_errmsg(db));
 
 	return lunion_send_statement (p_stmt);
 }

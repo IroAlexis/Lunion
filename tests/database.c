@@ -46,11 +46,11 @@ int test_lunion_add_game (sqlite3** db, const char* g_name, const char* slug)
 {
 	if (lunion_add_game (*db, g_name, slug) != EXIT_SUCCESS)
 	{
-		test_failure ("[+] test:: lunion_add_game: ");
+		test_failure ("[!] test:: lunion_add_game: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_add_game: ");
+	test_success ("[-] test:: lunion_add_game: ");
 	return EXIT_SUCCESS;
 }
 
@@ -59,11 +59,11 @@ int test_lunion_add_install (sqlite3** db, int gameId, int plateformId, int game
 {
 	if (lunion_add_install (*db, gameId, plateformId, gamesourceId, dir, type) != EXIT_SUCCESS)
 	{
-		test_failure ("[+] test:: lunion_add_install: ");
+		test_failure ("[!] test:: lunion_add_install: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_add_install: ");
+	test_success ("[-] test:: lunion_add_install: ");
 	return EXIT_SUCCESS;
 }
 
@@ -72,11 +72,11 @@ int test_lunion_add_tool (sqlite3** db, const char* name, const char* path, cons
 {
 	if (lunion_add_tool (*db, name, path, exec, version) != EXIT_SUCCESS)
 	{
-		test_failure ("[+] test:: lunion_add_tool: ");
+		test_failure ("[!] test:: lunion_add_tool: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_add_tool: ");
+	test_success ("[-] test:: lunion_add_tool: ");
 	return EXIT_SUCCESS;
 }
 
@@ -85,11 +85,11 @@ int test_lunion_close_database (sqlite3** db)
 {
 	if (lunion_close_database (db) != SQLITE_OK)
 	{
-		test_failure ("[+] test:: lunion_close_database: memory leak: ");
+		test_failure ("[!] test:: lunion_close_database: memory leak: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_close_database: ");
+	test_success ("[-] test:: lunion_close_database: ");
 	return EXIT_SUCCESS;
 }
 
@@ -99,11 +99,11 @@ int test_lunion_connect_database (sqlite3** db)
 	*db = lunion_connect_database ("/tmp/test.db");
 	if (NULL == *db)
 	{
-		test_failure ("[+] test:: lunion_connect_database: ");
+		test_failure ("[!] test:: lunion_connect_database: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_connect_database: ");
+	test_success ("[-] test:: lunion_connect_database: ");
 	return EXIT_SUCCESS;
 }
 
@@ -116,7 +116,7 @@ int test_lunion_delete_game (sqlite3** db, int id)
 
 	if (lunion_delete_game (*db, id) == EXIT_FAILURE)
 	{
-		test_failure ("[+] test:: lunion_delete_game: ");
+		test_failure ("[!] test:: lunion_delete_game: ");
 		return EXIT_FAILURE;
 	}
 
@@ -135,23 +135,23 @@ int test_lunion_delete_game (sqlite3** db, int id)
 
 	if (ret == SQLITE_ROW)
 	{
-		test_failure ("[+] test:: lunion_delete_game: Not deleted: ");
+		test_failure ("[!] test:: lunion_delete_game: Not deleted: ");
 		return EXIT_FAILURE;
 	}
 	if (ret != SQLITE_DONE)
 	{
-		test_failure ("[+] test:: lunion_delete_game: ");
+		test_failure ("[!] test:: lunion_delete_game: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_delete_game: ");
+	test_success ("[-] test:: lunion_delete_game: ");
 	return EXIT_SUCCESS;
 }
 
 
 int test_lunion_init_database(sqlite3** db)
 {
-	fprintf (stderr, "[+] test:: lunion_init_database: rework the test\n");
+	fprintf (stderr, "[-] test:: lunion_init_database: rework the test\n");
 
 	lunion_init_database (*db);
 

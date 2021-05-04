@@ -50,11 +50,11 @@ int test_lunion_set_env_var (const char* name, const char* value)
 
 	if (getenv (name) == NULL)
 	{
-		test_failure ("[+] test:: lunion_set_env_var: ");
+		test_failure ("[!] test:: lunion_set_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_set_env_var: ");
+	test_success ("[-] test:: lunion_set_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -65,11 +65,11 @@ int test_error_lunion_set_env_var (const char* name, const char* value)
 
 	if (getenv (name) != NULL)
 	{
-		test_failure ("[+] test_err:: lunion_set_env_var: ");
+		test_failure ("[!] test_err:: lunion_set_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test_err:: lunion_set_env_var: ");
+	test_success ("[-] test_err:: lunion_set_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -80,11 +80,11 @@ int test_lunion_get_env_var (const char* name)
 
 	if (value == NULL)
 	{
-		test_failure ("[+] test:: lunion_get_env_var: ");
+		test_failure ("[!] test:: lunion_get_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_get_env_var: ");
+	test_success ("[-] test:: lunion_get_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -95,11 +95,11 @@ int test_error_lunion_get_env_var (const char* name)
 
 	if (value != NULL)
 	{
-		test_failure ("[+] test_err:: lunion_get_env_var: ");
+		test_failure ("[!] test_err:: lunion_get_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test_err:: lunion_get_env_var: ");
+	test_success ("[-] test_err:: lunion_get_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -110,11 +110,11 @@ int test_lunion_unset_env_var (const char* name)
 
 	if (getenv (name) != NULL)
 	{
-		test_failure ("[+] test:: lunion_unset_env_var: ");
+		test_failure ("[!] test:: lunion_unset_env_var: ");
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_unset_env_var: ");
+	test_success ("[-] test:: lunion_unset_env_var: ");
 	return EXIT_SUCCESS;
 }
 
@@ -126,7 +126,7 @@ int test_lunion_convert_to_unix_style (const char* text, const char* exp)
 	unx = lunion_convert_to_unix_style (text);
 	if (NULL == unx)
 	{
-		test_failure ("[+] test:: lunion_convert_to_unix_style: ");
+		test_failure ("[!] test:: lunion_convert_to_unix_style: ");
 		free (unx);
 
 		return EXIT_FAILURE;
@@ -134,14 +134,14 @@ int test_lunion_convert_to_unix_style (const char* text, const char* exp)
 
 	if (strncmp (exp, unx, strlen (exp)) != 0)
 	{
-		fprintf (stderr, "[+] test:: lunion_convert_to_unix_style: '%s' '%s'\n", exp, unx);
-		test_failure ("[+] test:: lunion_convert_to_unix_style: ");
+		fprintf (stderr, "[-] test:: lunion_convert_to_unix_style: '%s' '%s'\n", exp, unx);
+		test_failure ("[!] test:: lunion_convert_to_unix_style: ");
 		free (unx);
 
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_convert_to_unix_style: ");
+	test_success ("[-] test:: lunion_convert_to_unix_style: ");
 	free (unx);
 
 	return EXIT_SUCCESS;
@@ -156,13 +156,13 @@ int test_lunion_get_absolute_path ()
 	path = lunion_get_absolute_path (file);
 	if (strcmp (path, "/usr/bin"))
 	{
-		test_failure ("[+] test:: lunion_get_absolute_path: ");
+		test_failure ("[!] test:: lunion_get_absolute_path: ");
 		free (path);
 
 		return EXIT_FAILURE;
 	}
 
-	test_success ("[+] test:: lunion_get_absolute_path: ");
+	test_success ("[-] test:: lunion_get_absolute_path: ");
 	free (path);
 
 	return EXIT_SUCCESS;
