@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-GAMEDIR=Games/game
-PATH=/opt/lunion-play-git/bin/:$PATH
+export GAMEDIR=Games
+export BINDIR=/opt/lunion-play-git/bin
+export PATH=$BINDIR:$PATH
 
-export WINEPREFIX=$HOME/$GAMEDIR/windata/
+export WINEPREFIX=$HOME/$GAMEDIR/pfx
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
 export WINEDEBUG=-all
 
-echo "[+] info:: lunion-play: Preparing to launch Game Name..."
+echo "[+] info:: lunion-play: Preparing to launch ..."
 wineboot &> /dev/null && wineserver --wait
 
 unset WINEDLLOVERRIDES
@@ -38,9 +39,9 @@ export MANGOHUD_CONFIGFILE=$HOME/Games/mangohud.config
 
 
 # Prevention en reference au probleme que j'ai eu avec The Witcher 3
-cd $HOME/$GAMEDIR/windata/drive_c/
+cd $HOME/$GAMEDIR
 
 echo "[+] info:: lunion-play: Starting..."
 echo "[-] info:: lunion-play: $(wine --version)"
-wine gameexe.exe && wineserver --wait
-#wine64 gameexe.exe && wineserver --wait
+wine .exe && wineserver --wait
+#wine64 .exe && wineserver --wait

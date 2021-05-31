@@ -9,11 +9,13 @@ if [ ! -d $HOME/Games/$1 ]; then
 	mkdir -p $HOME/Games/$1
 fi
 
-GAMEDIR=$HOME/Games/$1
+export GAMEDIR=$HOME/Games/$1
 
 
 
-export PATH=/opt/lunion-play-git/bin:$PATH
+export BINDIR=/opt/lunion-play-git/bin
+export PATH=$BINDIR:$PATH
+export LD_LIBRARY_PATH=$BINDIR/../lib64:$BINDIR/../lib32:$BINDIR/../lib:$LD_LIBRARY_PATH
 
 echo "Wine version: $(wine --version)"
 read -rp "Proceed with this Wine version (N/y) ? " _CONDITION;
@@ -21,10 +23,10 @@ if [[ "$_CONDITION" =~ [nN] ]]; then
 	exit 1
 fi
 
-export WINEPREFIX=$GAMEDIR/windata
+export WINEPREFIX=$GAMEDIR/pfx
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
 
-read -rp "Do you want create 32 bits prefix (N/y) ? " _CONDITION;
+read -rp "Do you want use 32 bits prefix (N/y) ? " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
 	export WINEARCH=win32
 fi
