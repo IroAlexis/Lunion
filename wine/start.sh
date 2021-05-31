@@ -3,6 +3,7 @@
 export GAMEDIR=Games
 export BINDIR=/opt/lunion-play-git/bin
 export PATH=$BINDIR:$PATH
+export LD_LIBRARY_PATH=$BINDIR/../lib64:$BINDIR/../lib32:$BINDIR/../lib:$LD_LIBRARY_PATH
 
 export WINEPREFIX=$HOME/$GAMEDIR/pfx
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
