@@ -147,11 +147,12 @@ if [ "$?" ]; then
         if [[ "$_CONDITION" =~ [yY] ]]; then
           mkdir -p $GAME/gamedata
           _ARGS="$_ARGS DIR=\"$(winepath -w $GAME/gamedata)\""
+          warning "Some installers completely ignore this feature. Check $(winepath -u c:\\GOG\ Games)"
         fi
       fi
     fi
 
-    warning "Don't launch the game with the setup..."
+    warning "Don't launch the game with the installer..."
     if [ ! -z "$_ARGS" ]; then
       wine "$2" $_ARGS && wineserver --wait
     else
@@ -159,7 +160,7 @@ if [ "$?" ]; then
     fi
   fi
 
-  msg "exit setup done"
+  msg "exit script done"
   echo ""
   exit 0
 fi
