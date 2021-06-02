@@ -8,11 +8,10 @@ if [ "$#" -gt 2 ]; then
 	exit 1
 fi
 
-if [ -e "$1" ]; then
+if [[ "$1" =~ ^\/$|(\/[a-zA-Z_0-9-]+)+$ ]]; then
 	echo "\`$1\` don't must not be a path"
 	exit 1
-fi
-if [ ! -d "$HOME/Games/$1" ]; then
+elif [ ! -d "$HOME/Games/$1" ]; then
 	mkdir -p $HOME/Games/$1
 fi
 
