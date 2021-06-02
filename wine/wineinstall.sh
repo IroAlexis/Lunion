@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# ==============
+#  Verification
+# ==============
 if [ "$#" -gt 2 ]; then
 	echo "Usage: $0 game_name [/path/to/setup_exe]"
 	exit 1
@@ -12,13 +15,16 @@ fi
 if [ ! -d "$HOME/Games/$1" ]; then
 	mkdir -p $HOME/Games/$1
 fi
+
+
+# ==========================
+#  Wine prefix Installation
+# ==========================
 export GAMEDIR=$HOME/Games/$1
 
-
-
-export BINDIR=/opt/lunion-play-git/bin
-export PATH=$BINDIR:$PATH
-export LD_LIBRARY_PATH=$BINDIR/../lib64:$BINDIR/../lib32:$BINDIR/../lib:$LD_LIBRARY_PATH
+export WINEBINDIR=/opt/lunion-play-git/bin
+export PATH=$WINEDIR:$PATH
+export LD_LIBRARY_PATH=$WINEDIR/../lib64:$WINEDIR/../lib32:$WINEDIR/../lib:$LD_LIBRARY_PATH
 
 echo "Wine version: $(wine --version)"
 read -rp "Proceed with this Wine version (N/y) ? " _CONDITION;
@@ -40,8 +46,12 @@ fi
 
 wineboot --init && wineserver --wait
 
+
+# ================================
+#  Translation layer Installation
+# ================================
 if [ "$?" ]; then
-	mkdir -p $GAMEDIR/shaders
+	mkdir $GAMEDIR/shaders
 
 	read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
 	if [[ "$_CONDITION" =~ [yY] ]]; then
@@ -54,6 +64,9 @@ if [ "$?" ]; then
 	fi
 
 
+# ===================
+#  Game Installation
+# ===================
 	if [ "$2" ]; then
 		if [ ! -f "$2" ]; then
 			exit 1
@@ -74,8 +87,7 @@ if [ "$?" ]; then
 
 				read -rp "Do install the game outside the wine prefix (n/y) ? " _CONDITION
 				if [[ "$_CONDITION" =~ [yY] ]]; then
-					mkdir -p $GAMEDIR/gamedata
-
+					mkdir $GAMEDIR/gamedata
 					ARGS="$ARGS DIR=\"$(winepath -w $GAMEDIR/gamedata)\""
 				fi
 			fi
