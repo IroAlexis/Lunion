@@ -21,7 +21,7 @@ fi
 # ==========================
 export GAMEDIR=$HOME/Games/$1
 
-export WINEBINDIR=/opt/lunion-play-git/bin
+export WINEDIR=/opt/lunion-play-git/bin
 export PATH=$WINEDIR:$PATH
 export LD_LIBRARY_PATH=$WINEDIR/../lib64:$WINEDIR/../lib32:$WINEDIR/../lib:$LD_LIBRARY_PATH
 
