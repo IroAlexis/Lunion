@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-if [ $# -gt 2 ]; then
+if [ "$#" -gt 2 ]; then
 	echo "Usage: $0 game_name [/path/to/setup_exe]"
 	exit 1
 fi
 
-if [ -e $1 ]; then
-	echo "game_name ($1) don't must not be a path"
+if [ -e "$1" ]; then
+	echo "\`$1\` don't must not be a path"
 	exit 1
 fi
-if [ ! -d $HOME/Games/$1 ]; then
+if [ ! -d "$HOME/Games/$1" ]; then
 	mkdir -p $HOME/Games/$1
 fi
 export GAMEDIR=$HOME/Games/$1
@@ -40,7 +40,7 @@ fi
 
 wineboot --init && wineserver --wait
 
-if [ $? ]; then
+if [ "$?" ]; then
 	mkdir -p $GAMEDIR/shaders
 
 	read -rp "Do you want install DXVK for Direct3D 9/10/11 (N/y) ? " _CONDITION;
@@ -54,8 +54,8 @@ if [ $? ]; then
 	fi
 
 
-	if [ $2 ]; then
-		if [ ! -f $2 ]; then
+	if [ "$2" ]; then
+		if [ ! -f "$2" ]; then
 			exit 1
 		fi
 
@@ -67,22 +67,22 @@ if [ $? ]; then
 
 				read -rp "Do you want a silent installation without progress bar (n/y) ? " _CONDITION
 				if [[ "$_CONDITION" =~ [yY] ]]; then
-					ARGS+=" /VERYSILENT"
+					ARGS="$ARGS /VERYSILENT"
 				else
-					ARGS+=" /SILENT"
+					ARGS="$ARGS /SILENT"
 				fi
 
 				read -rp "Do install the game outside the wine prefix (n/y) ? " _CONDITION
 				if [[ "$_CONDITION" =~ [yY] ]]; then
 					mkdir -p $GAMEDIR/gamedata
 
-					ARGS+=" DIR=\"$(winepath -w $GAMEDIR/gamedata)\""
+					ARGS="$ARGS DIR=\"$(winepath -w $GAMEDIR/gamedata)\""
 				fi
 			fi
 		fi
 
 		if [ ! -z "$ARGS" ]; then
-			wine $2 $ARGS && wineserver --wait
+			wine "$2" $ARGS && wineserver --wait
 		else
 			wine "$2" && wineserver --wait
 		fi
