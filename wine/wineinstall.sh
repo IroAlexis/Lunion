@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source "$(dirname $0)"/customization.cfg
 
 msg()
 {
@@ -41,10 +42,6 @@ fi
 # ============================
 #  Games folder Configuration
 # ============================
-#
-# Set to the path if you want install your games somewhere else
-# Example: _games_path="/home/frog" will install your game in /home/frog/game_name
-_games_path="$HOME/Games"
 
 dialog "Do you want install the game in $_games_path ?"
 read -rp "> N/y : " _CONDITION;
@@ -60,13 +57,20 @@ fi
 # ====================
 #  Wine Configuration
 # ====================
-#
-# Custom Wine dir - Comment the line to use system wine
-# Example: _CUSTOM_WINE="/opt/wine-tkg-git/bin"
-_CUSTOM_WINE="/opt/lunion-play-git/bin"
 
-export PATH=$_CUSTOM_WINE:$PATH
-export LD_LIBRARY_PATH=$_CUSTOM_WINE/../lib64:$_CUSTOM_WINE/../lib32:$_CUSTOM_WINE/../lib:$LD_LIBRARY_PATH
+if [ ! -z "$_CUSTOM_WINE" ]; then
+  if [ -z "$PATH" ]; then
+    export PATH="$_CUSTOM_WINE"
+  else
+    export PATH="$_CUSTOM_WINE:$PATH"
+  fi
+
+  if [ -z "$LD_LIBRARY_PATH" ]; then
+    export LD_LIBRARY_PATH="$_CUSTOM_WINE/../lib64:$_CUSTOM_WINE/../lib32:$_CUSTOM_WINE/../lib"
+  else
+    export LD_LIBRARY_PATH="$_CUSTOM_WINE/../lib64:$_CUSTOM_WINE/../lib32:$_CUSTOM_WINE/../lib:$LD_LIBRARY_PATH"
+  fi
+fi
 
 
 echo "[+] info:: lunion-play: $(wine --version)"
@@ -76,6 +80,7 @@ if [[ "$_CONDITION" =~ [nN] ]]; then
   msg "Please set \`_CUSTOM_WINE\` as you want in $(basename $0)"
   exit 1
 fi
+
 
 # ==========================
 #  Wine prefix Installation
