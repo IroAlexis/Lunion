@@ -27,6 +27,7 @@ error()
 # ==============
 #  Verification
 # ==============
+
 if [ "$#" -gt 2 ]; then
   echo "Usage: $0 game_name [/path/to/setup_exe]"
   exit 1
@@ -85,6 +86,7 @@ fi
 # ==========================
 #  Wine prefix Installation
 # ==========================
+
 GAME=$_games_path/$1
 
 export WINEPREFIX=$GAME/pfx
@@ -113,13 +115,13 @@ if [ "$?" ]; then
   dialog "Do you want install DXVK for Direct3D 9/10/11 ?"
   read -rp "> n/y : " _CONDITION;
   if [[ "$_CONDITION" =~ [yY] ]]; then
-    $HOME/runtime/dxvk-1.8.1/setup_dxvk.sh install && wineserver --wait
+    "$_dxvk_path"/setup_dxvk.sh install && wineserver --wait
   fi
 
   dialog "Do you want install VKD3D Proton for Direct3D 12 ?"
   read -rp "> n/y : " _CONDITION;
   if [[ "$_CONDITION" =~ [yY] ]]; then
-    $HOME/runtime/vkd3d-proton-master/setup_vkd3d_proton.sh install && wineserver --wait
+    "$_vkd3dproton_path"/setup_vkd3d_proton.sh install && wineserver --wait
   fi
 
 
