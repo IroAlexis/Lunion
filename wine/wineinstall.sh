@@ -9,7 +9,7 @@ msg()
 
 dialog()
 {
-  echo -e "\033[1;34m::\033[1;0m \033[1;1m$1\033[1;0m" >&2
+  echo -en "\033[1;34m::\033[1;0m \033[1;1m$1\033[1;0m" >&2
 }
 
 warning()
@@ -45,7 +45,7 @@ fi
 # ============================
 
 dialog "Do you want install the game in $_games_path ?"
-read -rp "> N/y : " _CONDITION;
+read -rp " [Y/n] " _CONDITION;
 if [[ "$_CONDITION" =~ [nN] ]]; then
   msg "Please set \`_game_path\` as you want in $(basename $0)"
   exit 1
@@ -76,7 +76,7 @@ fi
 
 echo "[+] info:: lunion-play: $(wine --version)"
 dialog "Proceed with this Wine version ?"
-read -rp "> N/y : " _CONDITION;
+read -rp " [Y/n] " _CONDITION;
 if [[ "$_CONDITION" =~ [nN] ]]; then
   msg "Please set \`_CUSTOM_WINE\` as you want in $(basename $0)"
   exit 1
@@ -93,12 +93,12 @@ export WINEPREFIX=$GAME/pfx
 export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
 
 dialog "Do you want use 32 bits prefix ?"
-read -rp "> N/y : " _CONDITION;
+read -rp " [y/N] " _CONDITION;
 if [[ "$_CONDITION" =~ [yY] ]]; then
   export WINEARCH=win32
 fi
 dialog "Do you want the debug Wine ?"
-read -rp "> N/y : " _CONDITION;
+read -rp " [Y/n] " _CONDITION;
 if [[ "$_CONDITION" =~ [nN] ]]; then
   export WINEDEBUG=-all
 fi
@@ -113,13 +113,13 @@ if [ "$?" ]; then
   mkdir -p $GAME/shaders
 
   dialog "Do you want install DXVK for Direct3D 9/10/11 ?"
-  read -rp "> n/y : " _CONDITION;
+  read -rp " [y/N] " _CONDITION;
   if [[ "$_CONDITION" =~ [yY] ]]; then
     "$_dxvk_path"/setup_dxvk.sh install && wineserver --wait
   fi
 
   dialog "Do you want install VKD3D Proton for Direct3D 12 ?"
-  read -rp "> n/y : " _CONDITION;
+  read -rp " [y/N] " _CONDITION;
   if [[ "$_CONDITION" =~ [yY] ]]; then
     "$_vkd3dproton_path"/setup_vkd3d_proton.sh install && wineserver --wait
   fi
@@ -134,15 +134,15 @@ if [ "$?" ]; then
     fi
 
     dialog "Is it a GOG installer ?"
-    read -rp "> n/y : " _CONDITION
+    read -rp " [y/N] " _CONDITION;
     if [[ "$_CONDITION" =~ [yY] ]]; then
       dialog "Do you want the GUI ?"
-      read -rp "> n/y : " _CONDITION
+      read -rp " [Y/n] " _CONDITION;
       if [[ "$_CONDITION" =~ [nN] ]]; then
         _ARGS="/SP- /SUPPRESSMSGBOXES"
 
         dialog "Do you want a silent installation without progress bar ?"
-        read -rp "> n/y : " _CONDITION
+        read -rp " [y/N] " _CONDITION;
         if [[ "$_CONDITION" =~ [yY] ]]; then
           _ARGS="$_ARGS /VERYSILENT"
         else
@@ -150,19 +150,19 @@ if [ "$?" ]; then
         fi
 
         dialog "Do install the game outside the wine prefix ?"
-        read -rp "> n/y : " _CONDITION
+        read -rp " [y/N] " _CONDITION;
         if [[ "$_CONDITION" =~ [yY] ]]; then
           mkdir -p $GAME/gamedata
           _ARGS="$_ARGS DIR=\"$(winepath -w $GAME/gamedata)\""
-          warning "Some installers completely ignore this feature. Check $(winepath -u c:\\GOG\ Games)"
+          warning "Some installers completely ignore this feature. Check $(winepath -u C:\\GOG\ Games)"
         fi
       fi
     fi
 
-    warning "Don't launch the game with the installer..."
     if [ ! -z "$_ARGS" ]; then
       wine "$2" $_ARGS && wineserver --wait
     else
+      warning "Don't launch the game with the installer..."
       wine "$2" && wineserver --wait
     fi
   fi
