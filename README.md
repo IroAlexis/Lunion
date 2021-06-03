@@ -22,7 +22,7 @@ Table of Contents
 How it works
 ------------
 For the native games, Lunion detects if you have installed with your package manager and integrates them in the library. It integrates also emulator applications and compatibility layers:
-* [Wine](https://www.winehq.org/) (and/or [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) entirely based on [Wine TkG](https://github.com/Frogging-Family/wine-tkg-git)), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
+* [Wine](https://www.winehq.org/), a open source compatibility layer capable of running Windows applications on several POSIX-compliant operating systems, such as Linux, macOS, & BSD
 * [DXVK](https://github.com/doitsujin/dxvk), a open source Vulkan-based translation layer for Direct3D 9/10/11 which allows running 3D applications on Linux using Wine
 * [VKD3D-Proton](https://github.com/HansKristian-Work/vkd3d-proton), a fork of [VKD3D](https://source.winehq.org/git/vkd3d.git/), which aims to implement the full Direct3D 12 API on top of Vulkan
 
@@ -75,7 +75,7 @@ Useful environment Variables
 | Environment Variables | Value(s) | Description |
 | :------------------- | :----: | :---------- |
 | `STAGING_SHARED_MEMORY` | `1` or `0` |  |
-| `WINE_LARGE_ADDRESS_AWARE` | `1` or `0` | Useful for 32-bit games hitting address space limitations, only with [Lunion Play](https://github.com/IroAlexis/lunion-play/tree/lunion-play) (or a build of [Wine TkG](https://github.com/Frogging-Family/wine-tkg-git)) but enable by default |
+| `WINE_LARGE_ADDRESS_AWARE` | `1` or `0` | Useful for 32-bit games hitting address space limitations, only with [Lunion Play](https://github.com/IroAlexis/lunion-play-build/tree/lunion-play) (or a build of [Wine TkG](https://github.com/Frogging-Family/wine-tkg-git)) but enable by default |
 
 ### Proprietary driver NVIDIA
 | Environment Variables | Value(s) | Description |
