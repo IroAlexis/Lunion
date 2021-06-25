@@ -2,7 +2,7 @@ Lunion
 ======
 A game library for all your PC games under Linux (GTK) inspired by GameHub, Steam and GOG Galaxy. Try to be ergonomic for "beginners" but also customizable for experts (we're going to try to work with you to offer you that opportunity)
 
-The Windows games tested list is available [here](https://github.com/IroAlexis/lunion/wiki/Tested-Windows-games-list) :frog:
+The Windows games tested list is available [here](https://github.com/IroAlexis/lunion-play/wiki/Home) :frog:
 
 
 
@@ -130,7 +130,7 @@ Troubleshooting
 Acknowledgements
 ----------------
 * [Wine](https://winehq.org) 
-* [Tk-Glitch](https://github.com/Tk-Glitch)
+* [Etienne Juvigny](https://github.com/Tk-Glitch)
 * [Hans-Kristian Arntzen](https://github.com/HansKristian-Work)
 * [Philip Rebohle](https://github.com/doitsujin)
 * [Joshua Ashton](https://github.com/Joshua-Ashton)
